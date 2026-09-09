@@ -119,6 +119,10 @@ button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid 
 .mrow .mrail .eyebrow{font-size:9.5px;color:var(--good)}
 .mrow .mrail .sub{font-size:11px;color:var(--ink-3)}
 .mrow .track{padding:5px 0;row-gap:2px}
+.mrow.folded .track{padding:3px 0}
+.mrail .bt{background:none;border:0;padding:0;cursor:pointer;display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--good)}
+.mrail .bt .car{font-size:9px;width:9px}
+.mrail .nxt{font-size:11px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .maj{margin-inline:2px;display:flex;align-items:center;gap:6px;padding:2px 7px;border-radius:4px;
   background:var(--surface);border:1px solid var(--good);border-left:3px solid var(--good);
   color:var(--ink);font-size:11px;line-height:1.25;overflow:hidden;cursor:pointer;text-align:left}
@@ -248,11 +252,14 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
 
   <div class="controls">
     <div class="field">
-      <span class="flab" id="lbl-group">Group by</span>
-      <div class="seg" role="group" aria-labelledby="lbl-group">
-        <button id="g-pg" aria-pressed="true">Process group</button>
-        <button id="g-stream" aria-pressed="false">Stream</button>
-      </div>
+      <label for="f-group">Group rows by</label>
+      <select id="f-group">
+        <option value="pg">Process group</option>
+        <option value="stream">Horizon — future-state / MVP / PoC</option>
+        <option value="phase">Design stage — discover → deliver</option>
+        <option value="track">Track — product owner / UX</option>
+        <option value="owner">Owner</option>
+      </select>
     </div>
     <div class="field">
       <span class="flab" id="lbl-view">Detail</span>
@@ -304,11 +311,12 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
       workshops no longer read as holes.</p>
     </div>
     <div class="note">
-      <h3>Why process group is the default row</h3>
-      <p>Horizon is a property of an <em>activity</em>, not of a process group &mdash; PG-01 has both
-      future-state and MVP work. Nesting by stream would duplicate that group into two rows that
-      can't be read as one thing. Group by <b>Stream</b> for the programme view; rows there carry an
-      <code>also in</code> tag so nothing reads as orphaned.</p>
+      <h3>The row hierarchy is a variable</h3>
+      <p>Every activity carries several dimensions &mdash; process group, horizon, design stage,
+      track, owner &mdash; and any of them can be the top level, with process groups nested
+      underneath. Process group is the default because it is the unit of work. Whichever dimension
+      you pick, rows carry an <code>also in</code> tag naming the group's other values, so a group
+      appearing in several sections never reads as orphaned.</p>
     </div>
     <div class="note">
       <h3>What counts as a milestone</h3>
@@ -476,16 +484,16 @@ var ACTS=[
 
 /* Milestones = a transfer or a commitment, never a task finishing. */
 var KINDS={
- backlog:{g:"⇥",label:"Discovery → backlog",feed:true},
- baseline:{g:"◇",label:"Requirements baselined"},
- handoff:{g:"◇",label:"Design handoff to engineering"},
- demo:{g:"◇",label:"Stakeholder demo"},
- uat:{g:"◇",label:"UAT start"},
- gate:{g:"◇",label:"PoC gate decision"},
- grad:{g:"◆",label:"Graduates to MVP delivery",major:true},
- golive:{g:"◆",label:"Go-live",major:true},
- freeze:{g:"◆",label:"Legacy freeze",major:true},
- steering:{g:"◆",label:"Steering group",major:true}
+ backlog:{g:"⇥",label:"Discovery → backlog",feed:true,phase:"define"},
+ baseline:{g:"◇",label:"Requirements baselined",phase:"define"},
+ handoff:{g:"◇",label:"Design handoff to engineering",phase:"deliver"},
+ demo:{g:"◇",label:"Stakeholder demo",phase:"validate"},
+ uat:{g:"◇",label:"UAT start",phase:"validate"},
+ gate:{g:"◇",label:"PoC gate decision",phase:"validate"},
+ grad:{g:"◆",label:"Graduates to MVP delivery",major:true,phase:"define"},
+ golive:{g:"◆",label:"Go-live",major:true,phase:"deliver"},
+ freeze:{g:"◆",label:"Legacy freeze",major:true,phase:"deliver"},
+ steering:{g:"◆",label:"Steering group",major:true,phase:"define"}
 };
 function M(pg,s,kind,name){return {pg:pg,s:s,kind:kind,name:name};}
 var MILESTONES=[
@@ -520,6 +528,25 @@ var MILESTONES=[
  M("PG-09",12,"handoff","Design handoff")
 ];
 
+/* Design stage is derived from an activity's type. Edit this one map to re-cut the stage view. */
+var PHASES=[
+ {id:"discover",name:"Discover",note:"Field research, workshops, ride-along synthesis — building the picture."},
+ {id:"define",name:"Define",note:"Journey maps, blueprints, requirements, acceptance criteria, PoC framing — fixing what gets built."},
+ {id:"design",name:"Design",note:"Concepts, wireframes, hi-fi, feasibility spikes — making it concrete."},
+ {id:"validate",name:"Validate",note:"Usability tests, field trials, UAT, PoC gates — checking it holds."},
+ {id:"deliver",name:"Deliver",note:"Design handoff, release readiness, provisioning — getting it out."},
+ {id:"enable",name:"Enable",note:"Licences, access, recruitment — unblocking everyone else."}
+];
+var PHASE_OF={
+ "Research":"discover","Workshop":"discover",
+ "Artefact":"define","Requirements":"define","Sign-off":"define","Backlog":"define","Framing":"define",
+ "Concept":"design","Design":"design","Spike":"design",
+ "Testing":"validate","UAT":"validate","Gate":"validate",
+ "Handoff":"deliver","Release":"deliver","Provisioning":"deliver",
+ "Procurement":"enable","Access":"enable","Recruiting":"enable"
+};
+ACTS.forEach(function(a){ a.phase=PHASE_OF[a.type]||"define"; });
+
 /* ---------- derived, from the FULL plan (filters never change a gap) ---------- */
 function sprintsOf(a){var o=[];for(var i=0;i<a.span;i++)o.push(a.s+i);return o;}
 var GAPS={};
@@ -546,7 +573,8 @@ PGS.forEach(function(pg){
 });
 
 /* ---------- state ---------- */
-var state={groupBy:"pg",person:"",pg:"",streams:{},tracks:{po:true,ux:true,ops:true},gapsOnly:false,table:false};
+var state={groupBy:"pg",person:"",pg:"",streams:{},tracks:{po:true,ux:true,ops:true},
+           gapsOnly:false,table:false,bandOpen:false};
 STREAMS.forEach(function(s){state.streams[s.id]=true;});
 var expanded={};
 
@@ -554,11 +582,41 @@ var $=function(i){return document.getElementById(i);};
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function sprintLabel(a){var s=SPRINTS[a.s-1],e=SPRINTS[a.s+a.span-2]||s;return a.span===1?s.id:s.id+"–"+e.id;}
 function dateLabel(a){var s=SPRINTS[a.s-1],e=SPRINTS[a.s+a.span-2]||s;return s.a+" → "+e.b;}
-function initials(name){var p=PMAP[name];return p?p.id:name.slice(0,2).toUpperCase();}
-function avatar(name,sm){
-  var on=state.person&&state.person===name;
-  return '<span class="av'+(sm?" sm":"")+(on?" on":"")+'" title="'+esc(name)+'">'+esc(initials(name))+'</span>';
+function initials(n){var p=PMAP[n];return p?p.id:n.slice(0,2).toUpperCase();}
+function avatar(n,sm){
+  var on=state.person&&state.person===n;
+  return '<span class="av'+(sm?" sm":"")+(on?" on":"")+'" title="'+esc(n)+'">'+esc(initials(n))+'</span>';
 }
+
+/* ---------- the row hierarchy is a variable ---------- */
+var DIMS={
+  pg:{label:"Process group",flat:true},
+  stream:{label:"Horizon",of:function(a){return a.stream;},
+    values:function(){return STREAMS.map(function(x){return {id:x.id,name:x.name,short:x.short,note:x.note,ops:x.ops};});}},
+  phase:{label:"Design stage",of:function(a){return a.phase;},
+    values:function(){return PHASES.map(function(x){return {id:x.id,name:x.name,short:x.name,note:x.note};});}},
+  track:{label:"Track",of:function(a){return a.track;},
+    values:function(){return [
+      {id:"po",name:"Product owner",short:"PO",note:"Everything a product owner drives — workshops, requirements, acceptance criteria, UAT, release readiness."},
+      {id:"ux",name:"UX",short:"UX",note:"Research, journey maps, concepts, design, usability testing, handoff."},
+      {id:"ops",name:"Enablement",short:"Ops",note:"Licences, access, ride-alongs, participant recruitment.",ops:true}];}},
+  owner:{label:"Owner",of:function(a){return a.owner;},
+    values:function(){return PEOPLE.map(function(x){return {id:x.name,name:x.name,short:initials(x.name),note:x.role};});}}
+};
+function dimOf(a,d){return DIMS[d].of(a);}
+function otherVals(pgId,dim,cur,acts){
+  var seen={},out=[];
+  acts.forEach(function(a){
+    if(a.pg!==pgId)return;
+    var v=dimOf(a,dim);
+    if(v===cur||seen[v])return;
+    seen[v]=1;out.push(v);
+  });
+  var all=DIMS[dim].values(),map={};
+  all.forEach(function(v){map[v.id]=v.short||v.name;});
+  return out.map(function(v){return map[v]||v;});
+}
+
 function actVisible(a){
   if(!state.streams[a.stream])return false;
   if(!state.tracks[a.track])return false;
@@ -575,12 +633,13 @@ function pgVisible(pg,acts){
 /* ---------- render pieces ---------- */
 function barHTML(a,mini,row){
   var st=STREAMS.filter(function(s){return s.id===a.stream;})[0];
+  var ph=PHASES.filter(function(x){return x.id===a.phase;})[0];
   var style="grid-column:"+a.s+" / span "+a.span+";"+(row?"grid-row:"+row+";":"");
-  var lab=a.name+" — "+a.owner+", "+st.name+", "+sprintLabel(a)+", "+a.type;
+  var lab=a.name+" — "+a.owner+", "+st.name+", "+ph.name+", "+sprintLabel(a)+", "+a.type;
   return '<button class="bar '+a.track+(mini?" mini":"")+'" style="'+style+'"'+
     ' data-n="'+esc(a.name)+'" data-o="'+esc(a.owner)+'" data-s="'+esc(sprintLabel(a))+'"'+
     ' data-d="'+esc(dateLabel(a))+'" data-t="'+esc(a.type)+'" data-tr="'+a.track+'"'+
-    ' data-h="'+esc(st.name)+'" data-pg="'+esc(PGMAP[a.pg].name)+'"'+
+    ' data-h="'+esc(st.name)+'" data-ph="'+esc(ph.name)+'" data-pg="'+esc(PGMAP[a.pg].name)+'"'+
     ' aria-label="'+esc(lab)+'">'+
     '<span class="bn"><span class="htag">'+st.tag+'</span><span class="t">'+esc(a.name)+'</span></span>'+
     '<span class="bo">'+avatar(a.owner,true)+'<span class="on">'+esc(a.owner)+'</span></span>'+
@@ -610,23 +669,37 @@ function msDotHTML(m,row){
 }
 function rosterHTML(acts){
   var seen={},out="";
-  acts.forEach(function(a){ if(!seen[a.owner]){seen[a.owner]=1;out+=avatar(a.owner,false);} });
+  acts.forEach(function(a){if(!seen[a.owner]){seen[a.owner]=1;out+=avatar(a.owner,false);}});
   return out?'<span class="roster">'+out+'</span>':"";
 }
+var TRACKNAME={po:"Product owner",ux:"UX",ops:"Enablement"};
+/* A gap is a plan-level fact, but its CELL belongs only in a slice that actually contains the
+   uncovered product-owner activity — otherwise it floats in a section with no related work. */
+function slicedGaps(gaps,acts){
+  return gaps.filter(function(n){
+    return acts.some(function(a){return a.track==="po"&&a.s<=n&&n<a.s+a.span;});
+  });
+}
 
-function pgBlock(pg,acts,html,inStream){
+function pgBlock(pg,acts,html,ctx,allVisActs,msList){
   var gaps=GAPS[pg.id]||[];
-  var ms=MILESTONES.filter(function(m){return m.pg===pg.id;});
+  var ms=msList||MILESTONES.filter(function(m){return m.pg===pg.id;});
   var exp=!!expanded[pg.id];
   var isOps=!!pg.ops;
+  var cells=state.tracks.ux?slicedGaps(gaps,acts):[];
 
   var badges='<span class="pgid">'+pg.id+'</span>';
   if(!isOps){
-    PGSTREAMS[pg.id].forEach(function(sid){
-      var st=STREAMS.filter(function(s){return s.id===sid;})[0];
-      if(inStream&&sid===inStream)return;
-      badges+='<span class="badge'+(inStream?" xref":"")+'">'+(inStream?"also in ":"")+st.short+'</span>';
-    });
+    if(!ctx){
+      PGSTREAMS[pg.id].forEach(function(sid){
+        var st=STREAMS.filter(function(s){return s.id===sid;})[0];
+        badges+='<span class="badge">'+st.short+'</span>';
+      });
+    }else{
+      var others=otherVals(pg.id,ctx.dim,ctx.val,allVisActs);
+      if(others.length)badges+='<span class="badge xref">also in '+
+        esc(others.slice(0,3).join(" · "))+(others.length>3?" +"+(others.length-3):"")+'</span>';
+    }
   }
   if(gaps.length)badges+='<span class="badge gapb">⚠ '+gaps.length+' gap'+(gaps.length===1?"":"s")+'</span>';
   if(ms.filter(function(m){return KINDS[m.kind].major;}).length)badges+='<span class="badge gradb">◆</span>';
@@ -647,24 +720,27 @@ function pgBlock(pg,acts,html,inStream){
   if(!exp){
     html+='<div class="track compact">';
     acts.forEach(function(a){html+=barHTML(a,true,a.track==="po"?1:2);});
-    if(state.tracks.ux)gaps.forEach(function(n){html+=gapHTML(n,2);});
+    cells.forEach(function(n){html+=gapHTML(n,2);});
     ms.forEach(function(m){html+=msDotHTML(m,3);});
     return html+'</div></div>';
   }
   html+='<div class="track"></div></div>';
-  var po=acts.filter(function(a){return a.track==="po";});
-  var ux=acts.filter(function(a){return a.track==="ux";});
-  html+='<div class="row subrow"><div class="tracklabel">'+
-    '<span class="dot" style="background:var(--po)"></span><span class="tl">Product owner</span>'+
-    rosterHTML(po)+'</div><div class="track">';
-  po.forEach(function(a){html+=barHTML(a,false,0);});
-  html+='</div></div>';
-  html+='<div class="row subrow"><div class="tracklabel">'+
-    '<span class="dot" style="background:var(--ux)"></span><span class="tl">UX</span>'+
-    rosterHTML(ux)+'</div><div class="track">';
-  ux.forEach(function(a){html+=barHTML(a,false,0);});
-  if(state.tracks.ux)gaps.forEach(function(n){html+=gapHTML(n,0);});
-  html+='</div></div>';
+  /* one sub-row per track actually present in this slice — so a Track or Owner
+     section shows only the tracks it contains, not two rows with one empty. */
+  var present=[];
+  ["po","ux","ops"].forEach(function(t){
+    if(acts.some(function(a){return a.track===t;}))present.push(t);
+  });
+  if(!present.length)present=["po","ux"];
+  present.forEach(function(t){
+    var rows=acts.filter(function(a){return a.track===t;});
+    html+='<div class="row subrow"><div class="tracklabel">'+
+      '<span class="dot" style="background:var(--'+t+')"></span>'+
+      '<span class="tl">'+TRACKNAME[t]+'</span>'+rosterHTML(rows)+'</div><div class="track">';
+    rows.forEach(function(a){html+=barHTML(a,false,0);});
+    if(t==="ux")cells.forEach(function(n){html+=gapHTML(n,0);});
+    html+='</div></div>';
+  });
   html+='<div class="row subrow last"><div class="tracklabel">'+
     '<span class="tl" style="padding-left:16px">Milestones</span></div><div class="track">';
   ms.forEach(function(m){html+=msHTML(m,0);});
@@ -672,33 +748,53 @@ function pgBlock(pg,acts,html,inStream){
   return html+'</div></div>';
 }
 
+function sectionHead(v,buckets,html){
+  var gt=0;
+  buckets.forEach(function(b){gt+=slicedGaps(GAPS[b.pg.id]||[],b.acts).length;});
+  return html+'<div class="row streamrow'+(v.ops?" opslane":"")+'"><div class="srail">'+
+    '<h2>'+esc(v.name)+'</h2><span class="stag">'+buckets.length+
+    (v.ops?" enablement item":" process group")+(buckets.length===1?"":"s")+
+    (gt?" · "+gt+" gap"+(gt===1?"":"s"):"")+'</span></div>'+
+    '<div class="snote"><span>'+esc(v.note||"")+'</span></div></div>';
+}
+
 function render(){
   var visActs=ACTS.filter(actVisible);
   var byPg={}; visActs.forEach(function(a){(byPg[a.pg]=byPg[a.pg]||[]).push(a);});
+  var progMs=MILESTONES.filter(function(m){return m.pg===null;});
 
   var html='<div class="thead"><div class="row qrow">'+
     '<div class="corner"><span class="eyebrow">Quarter</span></div>'+
     '<div class="qcell" style="grid-column:2 / 9">Q4 CY26 · Oct–Dec</div>'+
     '<div class="qcell" style="grid-column:9 / 15">Q1 CY27 · Jan–Mar</div>'+
     '</div><div class="row srow">'+
-    '<div class="railhead"><span class="eyebrow">'+
-      (state.groupBy==="pg"?"Process group":"Stream / process group")+'</span></div>';
+    '<div class="railhead"><span class="eyebrow">'+esc(DIMS[state.groupBy].label)+
+    (state.groupBy==="pg"?"":" / process group")+'</span></div>';
   SPRINTS.forEach(function(s){
     html+='<div class="sp'+(s.reduced?" dim":"")+'"><span class="id">'+s.id+'</span>'+
       '<span class="dt">'+s.a+"–"+s.b+'</span>'+(s.reduced?'<span class="red">reduced</span>':'')+'</div>';
   });
-  html+='</div><div class="row mrow"><div class="mrail">'+
-    '<span class="eyebrow">◆ Major milestones</span>'+
-    '<span class="sub">Programme-level launches and gates</span></div><div class="track">';
-  MILESTONES.filter(function(m){return m.pg===null;}).forEach(function(m){
-    var rev=m.s>=11,start,span;
-    if(rev){start=Math.max(1,m.s-3);span=m.s-start+1;}
-    else{start=m.s;span=Math.min(4,14-m.s);}
-    html+='<button class="maj'+(rev?" rev":"")+'" style="grid-column:'+start+' / span '+span+'"'+
-      ' data-ms="'+esc(KINDS[m.kind].label)+'" data-n="'+esc(m.name)+'" data-s="'+SPRINTS[m.s-1].id+'"'+
-      ' aria-label="'+esc(KINDS[m.kind].label+": "+m.name+", "+SPRINTS[m.s-1].id)+'">'+
-      '<span class="g">◆</span><span class="mn">'+esc(m.name)+'</span></button>';
-  });
+  var nxt=progMs[0];
+  html+='</div><div class="row mrow'+(state.bandOpen?"":" folded")+'"><div class="mrail">'+
+    '<button class="bt" id="bandtoggle" aria-expanded="'+(state.bandOpen?"true":"false")+'">'+
+      '<span class="car">'+(state.bandOpen?"▾":"▸")+'</span>◆ Major milestones</button>'+
+    '<span class="nxt">'+(state.bandOpen
+      ? "Programme-level launches and gates"
+      : progMs.length+" in window · next: "+esc(nxt.name)+" ("+SPRINTS[nxt.s-1].id+")")+
+    '</span></div><div class="track">';
+  if(state.bandOpen){
+    progMs.forEach(function(m){
+      var rev=m.s>=11,start,span;
+      if(rev){start=Math.max(1,m.s-3);span=m.s-start+1;}
+      else{start=m.s;span=Math.min(4,14-m.s);}
+      html+='<button class="maj'+(rev?" rev":"")+'" style="grid-column:'+start+' / span '+span+'"'+
+        ' data-ms="'+esc(KINDS[m.kind].label)+'" data-n="'+esc(m.name)+'" data-s="'+SPRINTS[m.s-1].id+'"'+
+        ' aria-label="'+esc(KINDS[m.kind].label+": "+m.name+", "+SPRINTS[m.s-1].id)+'">'+
+        '<span class="g">◆</span><span class="mn">'+esc(m.name)+'</span></button>';
+    });
+  }else{
+    progMs.forEach(function(m){html+=msDotHTML(m,1);});
+  }
   html+='</div></div></div>';
 
   var shownPgs=0;
@@ -706,31 +802,48 @@ function render(){
     PGS.filter(function(p){return !p.ops;}).forEach(function(pg){
       var acts=byPg[pg.id]||[];
       if(!pgVisible(pg,acts))return;
-      shownPgs++; html=pgBlock(pg,acts,html,null);
+      shownPgs++; html=pgBlock(pg,acts,html,null,visActs);
     });
     var opsPgs=PGS.filter(function(p){return p.ops&&pgVisible(p,byPg[p.id]||[]);});
     if(opsPgs.length){
-      var ost=STREAMS[3];
-      html+='<div class="row streamrow opslane"><div class="srail"><h2>'+esc(ost.name)+'</h2>'+
-        '<span class="stag">'+opsPgs.length+' enablement item'+(opsPgs.length===1?"":"s")+'</span></div>'+
-        '<div class="snote"><span>'+esc(ost.note)+'</span></div></div>';
-      opsPgs.forEach(function(pg){shownPgs++;html=pgBlock(pg,byPg[pg.id]||[],html,null);});
+      html=sectionHead({name:STREAMS[3].name,note:STREAMS[3].note,ops:true},
+        opsPgs.map(function(p){return {pg:p,acts:byPg[p.id]||[]};}),html);
+      opsPgs.forEach(function(pg){shownPgs++;html=pgBlock(pg,byPg[pg.id]||[],html,null,visActs);});
     }
   }else{
-    STREAMS.forEach(function(st){
-      var pgs=PGS.filter(function(p){
-        var acts=(byPg[p.id]||[]).filter(function(a){return a.stream===st.id;});
-        return acts.length&&pgVisible(p,acts);
+    var sections=[];
+    DIMS[state.groupBy].values().forEach(function(v){
+      var buckets=[];
+      PGS.forEach(function(p){
+        var acts=(byPg[p.id]||[]).filter(function(a){return dimOf(a,state.groupBy)===v.id;});
+        if(acts.length&&pgVisible(p,acts))buckets.push({pg:p,acts:acts});
       });
-      if(!pgs.length)return;
-      var gt=0; pgs.forEach(function(p){gt+=(GAPS[p.id]||[]).length;});
-      html+='<div class="row streamrow'+(st.ops?" opslane":"")+'"><div class="srail"><h2>'+esc(st.name)+'</h2>'+
-        '<span class="stag">'+pgs.length+(st.ops?" enablement item":" process group")+(pgs.length===1?"":"s")+
-        (gt?" · "+gt+" gap"+(gt===1?"":"s"):"")+'</span></div>'+
-        '<div class="snote"><span>'+esc(st.note)+'</span></div></div>';
-      pgs.forEach(function(pg){
+      if(buckets.length)sections.push({v:v,buckets:buckets});
+    });
+    /* A group can appear in several sections, but each of its milestones must be drawn
+       exactly once — otherwise the owner pivot alone repeats 23 markers 71 times. Prefer the
+       section that matches the milestone's own design stage; fall back to the group's first. */
+    var msAt={};
+    PGS.forEach(function(pg){
+      var where=[];
+      sections.forEach(function(sec){
+        if(sec.buckets.some(function(b){return b.pg.id===pg.id;}))where.push(sec.v.id);
+      });
+      if(!where.length)return;
+      MILESTONES.forEach(function(m){
+        if(m.pg!==pg.id)return;
+        var want=state.groupBy==="phase"?KINDS[m.kind].phase:null;
+        var target=(want&&where.indexOf(want)>-1)?want:where[0];
+        var k=pg.id+"|"+target;
+        (msAt[k]=msAt[k]||[]).push(m);
+      });
+    });
+    sections.forEach(function(sec){
+      html=sectionHead(sec.v,sec.buckets,html);
+      sec.buckets.forEach(function(b){
         shownPgs++;
-        html=pgBlock(pg,(byPg[pg.id]||[]).filter(function(a){return a.stream===st.id;}),html,st.ops?null:st.id);
+        html=pgBlock(b.pg,b.acts,html,{dim:state.groupBy,val:sec.v.id},visActs,
+                     msAt[b.pg.id+"|"+sec.v.id]||[]);
       });
     });
   }
@@ -740,7 +853,6 @@ function render(){
   }
   $("board").innerHTML=html;
 
-  /* slim stat strip */
   var gapPgs=0,gapSprints=0,people={},pgCount=0,opsCount=0;
   PGS.forEach(function(p){
     if(!pgVisible(p,byPg[p.id]||[]))return;
@@ -753,7 +865,8 @@ function render(){
   }).length;
   $("strip").innerHTML=
     '<div class="lead"><span class="n">'+gapSprints+'</span><span class="t">sprint-level UX gaps'+
-    (gapPgs?' in '+gapPgs+' process group'+(gapPgs===1?'':'s'):'')+' — product-owner activity with no UX within &plusmn;1 sprint</span></div>'+
+    (gapPgs?' in '+gapPgs+' process group'+(gapPgs===1?'':'s'):'')+
+    ' — product-owner activity with no UX within &plusmn;1 sprint</span></div>'+
     '<div class="rest">'+
       '<span class="kv"><b>'+pgCount+'</b> process groups</span>'+
       '<span class="kv"><b>'+opsCount+'</b> enablement items</span>'+
@@ -766,17 +879,17 @@ function render(){
 
 function renderTable(visActs){
   var order={}; PGS.forEach(function(p,i){order[p.id]=i;});
+  var pn={}; PHASES.forEach(function(x){pn[x.id]=x.name;});
   var h='<div class="tablewrap"><table><caption>Activities in the current view</caption><thead><tr>'+
-    '<th>Process group</th><th>Horizon</th><th>Track</th><th>Activity</th><th>Type</th>'+
-    '<th>Owner</th><th>Sprints</th><th>Dates</th></tr></thead><tbody>';
+    '<th>Process group</th><th>Horizon</th><th>Design stage</th><th>Track</th><th>Activity</th>'+
+    '<th>Type</th><th>Owner</th><th>Sprints</th><th>Dates</th></tr></thead><tbody>';
   visActs.slice().sort(function(a,b){
     return (order[a.pg]-order[b.pg])||(a.track<b.track?-1:a.track>b.track?1:0)||(a.s-b.s);
   }).forEach(function(a){
     var st=STREAMS.filter(function(s){return s.id===a.stream;})[0];
-    var tr=a.track==="po"?"Product owner":a.track==="ux"?"UX":"Enablement";
     h+='<tr><td>'+esc(PGMAP[a.pg].name)+' <span class="m">'+a.pg+'</span></td>'+
-      '<td class="m">'+esc(st.short)+'</td>'+
-      '<td><span class="tdot" style="background:var(--'+a.track+')"></span>'+tr+'</td>'+
+      '<td class="m">'+esc(st.short)+'</td><td class="m">'+esc(pn[a.phase])+'</td>'+
+      '<td><span class="tdot" style="background:var(--'+a.track+')"></span>'+TRACKNAME[a.track]+'</td>'+
       '<td>'+esc(a.name)+'</td><td class="m">'+esc(a.type)+'</td><td>'+esc(a.owner)+'</td>'+
       '<td class="m">'+esc(sprintLabel(a))+'</td><td class="m">'+esc(dateLabel(a))+'</td></tr>';
   });
@@ -808,10 +921,12 @@ function renderTable(visActs){
     '</tr></thead><tbody>'+rows+'</tbody></table></div>';
 
   h+='<div class="tablewrap" style="margin-top:18px"><table><caption>Who is on the programme</caption>'+
-    '<thead><tr><th>Initials</th><th>Name</th><th>Role</th><th>Activities</th></tr></thead><tbody>';
+    '<thead><tr><th>Initials</th><th>Name</th><th>Role</th><th>Activities</th><th>Sprints with work</th></tr></thead><tbody>';
   PEOPLE.forEach(function(p){
-    var n=ACTS.filter(function(a){return a.owner===p.name;}).length;
-    h+='<tr><td class="m">'+p.id+'</td><td>'+esc(p.name)+'</td><td>'+esc(p.role)+'</td><td class="m">'+n+'</td></tr>';
+    var mine=ACTS.filter(function(a){return a.owner===p.name;});
+    var sp={}; mine.forEach(function(a){sprintsOf(a).forEach(function(n){sp[n]=1;});});
+    h+='<tr><td class="m">'+p.id+'</td><td>'+esc(p.name)+'</td><td>'+esc(p.role)+'</td>'+
+      '<td class="m">'+mine.length+'</td><td class="m">'+Object.keys(sp).length+' of 13</td></tr>';
   });
   h+='</tbody></table></div>';
   $("tableview").innerHTML=h;
@@ -829,10 +944,11 @@ function showTip(el){
       '<div class="tr"><span>Sprint</span><span>'+el.getAttribute("data-s")+'</span></div>';
   }else{
     var tr=el.getAttribute("data-tr");
-    tip.innerHTML='<span class="tk">'+(tr==="po"?"Product owner":tr==="ux"?"UX":"Enablement")+'</span>'+
+    tip.innerHTML='<span class="tk">'+TRACKNAME[tr]+'</span>'+
       '<span class="tt">'+el.getAttribute("data-n")+'</span>'+
       '<div class="tr"><span>Process group</span><span>'+el.getAttribute("data-pg")+'</span></div>'+
       '<div class="tr"><span>Horizon</span><span>'+el.getAttribute("data-h")+'</span></div>'+
+      '<div class="tr"><span>Design stage</span><span>'+el.getAttribute("data-ph")+'</span></div>'+
       '<div class="tr"><span>Owner</span><span>'+el.getAttribute("data-o")+'</span></div>'+
       '<div class="tr"><span>Sprints</span><span>'+el.getAttribute("data-s")+'</span></div>'+
       '<div class="tr"><span>Dates</span><span>'+el.getAttribute("data-d")+'</span></div>'+
@@ -846,13 +962,15 @@ function showTip(el){
 }
 function hideTip(){tip.hidden=true;}
 var board=$("board");
-board.addEventListener("mouseover",function(e){var el=e.target.closest(".bar,.gapcell,.ms,.msdot,.maj");if(el)showTip(el);});
-board.addEventListener("mouseout",function(e){if(e.target.closest(".bar,.gapcell,.ms,.msdot,.maj"))hideTip();});
+var HOVER=".bar,.gapcell,.ms,.msdot,.maj";
+board.addEventListener("mouseover",function(e){var el=e.target.closest(HOVER);if(el)showTip(el);});
+board.addEventListener("mouseout",function(e){if(e.target.closest(HOVER))hideTip();});
 board.addEventListener("focusin",function(e){var el=e.target.closest(".bar,.ms,.msdot,.maj");if(el)showTip(el);});
 board.addEventListener("focusout",hideTip);
 $("scroller").addEventListener("scroll",hideTip);
 document.addEventListener("keydown",function(e){if(e.key==="Escape")hideTip();});
 board.addEventListener("click",function(e){
+  if(e.target.closest("#bandtoggle")){state.bandOpen=!state.bandOpen;render();return;}
   var d=e.target.closest(".disc[data-pg]"); if(!d)return;
   var id=d.getAttribute("data-pg");
   if(expanded[id])delete expanded[id]; else expanded[id]=1;
@@ -893,14 +1011,11 @@ function syncSeg(){
   var n=real.filter(function(p){return expanded[p.id];}).length;
   $("v-team").setAttribute("aria-pressed",n===real.length?"true":"false");
   $("v-exec").setAttribute("aria-pressed",n===0?"true":"false");
-  $("g-pg").setAttribute("aria-pressed",state.groupBy==="pg"?"true":"false");
-  $("g-stream").setAttribute("aria-pressed",state.groupBy==="stream"?"true":"false");
 }
+$("f-group").addEventListener("change",function(){state.groupBy=this.value;render();});
 $("f-person").addEventListener("change",function(){state.person=this.value;render();});
 $("f-pg").addEventListener("change",function(){state.pg=this.value;render();});
 $("f-gaps").addEventListener("change",function(){state.gapsOnly=this.checked;render();});
-$("g-pg").addEventListener("click",function(){state.groupBy="pg";syncSeg();render();});
-$("g-stream").addEventListener("click",function(){state.groupBy="stream";syncSeg();render();});
 $("v-exec").addEventListener("click",function(){expanded={};syncSeg();render();});
 $("v-team").addEventListener("click",function(){
   expanded={};PGS.forEach(function(p){if(!p.ops)expanded[p.id]=1;});syncSeg();render();
@@ -913,10 +1028,11 @@ $("f-table").addEventListener("click",function(){
   render();
 });
 $("f-reset").addEventListener("click",function(){
-  state.groupBy="pg";state.person="";state.pg="";state.gapsOnly=false;state.tracks={po:true,ux:true,ops:true};
+  state.groupBy="pg";state.person="";state.pg="";state.gapsOnly=false;
+  state.tracks={po:true,ux:true,ops:true};state.bandOpen=false;
   STREAMS.forEach(function(s){state.streams[s.id]=true;});
   expanded={};
-  $("f-person").value="";$("f-pg").value="";$("f-gaps").checked=false;
+  $("f-group").value="pg";$("f-person").value="";$("f-pg").value="";$("f-gaps").checked=false;
   Array.prototype.forEach.call(document.querySelectorAll(".chip"),function(c){c.setAttribute("aria-pressed","true");});
   syncSeg();render();
 });
