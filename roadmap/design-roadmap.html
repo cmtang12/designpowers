@@ -4,27 +4,16 @@
 <style>
 :root{
   color-scheme: light;
-  --ground:#f6f7f9;
-  --surface:#fdfdfe;
-  --surface-2:#eceff4;
-  --surface-3:#e3e8ee;
-  --line:#dbe1e8;
-  --line-strong:#c0c9d4;
-  --ink:#111820;
-  --ink-2:#4b5560;
-  --ink-3:#78838f;
-  --po:#2a78d6;
-  --po-soft:#dde9f8;
-  --ux:#eb6834;
-  --ux-soft:#fbe4d9;
-  --ops:#5b6672;
-  --ops-soft:#e4e8ed;
-  --warn:#b3261e;
-  --warn-soft:#fbe7e5;
+  --ground:#f6f7f9; --surface:#fdfdfe; --surface-2:#eceff4; --surface-3:#e3e8ee;
+  --line:#dbe1e8; --line-strong:#c0c9d4;
+  --ink:#111820; --ink-2:#4b5560; --ink-3:#78838f;
+  --po:#2a78d6; --po-soft:#dde9f8;
+  --ux:#eb6834; --ux-soft:#fbe4d9;
+  --ops:#5b6672; --ops-soft:#e4e8ed;
+  --warn:#b3261e; --warn-soft:#fbe7e5;
   --good:#00701f;
   --focus:#2a78d6;
-  --rail:270px;
-  --col:96px;
+  --rail:286px; --col:96px;
   --disp:"Archivo","Helvetica Neue",Arial,sans-serif;
   --body:"Source Sans 3",-apple-system,"Segoe UI",sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
@@ -32,86 +21,57 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme: dark;
-    --ground:#14171a;
-    --surface:#1b1f24;
-    --surface-2:#22272e;
-    --surface-3:#2a3037;
-    --line:#2d343c;
-    --line-strong:#414b56;
-    --ink:#eef2f6;
-    --ink-2:#a6b1bd;
-    --ink-3:#7c8792;
-    --po:#3987e5;
-    --po-soft:#16304e;
-    --ux:#d95926;
-    --ux-soft:#3e2015;
-    --ops:#8c98a5;
-    --ops-soft:#272d34;
-    --warn:#ef7a72;
-    --warn-soft:#3a1d1b;
+    --ground:#14171a; --surface:#1b1f24; --surface-2:#22272e; --surface-3:#2a3037;
+    --line:#2d343c; --line-strong:#414b56;
+    --ink:#eef2f6; --ink-2:#a6b1bd; --ink-3:#7c8792;
+    --po:#3987e5; --po-soft:#16304e;
+    --ux:#d95926; --ux-soft:#3e2015;
+    --ops:#8c98a5; --ops-soft:#272d34;
+    --warn:#ef7a72; --warn-soft:#3a1d1b;
     --good:#3fc98d;
     --focus:#6aa9f0;
   }
 }
 :root[data-theme="dark"]{
   color-scheme: dark;
-  --ground:#14171a;
-  --surface:#1b1f24;
-  --surface-2:#22272e;
-  --surface-3:#2a3037;
-  --line:#2d343c;
-  --line-strong:#414b56;
-  --ink:#eef2f6;
-  --ink-2:#a6b1bd;
-  --ink-3:#7c8792;
-  --po:#3987e5;
-  --po-soft:#16304e;
-  --ux:#d95926;
-  --ux-soft:#3e2015;
-  --ops:#8c98a5;
-  --ops-soft:#272d34;
-  --warn:#ef7a72;
-  --warn-soft:#3a1d1b;
+  --ground:#14171a; --surface:#1b1f24; --surface-2:#22272e; --surface-3:#2a3037;
+  --line:#2d343c; --line-strong:#414b56;
+  --ink:#eef2f6; --ink-2:#a6b1bd; --ink-3:#7c8792;
+  --po:#3987e5; --po-soft:#16304e;
+  --ux:#d95926; --ux-soft:#3e2015;
+  --ops:#8c98a5; --ops-soft:#272d34;
+  --warn:#ef7a72; --warn-soft:#3a1d1b;
   --good:#3fc98d;
   --focus:#6aa9f0;
 }
 *{box-sizing:border-box}
-body{
-  background:var(--ground);
-  color:var(--ink);
-  font-family:var(--body);
-  font-size:15px;
-  line-height:1.5;
-  margin:0;
-}
-.wrap{padding-inline:20px;padding-block:28px 44px;max-width:1560px;margin:0 auto}
+body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;margin:0}
+.wrap{padding-inline:20px;padding-block:26px 44px;max-width:1580px;margin:0 auto}
 h1,h2,h3{font-family:var(--disp);text-wrap:balance;margin:0}
-h1{font-size:clamp(1.5rem,1.2rem + 1.4vw,2.1rem);font-weight:700;letter-spacing:-0.02em;line-height:1.15}
-h2{font-size:.95rem;font-weight:600;letter-spacing:.02em}
+h1{font-size:clamp(1.45rem,1.2rem + 1.2vw,1.95rem);font-weight:700;letter-spacing:-.02em;line-height:1.15}
+h2{font-size:.95rem;font-weight:600;letter-spacing:.01em}
 .eyebrow{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 
-/* ---------- header ---------- */
-header.top{display:flex;flex-wrap:wrap;gap:18px 32px;align-items:flex-end;justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--line)}
-.top .lede{max-width:62ch;color:var(--ink-2);margin-top:8px;font-size:.95rem}
-.meta{display:flex;flex-wrap:wrap;gap:6px 20px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:12px;font-variant-numeric:tabular-nums}
+header.top{display:flex;flex-wrap:wrap;gap:14px 32px;align-items:flex-end;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.meta{display:flex;flex-wrap:wrap;gap:5px 18px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:10px;font-variant-numeric:tabular-nums}
 .meta b{color:var(--ink-2);font-weight:500}
 .samplechip{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--warn);background:var(--warn-soft);border:1px solid var(--warn);border-radius:3px;padding:3px 8px;white-space:nowrap}
 
-/* ---------- summary ---------- */
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin:24px 0 0;border-radius:5px;overflow:hidden}
-.tile{background:var(--surface);padding:14px 16px}
-.tile .n{font-family:var(--disp);font-size:1.9rem;font-weight:700;line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.tile .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:8px}
-.tile .sub{font-size:12.5px;color:var(--ink-2);margin-top:5px}
-.tile.flag{border-left:3px solid var(--warn)}
-.tile.flag .n{color:var(--warn)}
+/* slim stat strip */
+.strip{display:flex;flex-wrap:wrap;align-items:center;gap:10px 26px;margin-top:16px;padding:11px 15px;
+  background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:5px}
+.strip .lead{display:flex;align-items:baseline;gap:9px}
+.strip .lead .n{font-family:var(--disp);font-size:1.5rem;font-weight:700;line-height:1;color:var(--warn);font-variant-numeric:tabular-nums}
+.strip .lead .t{font-size:13px;color:var(--ink-2);max-width:40ch}
+.strip .rest{display:flex;flex-wrap:wrap;gap:6px 22px;margin-left:auto}
+.strip .kv{display:flex;align-items:baseline;gap:6px;font-size:12.5px;color:var(--ink-2)}
+.strip .kv b{font-family:var(--mono);font-size:13.5px;font-weight:600;color:var(--ink);font-variant-numeric:tabular-nums}
 
-/* ---------- controls ---------- */
-.controls{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:flex-end;margin:24px 0 0;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:5px}
+.controls{display:flex;flex-wrap:wrap;gap:13px 17px;align-items:flex-end;margin-top:16px;padding:13px 15px;background:var(--surface);border:1px solid var(--line);border-radius:5px}
 .field{display:flex;flex-direction:column;gap:5px;min-width:0}
-.field > label{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
-select{font-family:var(--body);font-size:13.5px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line-strong);border-radius:4px;padding:6px 8px;min-width:170px;max-width:230px}
+.field > label,.field > .flab{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+select{font-family:var(--body);font-size:13.5px;color:var(--ink);background:var(--surface-2);border:1px solid var(--line-strong);border-radius:4px;padding:6px 8px;min-width:168px;max-width:228px}
 .chips{display:flex;flex-wrap:wrap;gap:5px}
 .chip{font-family:var(--body);font-size:12.5px;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line-strong);border-radius:20px;padding:5px 11px;cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--surface);font-weight:600}
@@ -123,40 +83,52 @@ select{font-family:var(--body);font-size:13.5px;color:var(--ink);background:var(
 .tgl input{accent-color:var(--warn);width:15px;height:15px;margin:0}
 .ghost{font-family:var(--body);font-size:13px;color:var(--ink-2);background:none;border:1px solid var(--line-strong);border-radius:4px;padding:7px 12px;cursor:pointer}
 .ghost:hover{background:var(--surface-2);color:var(--ink)}
-button:focus-visible,select:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 
-/* ---------- legend ---------- */
-.legend{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin:18px 0 10px;font-size:12.5px;color:var(--ink-2)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin:16px 0 9px;font-size:12.5px;color:var(--ink-2)}
 .lg{display:inline-flex;align-items:center;gap:7px}
 .sw{width:22px;height:11px;border-radius:3px;flex:none}
 .sw.po{background:var(--po-soft);border-left:3px solid var(--po)}
 .sw.ux{background:var(--ux-soft);border-left:3px solid var(--ux)}
 .sw.ops{background:var(--ops-soft);border-left:3px solid var(--ops)}
-.sw.gap{background:var(--warn-soft);border:1px dashed var(--warn);background-image:repeating-linear-gradient(135deg,transparent 0 3px,var(--warn) 3px 4px)}
-.lg .gl{color:var(--good);font-size:14px;line-height:1}
+.sw.gap{border:1px dashed var(--warn);background-image:repeating-linear-gradient(135deg,transparent 0 3px,var(--warn) 3px 4px)}
+.lg .gl{font-size:13px;line-height:1}
+.lg .gmaj{color:var(--good)}
+.lg .gmin{color:var(--ink-2)}
 .count{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
 
-/* ---------- grid ---------- */
-.scroller{overflow:auto;max-height:74vh;border:1px solid var(--line);border-radius:5px;background:var(--surface);position:relative}
+.scroller{overflow:auto;max-height:76vh;border:1px solid var(--line);border-radius:5px;background:var(--surface);position:relative}
 .board{min-width:calc(var(--rail) + 13 * var(--col));width:max-content}
 .row{display:grid;grid-template-columns:var(--rail) repeat(13,var(--col));align-items:stretch}
 .thead{position:sticky;top:0;z-index:6;background:var(--surface)}
-.thead .row{border-bottom:1px solid var(--line-strong)}
+.thead .qrow,.thead .srow{border-bottom:1px solid var(--line)}
+.thead .mrow{border-bottom:2px solid var(--line-strong)}
 .qcell{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);background:var(--surface-3);padding:6px 10px;border-left:1px solid var(--line-strong)}
 .corner{position:sticky;left:0;z-index:7;background:var(--surface-3);padding:6px 12px;border-right:1px solid var(--line-strong)}
 .corner .eyebrow{font-size:10px}
 .railhead{position:sticky;left:0;z-index:7;background:var(--surface);padding:7px 12px;border-right:1px solid var(--line-strong);display:flex;align-items:flex-end}
-.sp{padding:7px 8px;border-left:1px solid var(--line);text-align:left;background:var(--surface)}
+.sp{padding:7px 8px;border-left:1px solid var(--line);background:var(--surface)}
 .sp .id{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink)}
-.sp .dt{display:block;font-family:var(--mono);font-size:9.5px;color:var(--ink-3);letter-spacing:-.01em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.sp .dt{display:block;font-family:var(--mono);font-size:9.5px;color:var(--ink-3);white-space:nowrap;font-variant-numeric:tabular-nums}
 .sp.dim{background:var(--surface-2)}
 .sp .red{display:block;font-family:var(--mono);font-size:9px;color:var(--warn);letter-spacing:.03em}
 
+/* major milestone band */
+.mrow{background:var(--surface-2)}
+.mrow .mrail{position:sticky;left:0;z-index:7;background:var(--surface-2);border-right:1px solid var(--line-strong);padding:8px 12px;display:flex;flex-direction:column;gap:2px;justify-content:center}
+.mrow .mrail .eyebrow{font-size:9.5px;color:var(--good)}
+.mrow .mrail .sub{font-size:11px;color:var(--ink-3)}
+.mrow .track{padding:5px 0;row-gap:2px}
+.maj{margin-inline:2px;display:flex;align-items:center;gap:6px;padding:2px 7px;border-radius:4px;
+  background:var(--surface);border:1px solid var(--good);border-left:3px solid var(--good);
+  color:var(--ink);font-size:11px;line-height:1.25;overflow:hidden;cursor:pointer;text-align:left}
+.maj .g{color:var(--good);font-size:11px;flex:none}
+.maj .mn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;font-size:10.5px}
+
 .streamrow{border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line);background:var(--surface-2)}
-.streamrow .srail{position:sticky;left:0;z-index:3;background:var(--surface-2);padding:11px 12px 10px;border-right:1px solid var(--line-strong)}
-.streamrow h2{color:var(--ink)}
+.streamrow .srail{position:sticky;left:0;z-index:3;background:var(--surface-2);padding:10px 12px;border-right:1px solid var(--line-strong)}
 .streamrow .snote{grid-column:2 / -1;background:var(--surface-2);display:flex;align-items:center}
-.streamrow .snote span{position:sticky;left:12px;font-size:12.5px;color:var(--ink-2);padding:4px 0;max-width:78ch}
+.streamrow .snote span{position:sticky;left:12px;font-size:12.5px;color:var(--ink-2);padding:4px 0;max-width:80ch}
 .stag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-top:3px;display:block}
 .streamrow.opslane .srail{border-left:3px solid var(--ops)}
 
@@ -168,62 +140,82 @@ button:focus-visible,select:focus-visible,input:focus-visible,[tabindex]:focus-v
 .pgtop{display:flex;align-items:center;gap:7px;min-width:0}
 .disc{background:none;border:0;padding:0;cursor:pointer;color:var(--ink-3);font-size:10px;line-height:1;width:15px;flex:none;font-family:var(--mono)}
 .pgname{font-family:var(--disp);font-size:13px;font-weight:600;color:var(--ink);line-height:1.25;min-width:0}
-.pgid{font-family:var(--mono);font-size:10px;color:var(--ink-3);letter-spacing:.02em}
-.badges{display:flex;flex-wrap:wrap;gap:4px;padding-left:22px}
+.pgid{font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.badges{display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding-left:22px}
 .badge{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:3px;border:1px solid var(--line-strong);color:var(--ink-2);background:var(--surface-2);white-space:nowrap}
 .badge.gapb{color:var(--warn);border-color:var(--warn);background:var(--warn-soft);font-weight:600}
 .badge.gradb{color:var(--good);border-color:var(--good);background:transparent;font-weight:600}
+.badge.xref{border-style:dashed;color:var(--ink-3)}
 
 .track{grid-column:2 / -1;display:grid;grid-template-columns:repeat(13,var(--col));align-content:start;row-gap:4px;padding:7px 0}
 .track.compact{row-gap:3px;padding:9px 0}
-.tracklabel{position:sticky;left:0;z-index:3;background:var(--surface);border-right:1px solid var(--line-strong);padding:5px 12px 5px 34px;display:flex;align-items:center;gap:7px}
+.tracklabel{position:sticky;left:0;z-index:3;background:var(--surface);border-right:1px solid var(--line-strong);padding:5px 12px 5px 34px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .tracklabel .tl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
 .tracklabel .dot{width:8px;height:8px;border-radius:2px;flex:none}
+.tracklabel .roster{display:flex;gap:3px;margin-left:auto}
 .subrow{border-bottom:1px dashed var(--line)}
 .subrow.last{border-bottom:1px solid var(--line)}
 
-.bar{
-  margin-inline:2px;padding:4px 8px;border-radius:4px;min-width:0;
-  font-family:var(--body);font-size:11.5px;line-height:1.3;color:var(--ink);
-  text-align:left;border:0;border-left:3px solid var(--ink-3);background:var(--surface-2);
-  cursor:pointer;overflow:hidden;display:block;
-}
-.bar .bn{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
-.bar .bo{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:var(--mono);font-size:9.5px;color:var(--ink-2);letter-spacing:-.01em}
+.av{width:19px;height:19px;border-radius:50%;background:var(--surface-3);border:1px solid var(--line-strong);
+  font-family:var(--mono);font-size:8.5px;font-weight:600;color:var(--ink-2);
+  display:inline-flex;align-items:center;justify-content:center;flex:none;letter-spacing:-.02em}
+.av.sm{width:15px;height:15px;font-size:7.5px}
+.av.on{border-color:var(--po);border-width:2px;color:var(--ink);background:var(--po-soft)}
+
+.bar{margin-inline:2px;padding:4px 7px;border-radius:4px;min-width:0;font-family:var(--body);font-size:11.5px;
+  line-height:1.3;color:var(--ink);text-align:left;border:0;border-left:3px solid var(--ink-3);
+  background:var(--surface-2);cursor:pointer;overflow:hidden;display:block}
+.bar .bn{display:flex;align-items:center;gap:5px;white-space:nowrap;overflow:hidden}
+.bar .bn .t{overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.bar .htag{font-family:var(--mono);font-size:8.5px;font-weight:600;letter-spacing:.04em;color:var(--ink-3);
+  border:1px solid var(--line-strong);border-radius:2px;padding:0 3px;flex:none;background:var(--surface)}
+.bar .bo{display:flex;align-items:center;gap:4px;white-space:nowrap;overflow:hidden;margin-top:2px}
+.bar .bo .on{font-family:var(--mono);font-size:9.5px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis}
 .bar.po{background:var(--po-soft);border-left-color:var(--po)}
 .bar.ux{background:var(--ux-soft);border-left-color:var(--ux)}
 .bar.ops{background:var(--ops-soft);border-left-color:var(--ops)}
-.bar.mini{padding:0;height:11px;border-radius:3px;border-left-width:3px}
+.bar.mini{padding:0;height:11px;border-radius:3px}
 .bar.mini .bn,.bar.mini .bo{display:none}
 .bar:hover{filter:saturate(1.25) brightness(.98)}
 @media (prefers-reduced-motion: no-preference){.bar{transition:filter .12s ease}}
 
-.gapcell{margin-inline:2px;border:1px dashed var(--warn);border-radius:4px;background:var(--warn-soft);background-image:repeating-linear-gradient(135deg,transparent 0 4px,color-mix(in srgb,var(--warn) 22%,transparent) 4px 5px);display:flex;align-items:center;justify-content:center;color:var(--warn);font-size:11px;font-weight:700;min-height:11px}
-.gapcell.mini{min-height:11px}
-.grad{margin-inline:2px;display:flex;align-items:center;gap:5px;color:var(--good);font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:.03em;white-space:nowrap;border-left:2px solid var(--good);padding-left:6px}
-.grad .g{font-size:11px}
+.gapcell{margin-inline:2px;border:1px dashed var(--warn);border-radius:4px;background:var(--warn-soft);
+  background-image:repeating-linear-gradient(135deg,transparent 0 4px,color-mix(in srgb,var(--warn) 22%,transparent) 4px 5px);
+  display:flex;align-items:center;justify-content:center;color:var(--warn);font-size:11px;font-weight:700;min-height:11px}
+
+.ms{margin-inline:2px;display:flex;align-items:center;gap:5px;padding:3px 7px;border-radius:4px;
+  background:var(--surface);border:1px solid var(--line-strong);color:var(--ink-2);font-size:10.5px;
+  line-height:1.25;overflow:hidden;cursor:pointer;text-align:left}
+.ms .g{flex:none;font-size:10px;color:var(--ink-2)}
+.ms.rev,.maj.rev{flex-direction:row-reverse}
+.ms.rev .mn,.maj.rev .mn{text-align:right;flex:1}
+.ms .mn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ms.major{border-color:var(--good);color:var(--ink)}
+.ms.major .g{color:var(--good)}
+.ms.feed{border-style:dashed}
+.msdot{background:none;border:0;padding:0;font-family:var(--body);margin-inline:2px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--ink-2);min-height:11px;cursor:pointer}
+.msdot.major{color:var(--good);font-size:11px}
+
 .empty{grid-column:2 / -1;padding:14px 12px;color:var(--ink-3);font-size:13px}
 .emptyrail{position:sticky;left:0;background:var(--surface);border-right:1px solid var(--line-strong)}
 
-/* ---------- tooltip ---------- */
-#tip{position:fixed;z-index:50;max-width:270px;background:var(--ink);color:var(--ground);border-radius:5px;padding:9px 11px;font-size:12.5px;line-height:1.4;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.28)}
+#tip{position:fixed;z-index:50;max-width:280px;background:var(--ink);color:var(--ground);border-radius:5px;
+  padding:9px 11px;font-size:12.5px;line-height:1.4;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.28)}
 #tip[hidden]{display:none!important}
 #tip .tt{font-family:var(--disp);font-weight:600;font-size:13px;display:block;margin-bottom:4px}
 #tip .tk{font-family:var(--mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;opacity:.72;display:block}
 #tip .tr{display:flex;gap:8px;justify-content:space-between;font-family:var(--mono);font-size:11px;margin-top:3px;font-variant-numeric:tabular-nums}
 
-/* ---------- table view ---------- */
 .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:5px;background:var(--surface)}
-table{border-collapse:collapse;width:100%;font-size:13px;min-width:820px}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:840px}
 caption{text-align:left;padding:12px 14px;font-family:var(--disp);font-weight:600;font-size:.95rem;color:var(--ink);border-bottom:1px solid var(--line)}
 th,td{text-align:left;padding:7px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);background:var(--surface-2);position:sticky;top:0}
 td.m{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums}
 tr.gaprow td{background:var(--warn-soft)}
-td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px;vertical-align:baseline}
+td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px}
 
-/* ---------- notes ---------- */
-.notes{margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px 26px}
+.notes{margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:18px 26px}
 .note h3{font-family:var(--disp);font-size:12.5px;font-weight:600;margin-bottom:5px}
 .note p{margin:0;font-size:13px;color:var(--ink-2);max-width:60ch}
 .note code{font-family:var(--mono);font-size:11.5px;background:var(--surface-2);padding:1px 4px;border-radius:3px}
@@ -231,10 +223,9 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
 
 @media (max-width:640px){
   .wrap{padding-inline:16px}
-  :root{--rail:186px;--col:86px}
-  .tile .n{font-size:1.5rem}
-  .controls{gap:12px}
+  :root{--rail:190px;--col:86px}
   select{min-width:140px}
+  .strip .rest{margin-left:0}
 }
 </style>
 
@@ -243,22 +234,33 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
     <div>
       <span class="eyebrow">Field Operations Modernization &middot; Design &amp; Delivery</span>
       <h1>Process Group Roadmap</h1>
-      <p class="lede">Four work streams, thirteen sprints. Every process group carries a product-owner
-      track and a UX track on the same timeline, so a commitment made without design or research
-      behind it shows up as a gap instead of a surprise.</p>
       <div class="meta">
         <span><b>13 sprints</b> &middot; 2 weeks each</span>
         <span><b>S1</b> Sep 28 2026 &rarr; <b>S13</b> Mar 26 2027</span>
         <span>Q4 CY26 + Q1 CY27</span>
-        <span>Today: Sep 9 2026 &mdash; <b>19 days before S1</b></span>
+        <span>Last updated <b>9 Sep 2026</b></span>
       </div>
     </div>
     <span class="samplechip">&#9679; Illustrative data &mdash; replace with real names</span>
   </header>
 
-  <div class="tiles" id="tiles"></div>
+  <div class="strip" id="strip"></div>
 
   <div class="controls">
+    <div class="field">
+      <span class="flab" id="lbl-group">Group by</span>
+      <div class="seg" role="group" aria-labelledby="lbl-group">
+        <button id="g-pg" aria-pressed="true">Process group</button>
+        <button id="g-stream" aria-pressed="false">Stream</button>
+      </div>
+    </div>
+    <div class="field">
+      <span class="flab" id="lbl-view">Detail</span>
+      <div class="seg" role="group" aria-labelledby="lbl-view">
+        <button id="v-exec" aria-pressed="true">Coverage</button>
+        <button id="v-team" aria-pressed="false">Activities</button>
+      </div>
+    </div>
     <div class="field">
       <label for="f-person">Person</label>
       <select id="f-person"><option value="">Everyone</option></select>
@@ -268,23 +270,12 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
       <select id="f-pg"><option value="">All process groups</option></select>
     </div>
     <div class="field">
-      <label for="f-stage">Stage</label>
-      <select id="f-stage"><option value="">All stages</option></select>
-    </div>
-    <div class="field">
-      <span id="lbl-stream" class="mono" style="font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)">Stream</span>
+      <span class="flab" id="lbl-stream">Horizon</span>
       <div class="chips" id="f-stream" role="group" aria-labelledby="lbl-stream"></div>
     </div>
     <div class="field">
-      <span id="lbl-track" class="mono" style="font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)">Track</span>
+      <span class="flab" id="lbl-track">Track</span>
       <div class="chips" id="f-track" role="group" aria-labelledby="lbl-track"></div>
-    </div>
-    <div class="field">
-      <span id="lbl-view" class="mono" style="font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)">Detail</span>
-      <div class="seg" role="group" aria-labelledby="lbl-view">
-        <button id="v-exec" aria-pressed="true">Coverage</button>
-        <button id="v-team" aria-pressed="false">Activities</button>
-      </div>
     </div>
     <label class="tgl" for="f-gaps"><input type="checkbox" id="f-gaps"> Only groups with gaps</label>
     <button class="ghost" id="f-table" aria-pressed="false">Table view</button>
@@ -292,11 +283,12 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
   </div>
 
   <div class="legend">
-    <span class="lg"><span class="sw po"></span> Product owner activity</span>
-    <span class="lg"><span class="sw ux"></span> UX activity</span>
+    <span class="lg"><span class="sw po"></span> Product owner</span>
+    <span class="lg"><span class="sw ux"></span> UX</span>
     <span class="lg"><span class="sw ops"></span> Enablement</span>
     <span class="lg"><span class="sw gap"></span> UX coverage gap</span>
-    <span class="lg"><span class="gl">&#9670;</span> Graduates to another stream</span>
+    <span class="lg"><span class="gl gmin">&#9671;</span> Milestone</span>
+    <span class="lg"><span class="gl gmaj">&#9670;</span> Launch / graduation</span>
     <span class="count" id="vis"></span>
   </div>
 
@@ -306,28 +298,40 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
   <div class="notes">
     <div class="note warnnote">
       <h3>How a gap is flagged</h3>
-      <p>A sprint is flagged when a process group has product-owner activity and <em>no</em> UX
-      activity within <code>&plusmn;1 sprint</code> of it. The tolerance is deliberate &mdash; design
-      and research rarely land in the exact sprint they inform. Change the tolerance if it
-      is flagging noise, but change it in the open.</p>
+      <p>A sprint is flagged when a process group has product-owner activity and <em>no</em> UX activity
+      within <code>&plusmn;1 sprint</code> &mdash; counting UX work on <em>any</em> horizon. Future-state
+      research therefore counts as coverage for MVP product-owner work, which is why overlapping
+      workshops no longer read as holes.</p>
     </div>
     <div class="note">
-      <h3>Why stream isn't a colour</h3>
-      <p>Streams are already encoded by position &mdash; each is a labelled lane. Colour is spent
-      on the one distinction the gap check depends on, <span class="mono">PO</span> vs
-      <span class="mono">UX</span>, which is validated to stay separable for colour-blind readers
-      and in both themes.</p>
+      <h3>Why process group is the default row</h3>
+      <p>Horizon is a property of an <em>activity</em>, not of a process group &mdash; PG-01 has both
+      future-state and MVP work. Nesting by stream would duplicate that group into two rows that
+      can't be read as one thing. Group by <b>Stream</b> for the programme view; rows there carry an
+      <code>also in</code> tag so nothing reads as orphaned.</p>
     </div>
     <div class="note">
-      <h3>The ops lane measures something else</h3>
-      <p>Licences, ride-alongs and access requests are enablement items, not process groups being
-      redesigned. They share the timeline because they gate research access, but they carry no
-      PO/UX tracks and are excluded from the gap check.</p>
+      <h3>What counts as a milestone</h3>
+      <p>A transfer or a commitment &mdash; not a task finishing. Requirements baselined, design
+      handoff, stakeholder demo, UAT start, PoC gate, discovery synthesis reaching the backlog,
+      go-live. &ldquo;Wireframes done&rdquo; is an activity ending, so it isn't one.</p>
+    </div>
+    <div class="note">
+      <h3>Where discovery feeds delivery</h3>
+      <p>The dashed <code>&#8677;</code> milestone is the handoff you can actually point at: discovery
+      synthesis landing <em>n</em> items in the backlog, which MVP delivery then draws from. Three
+      process groups have one inside this window.</p>
     </div>
     <div class="note">
       <h3>S7 is not a full sprint</h3>
-      <p><span class="mono">Dec 21 &ndash; Jan 01</span> is marked reduced capacity. Nothing with a
-      hard commitment should be planned to land there; two process groups currently cross it.</p>
+      <p><span class="mono">Dec 21 &ndash; Jan 01</span> is reduced capacity. Nothing with a hard
+      commitment should land there.</p>
+    </div>
+    <div class="note">
+      <h3>Enablement measures something else</h3>
+      <p>Licences, ride-alongs and access requests are enablement items, not workflows being
+      redesigned. They share the timeline because they gate research access, but carry no PO/UX
+      tracks and are excluded from the gap check.</p>
     </div>
   </div>
 </div>
@@ -336,7 +340,6 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
 (function(){
 "use strict";
 
-/* ---------------- sprint calendar ---------------- */
 var SPRINTS=[
  {n:1,id:"S1",a:"Sep 28",b:"Oct 09"},{n:2,id:"S2",a:"Oct 12",b:"Oct 23"},
  {n:3,id:"S3",a:"Oct 26",b:"Nov 06"},{n:4,id:"S4",a:"Nov 09",b:"Nov 20"},
@@ -348,327 +351,444 @@ var SPRINTS=[
 ];
 var GAP_TOLERANCE=1;
 
-/* ---------------- streams ---------------- */
+/* Horizon is a property of an ACTIVITY, not of a process group. */
 var STREAMS=[
- {id:"discovery",name:"Future-State Discovery",short:"Discovery",
-  note:"Blanket research gathering requirements across every process group — problem space, not solution space."},
- {id:"mvp",name:"MVP Delivery",short:"MVP",
-  note:"Product-owner led. Base “apples-for-apples” requirements agreed with stakeholders, not transformational scope."},
- {id:"innovation",name:"Innovation & Proof of Concept",short:"Innovation",
-  note:"Solution-space probes. A PoC that clears its review gate graduates into MVP Delivery."},
- {id:"ops",name:"Operational Enablement",short:"Operations",
-  note:"Licences, ride-alongs, environment access, participant panels. Enablement items — no PO/UX tracks, excluded from the gap check.",ops:true}
+ {id:"discovery",name:"Future-State Discovery",short:"Future-state",tag:"FS",
+  note:"Blanket research across every process group. Its output is backlog items — quick wins and transformative bets — which MVP delivery then draws from."},
+ {id:"mvp",name:"MVP Delivery",short:"MVP",tag:"MVP",
+  note:"Product-owner led. Base requirements needed to move off the legacy system, agreed with stakeholders — not transformational scope."},
+ {id:"innovation",name:"Innovation & Proof of Concept",short:"PoC",tag:"PoC",
+  note:"Solution-space probes. A PoC that clears its gate graduates into MVP delivery."},
+ {id:"ops",name:"Operational Enablement",short:"Enablement",tag:"OPS",
+  note:"Licences, ride-alongs, environment access, participant panels. No PO/UX tracks; excluded from the gap check.",ops:true}
 ];
 
-/* ---------------- process groups ---------------- */
+var PEOPLE=[
+ {id:"DW",name:"Dana Whitfield",role:"Product owner"},
+ {id:"MI",name:"Marcus Iyer",role:"Product owner"},
+ {id:"PR",name:"Priya Raghunathan",role:"Product owner"},
+ {id:"TO",name:"Tom Okafor",role:"Researcher"},
+ {id:"LB",name:"Lena Brandt",role:"Designer"},
+ {id:"SM",name:"Sofia Marchetti",role:"Designer"},
+ {id:"KA",name:"Ken Adeyemi",role:"Usability"},
+ {id:"RB",name:"Ravi Balakrishnan",role:"Programme ops"}
+];
+var PMAP={}; PEOPLE.forEach(function(p){PMAP[p.name]=p;});
+
 var PGS=[
- {id:"PG-01",name:"Work Intake & Triage",stream:"discovery",stage:"Discovery"},
- {id:"PG-02",name:"Scheduling & Dispatch",stream:"discovery",stage:"Discovery"},
- {id:"PG-03",name:"Field Execution & Inspection",stream:"discovery",stage:"Discovery"},
- {id:"PG-04",name:"Asset Records Management",stream:"mvp",stage:"MVP"},
- {id:"PG-05",name:"Permitting & Compliance",stream:"mvp",stage:"MVP"},
- {id:"PG-06",name:"Materials & Inventory Requests",stream:"mvp",stage:"MVP"},
- {id:"PG-07",name:"Predictive Maintenance Signals",stream:"innovation",stage:"PoC"},
- {id:"PG-08",name:"Offline Mobile Capture",stream:"innovation",stage:"PoC"},
- {id:"PG-09",name:"Automated Damage Assessment",stream:"innovation",stage:"PoC → MVP"},
- {id:"OPS-01",name:"Platform Licence Procurement",stream:"ops",stage:"Enablement"},
- {id:"OPS-02",name:"Field Ride-Alongs",stream:"ops",stage:"Enablement"},
- {id:"OPS-03",name:"Sandbox Environment Access",stream:"ops",stage:"Enablement"},
- {id:"OPS-04",name:"Research Participant Panel",stream:"ops",stage:"Enablement"}
+ {id:"PG-01",name:"Work Intake & Triage"},
+ {id:"PG-02",name:"Scheduling & Dispatch"},
+ {id:"PG-03",name:"Field Execution & Inspection"},
+ {id:"PG-04",name:"Asset Records Management"},
+ {id:"PG-05",name:"Permitting & Compliance"},
+ {id:"PG-06",name:"Materials & Inventory Requests"},
+ {id:"PG-07",name:"Predictive Maintenance Signals"},
+ {id:"PG-08",name:"Offline Mobile Capture"},
+ {id:"PG-09",name:"Automated Damage Assessment"},
+ {id:"OPS-01",name:"Platform Licence Procurement",ops:true},
+ {id:"OPS-02",name:"Field Ride-Alongs",ops:true},
+ {id:"OPS-03",name:"Sandbox Environment Access",ops:true},
+ {id:"OPS-04",name:"Research Participant Panel",ops:true}
 ];
-
-/* ---------------- activities ---------------- */
-function A(pg,track,name,owner,s,span,type){return {pg:pg,track:track,name:name,owner:owner,s:s,span:span,type:type};}
-var ACTS=[
- /* PG-01 */
- A("PG-01","po","Stakeholder workshops","Dana Whitfield",1,2,"Workshop"),
- A("PG-01","po","Current-state map sign-off","Dana Whitfield",3,1,"Sign-off"),
- A("PG-01","po","Requirements backlog","Dana Whitfield",6,2,"Backlog"),
- A("PG-01","ux","Generative research","Tom Okafor",1,3,"Research"),
- A("PG-01","ux","Journey map","Lena Brandt",3,2,"Artefact"),
- A("PG-01","ux","Concept sketches","Lena Brandt",5,2,"Concept"),
- A("PG-01","ux","Concept test × 6","Ken Adeyemi",7,1,"Testing"),
- /* PG-02 */
- A("PG-02","po","Stakeholder workshops","Marcus Iyer",2,2,"Workshop"),
- A("PG-02","po","Pain-point prioritisation","Marcus Iyer",4,1,"Sign-off"),
- A("PG-02","po","Requirements backlog","Marcus Iyer",8,2,"Backlog"),
- A("PG-02","ux","Generative research","Tom Okafor",2,3,"Research"),
- A("PG-02","ux","Service blueprint","Sofia Marchetti",5,2,"Artefact"),
- /* PG-03 */
- A("PG-03","po","Ride-along synthesis","Priya Raghunathan",3,2,"Workshop"),
- A("PG-03","po","Requirements backlog","Priya Raghunathan",9,2,"Backlog"),
- A("PG-03","ux","Field research × 6 crews","Tom Okafor",3,3,"Research"),
- A("PG-03","ux","Journey map","Sofia Marchetti",6,2,"Artefact"),
- A("PG-03","ux","Concept sketches","Sofia Marchetti",9,2,"Concept"),
- A("PG-03","ux","Concept test","Ken Adeyemi",11,1,"Testing"),
- /* PG-04 */
- A("PG-04","po","Base requirements gathering","Dana Whitfield",1,1,"Requirements"),
- A("PG-04","po","Acceptance criteria","Dana Whitfield",2,2,"Sign-off"),
- A("PG-04","po","UAT coordination","Dana Whitfield",8,1,"UAT"),
- A("PG-04","po","Release readiness","Dana Whitfield",10,1,"Release"),
- A("PG-04","ux","Wireframes","Lena Brandt",2,2,"Design"),
- A("PG-04","ux","Hi-fi design","Lena Brandt",4,2,"Design"),
- A("PG-04","ux","Usability test × 5","Ken Adeyemi",6,1,"Testing"),
- A("PG-04","ux","Design spec handoff","Lena Brandt",7,1,"Handoff"),
- A("PG-04","ux","Post-launch validation","Ken Adeyemi",11,1,"Testing"),
- /* PG-05 -- the gap case */
- A("PG-05","po","Base requirements gathering","Marcus Iyer",2,1,"Requirements"),
- A("PG-05","po","Acceptance criteria","Marcus Iyer",4,2,"Sign-off"),
- A("PG-05","po","Backlog grooming","Marcus Iyer",6,1,"Backlog"),
- A("PG-05","po","UAT coordination","Marcus Iyer",9,1,"UAT"),
- A("PG-05","ux","Wireframes","Sofia Marchetti",8,2,"Design"),
- A("PG-05","ux","Hi-fi design","Sofia Marchetti",10,2,"Design"),
- /* PG-06 */
- A("PG-06","po","Base requirements gathering","Priya Raghunathan",5,1,"Requirements"),
- A("PG-06","po","Acceptance criteria","Priya Raghunathan",7,2,"Sign-off"),
- A("PG-06","po","UAT coordination","Priya Raghunathan",12,1,"UAT"),
- A("PG-06","ux","Wireframes","Lena Brandt",7,2,"Design"),
- A("PG-06","ux","Hi-fi design","Lena Brandt",9,2,"Design"),
- A("PG-06","ux","Usability test × 5","Ken Adeyemi",11,1,"Testing"),
- A("PG-06","ux","Design spec handoff","Lena Brandt",12,1,"Handoff"),
- /* PG-07 */
- A("PG-07","po","PoC framing & success metrics","Dana Whitfield",4,1,"Framing"),
- A("PG-07","po","PoC review gate","Dana Whitfield",8,1,"Gate"),
- A("PG-07","ux","Concept probe","Sofia Marchetti",5,2,"Concept"),
- A("PG-07","ux","Feasibility spike with eng","Sofia Marchetti",7,1,"Spike"),
- /* PG-08 */
- A("PG-08","po","PoC framing & success metrics","Marcus Iyer",6,1,"Framing"),
- A("PG-08","po","PoC review gate","Marcus Iyer",10,1,"Gate"),
- A("PG-08","ux","Concept probe","Lena Brandt",7,2,"Concept"),
- A("PG-08","ux","Field trial × 3 crews","Tom Okafor",9,1,"Testing"),
- /* PG-09 -- graduates */
- A("PG-09","po","PoC framing & success metrics","Priya Raghunathan",2,1,"Framing"),
- A("PG-09","po","PoC review gate","Priya Raghunathan",6,1,"Gate"),
- A("PG-09","po","MVP scope definition","Priya Raghunathan",9,1,"Requirements"),
- A("PG-09","po","UAT coordination","Priya Raghunathan",12,1,"UAT"),
- A("PG-09","ux","Concept probe","Sofia Marchetti",3,2,"Concept"),
- A("PG-09","ux","Feasibility spike with eng","Sofia Marchetti",5,1,"Spike"),
- A("PG-09","ux","Wireframes","Sofia Marchetti",9,2,"Design"),
- A("PG-09","ux","Hi-fi design","Sofia Marchetti",11,2,"Design"),
- /* OPS */
- A("OPS-01","ops","Licence procurement × 40 seats","Ravi Balakrishnan",1,2,"Procurement"),
- A("OPS-01","ops","Provisioning","Ravi Balakrishnan",3,1,"Access"),
- A("OPS-02","ops","Ride-along scheduling & execution","Ravi Balakrishnan",2,4,"Access"),
- A("OPS-02","ops","Second wave × 4 depots","Ravi Balakrishnan",8,2,"Access"),
- A("OPS-03","ops","Sandbox access request","Ravi Balakrishnan",1,1,"Access"),
- A("OPS-03","ops","Access granted & verified","Ravi Balakrishnan",4,1,"Access"),
- A("OPS-04","ops","Participant panel recruitment","Ravi Balakrishnan",3,2,"Recruiting"),
- A("OPS-04","ops","Panel refresh","Ravi Balakrishnan",8,2,"Recruiting")
-];
-
-var GRADS=[{pg:"PG-09",s:9,label:"Graduates to MVP Delivery"}];
-
-/* ---------------- derived: gaps (computed from the FULL plan, never the filtered view) ---------------- */
 var PGMAP={}; PGS.forEach(function(p){PGMAP[p.id]=p;});
-function sprintsOf(a){var out=[];for(var i=0;i<a.span;i++){out.push(a.s+i);}return out;}
 
-var GAPS={}; /* pgId -> [sprintNumbers] */
+function A(pg,stream,track,name,owner,s,span,type){
+  return {pg:pg,stream:stream,track:track,name:name,owner:owner,s:s,span:span,type:type};
+}
+var ACTS=[
+ /* PG-01 — lives on two horizons */
+ A("PG-01","discovery","po","Future-state workshops","Dana Whitfield",2,2,"Workshop"),
+ A("PG-01","discovery","ux","Generative research","Tom Okafor",1,3,"Research"),
+ A("PG-01","discovery","ux","Future-state journey map","Lena Brandt",3,2,"Artefact"),
+ A("PG-01","mvp","po","Base requirements","Dana Whitfield",1,1,"Requirements"),
+ A("PG-01","mvp","po","Acceptance criteria","Dana Whitfield",5,2,"Sign-off"),
+ A("PG-01","mvp","ux","Wireframes","Lena Brandt",5,2,"Design"),
+ A("PG-01","mvp","ux","Usability test × 5","Ken Adeyemi",7,1,"Testing"),
+ /* PG-02 — two horizons, and the delivery gap */
+ A("PG-02","discovery","po","Future-state workshops","Marcus Iyer",3,2,"Workshop"),
+ A("PG-02","discovery","ux","Generative research","Tom Okafor",2,3,"Research"),
+ A("PG-02","discovery","ux","Service blueprint","Sofia Marchetti",5,2,"Artefact"),
+ A("PG-02","mvp","po","Base requirements","Marcus Iyer",8,1,"Requirements"),
+ A("PG-02","mvp","po","Acceptance criteria","Marcus Iyer",9,2,"Sign-off"),
+ A("PG-02","mvp","ux","Wireframes","Sofia Marchetti",11,2,"Design"),
+ /* PG-03 — all three horizons */
+ A("PG-03","discovery","po","Ride-along synthesis","Priya Raghunathan",4,2,"Workshop"),
+ A("PG-03","discovery","ux","Field research × 6 crews","Tom Okafor",3,3,"Research"),
+ A("PG-03","discovery","ux","Future-state journey map","Sofia Marchetti",6,2,"Artefact"),
+ A("PG-03","mvp","po","Base requirements","Priya Raghunathan",9,1,"Requirements"),
+ A("PG-03","mvp","ux","Wireframes","Sofia Marchetti",9,2,"Design"),
+ A("PG-03","innovation","po","PoC framing & metrics","Priya Raghunathan",10,1,"Framing"),
+ A("PG-03","innovation","ux","Wearable capture probe","Lena Brandt",11,2,"Concept"),
+ /* PG-04 — MVP only, well covered */
+ A("PG-04","mvp","po","Base requirements","Dana Whitfield",1,1,"Requirements"),
+ A("PG-04","mvp","po","Acceptance criteria","Dana Whitfield",2,2,"Sign-off"),
+ A("PG-04","mvp","po","UAT coordination","Dana Whitfield",8,1,"UAT"),
+ A("PG-04","mvp","po","Release readiness","Dana Whitfield",10,1,"Release"),
+ A("PG-04","mvp","ux","Wireframes","Lena Brandt",2,2,"Design"),
+ A("PG-04","mvp","ux","Hi-fi design","Lena Brandt",4,2,"Design"),
+ A("PG-04","mvp","ux","Usability test × 5","Ken Adeyemi",6,1,"Testing"),
+ A("PG-04","mvp","ux","Design spec handoff","Lena Brandt",7,1,"Handoff"),
+ A("PG-04","mvp","ux","Post-launch validation","Ken Adeyemi",11,1,"Testing"),
+ /* PG-05 — the neglected one */
+ A("PG-05","mvp","po","Base requirements","Marcus Iyer",2,1,"Requirements"),
+ A("PG-05","mvp","po","Acceptance criteria","Marcus Iyer",4,2,"Sign-off"),
+ A("PG-05","mvp","po","Backlog grooming","Marcus Iyer",6,1,"Backlog"),
+ A("PG-05","mvp","po","UAT coordination","Marcus Iyer",11,1,"UAT"),
+ A("PG-05","mvp","ux","Wireframes","Sofia Marchetti",9,2,"Design"),
+ A("PG-05","mvp","ux","Hi-fi design","Sofia Marchetti",11,2,"Design"),
+ /* PG-06 */
+ A("PG-06","mvp","po","Base requirements","Priya Raghunathan",5,1,"Requirements"),
+ A("PG-06","mvp","po","Acceptance criteria","Priya Raghunathan",7,2,"Sign-off"),
+ A("PG-06","mvp","po","UAT coordination","Priya Raghunathan",12,1,"UAT"),
+ A("PG-06","mvp","ux","Wireframes","Lena Brandt",7,2,"Design"),
+ A("PG-06","mvp","ux","Hi-fi design","Lena Brandt",9,2,"Design"),
+ A("PG-06","mvp","ux","Usability test × 5","Ken Adeyemi",11,1,"Testing"),
+ A("PG-06","mvp","ux","Design spec handoff","Lena Brandt",12,1,"Handoff"),
+ /* PG-07 */
+ A("PG-07","innovation","po","PoC framing & metrics","Dana Whitfield",4,1,"Framing"),
+ A("PG-07","innovation","ux","Concept probe","Sofia Marchetti",5,2,"Concept"),
+ A("PG-07","innovation","ux","Feasibility spike with eng","Sofia Marchetti",7,1,"Spike"),
+ A("PG-07","innovation","po","PoC gate review","Dana Whitfield",8,1,"Gate"),
+ /* PG-08 */
+ A("PG-08","innovation","po","PoC framing & metrics","Marcus Iyer",6,1,"Framing"),
+ A("PG-08","innovation","ux","Concept probe","Lena Brandt",7,2,"Concept"),
+ A("PG-08","innovation","ux","Field trial × 3 crews","Tom Okafor",9,1,"Testing"),
+ A("PG-08","innovation","po","PoC gate review","Marcus Iyer",10,1,"Gate"),
+ /* PG-09 — graduates mid-window */
+ A("PG-09","innovation","po","PoC framing & metrics","Priya Raghunathan",2,1,"Framing"),
+ A("PG-09","innovation","ux","Concept probe","Sofia Marchetti",3,2,"Concept"),
+ A("PG-09","innovation","ux","Feasibility spike with eng","Sofia Marchetti",5,1,"Spike"),
+ A("PG-09","innovation","po","PoC gate review","Priya Raghunathan",6,1,"Gate"),
+ A("PG-09","mvp","po","MVP scope definition","Priya Raghunathan",9,1,"Requirements"),
+ A("PG-09","mvp","ux","Wireframes","Sofia Marchetti",9,2,"Design"),
+ A("PG-09","mvp","ux","Hi-fi design","Sofia Marchetti",11,2,"Design"),
+ A("PG-09","mvp","po","UAT coordination","Priya Raghunathan",13,1,"UAT"),
+ /* Enablement */
+ A("OPS-01","ops","ops","Licence procurement × 40 seats","Ravi Balakrishnan",1,2,"Procurement"),
+ A("OPS-01","ops","ops","Provisioning","Ravi Balakrishnan",3,1,"Access"),
+ A("OPS-02","ops","ops","Ride-alongs wave 1 × 6 depots","Ravi Balakrishnan",2,4,"Access"),
+ A("OPS-02","ops","ops","Ride-alongs wave 2 × 4 depots","Ravi Balakrishnan",8,2,"Access"),
+ A("OPS-03","ops","ops","Sandbox access request","Ravi Balakrishnan",1,1,"Access"),
+ A("OPS-03","ops","ops","Access granted & verified","Ravi Balakrishnan",4,1,"Access"),
+ A("OPS-04","ops","ops","Participant panel recruitment","Ravi Balakrishnan",3,2,"Recruiting"),
+ A("OPS-04","ops","ops","Panel refresh","Ravi Balakrishnan",8,2,"Recruiting")
+];
+
+/* Milestones = a transfer or a commitment, never a task finishing. */
+var KINDS={
+ backlog:{g:"⇥",label:"Discovery → backlog",feed:true},
+ baseline:{g:"◇",label:"Requirements baselined"},
+ handoff:{g:"◇",label:"Design handoff to engineering"},
+ demo:{g:"◇",label:"Stakeholder demo"},
+ uat:{g:"◇",label:"UAT start"},
+ gate:{g:"◇",label:"PoC gate decision"},
+ grad:{g:"◆",label:"Graduates to MVP delivery",major:true},
+ golive:{g:"◆",label:"Go-live",major:true},
+ freeze:{g:"◆",label:"Legacy freeze",major:true},
+ steering:{g:"◆",label:"Steering group",major:true}
+};
+function M(pg,s,kind,name){return {pg:pg,s:s,kind:kind,name:name};}
+var MILESTONES=[
+ /* programme level — pg null — pinned in the band at the top */
+ M(null,6,"freeze","Legacy system goes read-only"),
+ M(null,8,"steering","Discovery backlog v1 to steering group"),
+ M(null,10,"golive","Wave 1 go-live — Asset Records"),
+ M(null,13,"golive","Wave 2 go-live — Permitting, Scheduling, Materials"),
+ /* within process groups */
+ M("PG-01",4,"backlog","Synthesis → 6 backlog items"),
+ M("PG-01",6,"baseline","Requirements baselined"),
+ M("PG-01",8,"handoff","Design handoff"),
+ M("PG-02",7,"backlog","Synthesis → 9 backlog items"),
+ M("PG-02",10,"baseline","Requirements baselined"),
+ M("PG-02",13,"golive","Wave 2 go-live"),
+ M("PG-03",8,"backlog","Synthesis → 4 backlog items"),
+ M("PG-03",12,"demo","Wearable probe demo"),
+ M("PG-04",3,"baseline","Requirements baselined"),
+ M("PG-04",7,"handoff","Design handoff"),
+ M("PG-04",8,"uat","UAT start"),
+ M("PG-04",10,"golive","Wave 1 go-live"),
+ M("PG-05",6,"baseline","Requirements baselined"),
+ M("PG-05",11,"uat","UAT start"),
+ M("PG-05",13,"golive","Wave 2 go-live"),
+ M("PG-06",8,"baseline","Requirements baselined"),
+ M("PG-06",12,"handoff","Design handoff"),
+ M("PG-06",13,"golive","Wave 2 go-live"),
+ M("PG-07",8,"gate","PoC gate decision"),
+ M("PG-08",10,"gate","PoC gate decision"),
+ M("PG-09",6,"gate","PoC gate decision"),
+ M("PG-09",9,"grad","Graduates to MVP delivery"),
+ M("PG-09",12,"handoff","Design handoff")
+];
+
+/* ---------- derived, from the FULL plan (filters never change a gap) ---------- */
+function sprintsOf(a){var o=[];for(var i=0;i<a.span;i++)o.push(a.s+i);return o;}
+var GAPS={};
 PGS.forEach(function(pg){
-  if(pg.stream==="ops"){GAPS[pg.id]=[];return;}
+  if(pg.ops){GAPS[pg.id]=[];return;}
   var po={},ux={};
   ACTS.forEach(function(a){
     if(a.pg!==pg.id)return;
     sprintsOf(a).forEach(function(n){ if(a.track==="po")po[n]=1; else if(a.track==="ux")ux[n]=1; });
   });
-  var flagged=[];
+  var f=[];
   Object.keys(po).forEach(function(k){
-    var n=+k,covered=false;
-    for(var d=-GAP_TOLERANCE;d<=GAP_TOLERANCE;d++){ if(ux[n+d]){covered=true;break;} }
-    if(!covered)flagged.push(n);
+    var n=+k,ok=false;
+    for(var d=-GAP_TOLERANCE;d<=GAP_TOLERANCE;d++) if(ux[n+d]){ok=true;break;}
+    if(!ok)f.push(n);
   });
-  GAPS[pg.id]=flagged.sort(function(x,y){return x-y;});
+  GAPS[pg.id]=f.sort(function(x,y){return x-y;});
+});
+var PGSTREAMS={};
+PGS.forEach(function(pg){
+  var seen={},list=[];
+  ACTS.forEach(function(a){ if(a.pg===pg.id&&!seen[a.stream]){seen[a.stream]=1;list.push(a.stream);} });
+  PGSTREAMS[pg.id]=list;
 });
 
-var PEOPLE=[]; (function(){var seen={};ACTS.forEach(function(a){if(!seen[a.owner]){seen[a.owner]=1;PEOPLE.push(a.owner);}});PEOPLE.sort();})();
-var STAGES=[]; (function(){var seen={};PGS.forEach(function(p){if(!seen[p.stage]){seen[p.stage]=1;STAGES.push(p.stage);}});})();
-
-/* ---------------- state ---------------- */
-var state={person:"",pg:"",stage:"",streams:{},tracks:{po:true,ux:true,ops:true},gapsOnly:false,table:false};
+/* ---------- state ---------- */
+var state={groupBy:"pg",person:"",pg:"",streams:{},tracks:{po:true,ux:true,ops:true},gapsOnly:false,table:false};
 STREAMS.forEach(function(s){state.streams[s.id]=true;});
 var expanded={};
 
-/* ---------------- helpers ---------------- */
-var $=function(id){return document.getElementById(id);};
+var $=function(i){return document.getElementById(i);};
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
-function sprintLabel(a){
-  var s=SPRINTS[a.s-1],e=SPRINTS[a.s+a.span-2]||s;
-  return a.span===1 ? s.id : s.id+"–"+e.id;
-}
-function dateLabel(a){
-  var s=SPRINTS[a.s-1],e=SPRINTS[a.s+a.span-2]||s;
-  return s.a+" → "+e.b;
+function sprintLabel(a){var s=SPRINTS[a.s-1],e=SPRINTS[a.s+a.span-2]||s;return a.span===1?s.id:s.id+"–"+e.id;}
+function dateLabel(a){var s=SPRINTS[a.s-1],e=SPRINTS[a.s+a.span-2]||s;return s.a+" → "+e.b;}
+function initials(name){var p=PMAP[name];return p?p.id:name.slice(0,2).toUpperCase();}
+function avatar(name,sm){
+  var on=state.person&&state.person===name;
+  return '<span class="av'+(sm?" sm":"")+(on?" on":"")+'" title="'+esc(name)+'">'+esc(initials(name))+'</span>';
 }
 function actVisible(a){
-  var pg=PGMAP[a.pg];
-  if(!pg)return false;
-  if(!state.streams[pg.stream])return false;
+  if(!state.streams[a.stream])return false;
   if(!state.tracks[a.track])return false;
   if(state.person&&a.owner!==state.person)return false;
   if(state.pg&&a.pg!==state.pg)return false;
-  if(state.stage&&pg.stage!==state.stage)return false;
   return true;
 }
 function pgVisible(pg,acts){
-  if(!state.streams[pg.stream])return false;
   if(state.pg&&pg.id!==state.pg)return false;
-  if(state.stage&&pg.stage!==state.stage)return false;
-  if(state.gapsOnly&&(!GAPS[pg.id]||!GAPS[pg.id].length))return false;
-  if((state.person||!state.tracks.po||!state.tracks.ux||!state.tracks.ops)&&!acts.length)return false;
-  return true;
+  if(state.gapsOnly&&!(GAPS[pg.id]||[]).length)return false;
+  return acts.length>0;
 }
 
-/* ---------------- render ---------------- */
+/* ---------- render pieces ---------- */
 function barHTML(a,mini,row){
-  var cls="bar "+a.track+(mini?" mini":"");
-  var style="grid-column:"+a.s+" / span "+a.span+";";
-  if(row)style+="grid-row:"+row+";";
-  var label=a.name+" — "+a.owner+", "+sprintLabel(a)+", "+a.type;
-  return '<button class="'+cls+'" style="'+style+'" '+
-    'data-n="'+esc(a.name)+'" data-o="'+esc(a.owner)+'" data-s="'+esc(sprintLabel(a))+'" '+
-    'data-d="'+esc(dateLabel(a))+'" data-t="'+esc(a.type)+'" data-tr="'+a.track+'" '+
-    'aria-label="'+esc(label)+'">'+
-    '<span class="bn">'+esc(a.name)+'</span><span class="bo">'+esc(a.owner)+'</span></button>';
+  var st=STREAMS.filter(function(s){return s.id===a.stream;})[0];
+  var style="grid-column:"+a.s+" / span "+a.span+";"+(row?"grid-row:"+row+";":"");
+  var lab=a.name+" — "+a.owner+", "+st.name+", "+sprintLabel(a)+", "+a.type;
+  return '<button class="bar '+a.track+(mini?" mini":"")+'" style="'+style+'"'+
+    ' data-n="'+esc(a.name)+'" data-o="'+esc(a.owner)+'" data-s="'+esc(sprintLabel(a))+'"'+
+    ' data-d="'+esc(dateLabel(a))+'" data-t="'+esc(a.type)+'" data-tr="'+a.track+'"'+
+    ' data-h="'+esc(st.name)+'" data-pg="'+esc(PGMAP[a.pg].name)+'"'+
+    ' aria-label="'+esc(lab)+'">'+
+    '<span class="bn"><span class="htag">'+st.tag+'</span><span class="t">'+esc(a.name)+'</span></span>'+
+    '<span class="bo">'+avatar(a.owner,true)+'<span class="on">'+esc(a.owner)+'</span></span>'+
+    '</button>';
 }
-function gapHTML(n,mini,row){
-  var style="grid-column:"+n+" / span 1;"+(row?"grid-row:"+row+";":"");
-  return '<div class="gapcell'+(mini?" mini":"")+'" style="'+style+'" '+
-    'data-gap="'+SPRINTS[n-1].id+'" role="img" '+
-    'aria-label="UX coverage gap in sprint '+SPRINTS[n-1].id+'">⚠</div>';
+function gapHTML(n,row){
+  return '<div class="gapcell" style="grid-column:'+n+' / span 1;'+(row?"grid-row:"+row+";":"")+'"'+
+    ' data-gap="'+SPRINTS[n-1].id+'" role="img"'+
+    ' aria-label="UX coverage gap in sprint '+SPRINTS[n-1].id+'">⚠</div>';
 }
-function gradHTML(g,row){
-  var style="grid-column:"+g.s+" / span 2;"+(row?"grid-row:"+row+";":"");
-  return '<div class="grad" style="'+style+'"><span class="g">◆</span>'+esc(g.label)+'</div>';
+function msHTML(m,row){
+  var k=KINDS[m.kind],rev=m.s>=11,start,span;
+  if(rev){start=Math.max(1,m.s-2);span=m.s-start+1;}
+  else{start=m.s;span=Math.min(3,14-m.s);}
+  return '<button class="ms'+(k.major?" major":"")+(k.feed?" feed":"")+(rev?" rev":"")+'"'+
+    ' style="grid-column:'+start+' / span '+span+';'+(row?"grid-row:"+row+";":"")+'"'+
+    ' data-ms="'+esc(k.label)+'" data-n="'+esc(m.name)+'" data-s="'+SPRINTS[m.s-1].id+'"'+
+    ' aria-label="'+esc(k.label+": "+m.name+", "+SPRINTS[m.s-1].id)+'">'+
+    '<span class="g">'+k.g+'</span><span class="mn">'+esc(m.name)+'</span></button>';
+}
+function msDotHTML(m,row){
+  var k=KINDS[m.kind];
+  return '<button class="msdot'+(k.major?" major":"")+'"'+
+    ' style="grid-column:'+m.s+' / span 1;'+(row?"grid-row:"+row+";":"")+'"'+
+    ' data-ms="'+esc(k.label)+'" data-n="'+esc(m.name)+'" data-s="'+SPRINTS[m.s-1].id+'"'+
+    ' aria-label="'+esc(k.label+": "+m.name+", "+SPRINTS[m.s-1].id)+'">'+k.g+'</button>';
+}
+function rosterHTML(acts){
+  var seen={},out="";
+  acts.forEach(function(a){ if(!seen[a.owner]){seen[a.owner]=1;out+=avatar(a.owner,false);} });
+  return out?'<span class="roster">'+out+'</span>':"";
+}
+
+function pgBlock(pg,acts,html,inStream){
+  var gaps=GAPS[pg.id]||[];
+  var ms=MILESTONES.filter(function(m){return m.pg===pg.id;});
+  var exp=!!expanded[pg.id];
+  var isOps=!!pg.ops;
+
+  var badges='<span class="pgid">'+pg.id+'</span>';
+  if(!isOps){
+    PGSTREAMS[pg.id].forEach(function(sid){
+      var st=STREAMS.filter(function(s){return s.id===sid;})[0];
+      if(inStream&&sid===inStream)return;
+      badges+='<span class="badge'+(inStream?" xref":"")+'">'+(inStream?"also in ":"")+st.short+'</span>';
+    });
+  }
+  if(gaps.length)badges+='<span class="badge gapb">⚠ '+gaps.length+' gap'+(gaps.length===1?"":"s")+'</span>';
+  if(ms.filter(function(m){return KINDS[m.kind].major;}).length)badges+='<span class="badge gradb">◆</span>';
+
+  var disc=isOps?'<span class="disc" aria-hidden="true">·</span>'
+    :'<button class="disc" data-pg="'+pg.id+'" aria-expanded="'+(exp?"true":"false")+'"'+
+     ' aria-label="'+(exp?"Collapse":"Expand")+' '+esc(pg.name)+'">'+(exp?"▾":"▸")+'</button>';
+
+  html+='<div class="row pgrow'+(exp&&!isOps?" pghdr":"")+'"><div class="pgrail">'+
+    '<div class="pgtop">'+disc+'<span class="pgname">'+esc(pg.name)+'</span></div>'+
+    '<div class="badges">'+badges+'</div></div>';
+
+  if(isOps){
+    html+='<div class="track">';
+    acts.forEach(function(a){html+=barHTML(a,false,0);});
+    return html+'</div></div>';
+  }
+  if(!exp){
+    html+='<div class="track compact">';
+    acts.forEach(function(a){html+=barHTML(a,true,a.track==="po"?1:2);});
+    if(state.tracks.ux)gaps.forEach(function(n){html+=gapHTML(n,2);});
+    ms.forEach(function(m){html+=msDotHTML(m,3);});
+    return html+'</div></div>';
+  }
+  html+='<div class="track"></div></div>';
+  var po=acts.filter(function(a){return a.track==="po";});
+  var ux=acts.filter(function(a){return a.track==="ux";});
+  html+='<div class="row subrow"><div class="tracklabel">'+
+    '<span class="dot" style="background:var(--po)"></span><span class="tl">Product owner</span>'+
+    rosterHTML(po)+'</div><div class="track">';
+  po.forEach(function(a){html+=barHTML(a,false,0);});
+  html+='</div></div>';
+  html+='<div class="row subrow"><div class="tracklabel">'+
+    '<span class="dot" style="background:var(--ux)"></span><span class="tl">UX</span>'+
+    rosterHTML(ux)+'</div><div class="track">';
+  ux.forEach(function(a){html+=barHTML(a,false,0);});
+  if(state.tracks.ux)gaps.forEach(function(n){html+=gapHTML(n,0);});
+  html+='</div></div>';
+  html+='<div class="row subrow last"><div class="tracklabel">'+
+    '<span class="tl" style="padding-left:16px">Milestones</span></div><div class="track">';
+  ms.forEach(function(m){html+=msHTML(m,0);});
+  if(!ms.length)html+='<div style="grid-column:1 / -1;padding:2px 8px;font-size:11.5px;color:var(--ink-3)">No milestones in this window</div>';
+  return html+'</div></div>';
 }
 
 function render(){
   var visActs=ACTS.filter(actVisible);
   var byPg={}; visActs.forEach(function(a){(byPg[a.pg]=byPg[a.pg]||[]).push(a);});
 
-  var html='<div class="thead"><div class="row">'+
+  var html='<div class="thead"><div class="row qrow">'+
     '<div class="corner"><span class="eyebrow">Quarter</span></div>'+
     '<div class="qcell" style="grid-column:2 / 9">Q4 CY26 · Oct–Dec</div>'+
     '<div class="qcell" style="grid-column:9 / 15">Q1 CY27 · Jan–Mar</div>'+
-    '</div><div class="row">'+
-    '<div class="railhead"><span class="eyebrow">Stream / process group</span></div>';
+    '</div><div class="row srow">'+
+    '<div class="railhead"><span class="eyebrow">'+
+      (state.groupBy==="pg"?"Process group":"Stream / process group")+'</span></div>';
   SPRINTS.forEach(function(s){
     html+='<div class="sp'+(s.reduced?" dim":"")+'"><span class="id">'+s.id+'</span>'+
-      '<span class="dt">'+s.a+"–"+s.b+'</span>'+
-      (s.reduced?'<span class="red">reduced</span>':'')+'</div>';
+      '<span class="dt">'+s.a+"–"+s.b+'</span>'+(s.reduced?'<span class="red">reduced</span>':'')+'</div>';
   });
-  html+='</div></div>';
+  html+='</div><div class="row mrow"><div class="mrail">'+
+    '<span class="eyebrow">◆ Major milestones</span>'+
+    '<span class="sub">Programme-level launches and gates</span></div><div class="track">';
+  MILESTONES.filter(function(m){return m.pg===null;}).forEach(function(m){
+    var rev=m.s>=11,start,span;
+    if(rev){start=Math.max(1,m.s-3);span=m.s-start+1;}
+    else{start=m.s;span=Math.min(4,14-m.s);}
+    html+='<button class="maj'+(rev?" rev":"")+'" style="grid-column:'+start+' / span '+span+'"'+
+      ' data-ms="'+esc(KINDS[m.kind].label)+'" data-n="'+esc(m.name)+'" data-s="'+SPRINTS[m.s-1].id+'"'+
+      ' aria-label="'+esc(KINDS[m.kind].label+": "+m.name+", "+SPRINTS[m.s-1].id)+'">'+
+      '<span class="g">◆</span><span class="mn">'+esc(m.name)+'</span></button>';
+  });
+  html+='</div></div></div>';
 
   var shownPgs=0;
-  STREAMS.forEach(function(st){
-    var pgs=PGS.filter(function(p){return p.stream===st.id&&pgVisible(p,byPg[p.id]||[]);});
-    if(!pgs.length)return;
-    shownPgs+=pgs.length;
-    var gapTotal=0; pgs.forEach(function(p){gapTotal+=(GAPS[p.id]||[]).length;});
-    html+='<div class="row streamrow'+(st.ops?" opslane":"")+'">'+
-      '<div class="srail"><h2>'+esc(st.name)+'</h2><span class="stag">'+pgs.length+
-      (st.ops?" enablement item":" process group")+(pgs.length===1?"":"s")+
-      (gapTotal?" · "+gapTotal+" gap"+(gapTotal===1?"":"s"):"")+'</span></div>'+
-      '<div class="snote"><span>'+esc(st.note)+'</span></div></div>';
-
-    pgs.forEach(function(pg){
+  if(state.groupBy==="pg"){
+    PGS.filter(function(p){return !p.ops;}).forEach(function(pg){
       var acts=byPg[pg.id]||[];
-      var gaps=GAPS[pg.id]||[];
-      var grads=GRADS.filter(function(g){return g.pg===pg.id;});
-      var isOps=pg.stream==="ops";
-      var exp=isOps?false:!!expanded[pg.id];
-
-      var badges='<span class="pgid">'+pg.id+'</span><span class="badge">'+esc(pg.stage)+'</span>';
-      if(gaps.length)badges+='<span class="badge gapb">⚠ '+gaps.length+' gap'+(gaps.length===1?"":"s")+'</span>';
-      if(grads.length)badges+='<span class="badge gradb">◆ graduates</span>';
-
-      var disc=isOps?'<span class="disc" aria-hidden="true">·</span>'
-        :'<button class="disc" data-pg="'+pg.id+'" aria-expanded="'+(exp?"true":"false")+
-         '" aria-label="'+(exp?"Collapse":"Expand")+' '+esc(pg.name)+' tracks">'+(exp?"▾":"▸")+'</button>';
-
-      html+='<div class="row pgrow'+(exp?" pghdr":"")+'"><div class="pgrail">'+
-        '<div class="pgtop">'+disc+'<span class="pgname">'+esc(pg.name)+'</span></div>'+
-        '<div class="badges">'+badges+'</div></div>';
-
-      if(isOps){
-        html+='<div class="track">';
-        acts.forEach(function(a){html+=barHTML(a,false,0);});
-        html+='</div></div>';
-        return;
-      }
-      if(!exp){
-        html+='<div class="track compact">';
-        acts.forEach(function(a){html+=barHTML(a,true,a.track==="po"?1:2);});
-        if(state.tracks.ux)gaps.forEach(function(n){html+=gapHTML(n,true,2);});
-        grads.forEach(function(g){html+=gradHTML(g,3);});
-        html+='</div></div>';
-        return;
-      }
-      /* expanded: header row carries graduation, then two labelled sub-rows */
-      html+='<div class="track">';
-      grads.forEach(function(g){html+=gradHTML(g,0);});
-      html+='</div></div>';
-
-      var po=acts.filter(function(a){return a.track==="po";});
-      var ux=acts.filter(function(a){return a.track==="ux";});
-      html+='<div class="row subrow"><div class="tracklabel">'+
-        '<span class="dot" style="background:var(--po)"></span><span class="tl">Product owner</span></div>'+
-        '<div class="track">';
-      po.forEach(function(a){html+=barHTML(a,false,0);});
-      html+='</div></div>';
-      html+='<div class="row subrow last"><div class="tracklabel">'+
-        '<span class="dot" style="background:var(--ux)"></span><span class="tl">UX</span></div>'+
-        '<div class="track">';
-      ux.forEach(function(a){html+=barHTML(a,false,0);});
-      if(state.tracks.ux)gaps.forEach(function(n){html+=gapHTML(n,false,0);});
-      html+='</div></div>';
+      if(!pgVisible(pg,acts))return;
+      shownPgs++; html=pgBlock(pg,acts,html,null);
     });
-  });
-
+    var opsPgs=PGS.filter(function(p){return p.ops&&pgVisible(p,byPg[p.id]||[]);});
+    if(opsPgs.length){
+      var ost=STREAMS[3];
+      html+='<div class="row streamrow opslane"><div class="srail"><h2>'+esc(ost.name)+'</h2>'+
+        '<span class="stag">'+opsPgs.length+' enablement item'+(opsPgs.length===1?"":"s")+'</span></div>'+
+        '<div class="snote"><span>'+esc(ost.note)+'</span></div></div>';
+      opsPgs.forEach(function(pg){shownPgs++;html=pgBlock(pg,byPg[pg.id]||[],html,null);});
+    }
+  }else{
+    STREAMS.forEach(function(st){
+      var pgs=PGS.filter(function(p){
+        var acts=(byPg[p.id]||[]).filter(function(a){return a.stream===st.id;});
+        return acts.length&&pgVisible(p,acts);
+      });
+      if(!pgs.length)return;
+      var gt=0; pgs.forEach(function(p){gt+=(GAPS[p.id]||[]).length;});
+      html+='<div class="row streamrow'+(st.ops?" opslane":"")+'"><div class="srail"><h2>'+esc(st.name)+'</h2>'+
+        '<span class="stag">'+pgs.length+(st.ops?" enablement item":" process group")+(pgs.length===1?"":"s")+
+        (gt?" · "+gt+" gap"+(gt===1?"":"s"):"")+'</span></div>'+
+        '<div class="snote"><span>'+esc(st.note)+'</span></div></div>';
+      pgs.forEach(function(pg){
+        shownPgs++;
+        html=pgBlock(pg,(byPg[pg.id]||[]).filter(function(a){return a.stream===st.id;}),html,st.ops?null:st.id);
+      });
+    });
+  }
   if(!shownPgs){
     html+='<div class="row"><div class="emptyrail"></div><div class="empty">'+
-      'Nothing matches these filters. Try clearing the person or stage filter.</div></div>';
+      'Nothing matches these filters. Try clearing the person filter.</div></div>';
   }
   $("board").innerHTML=html;
 
-  /* tiles reflect the current view */
-  var gapPgs=0,gapSprints=0,people={},pgCountVis=0,opsCountVis=0;
+  /* slim stat strip */
+  var gapPgs=0,gapSprints=0,people={},pgCount=0,opsCount=0;
   PGS.forEach(function(p){
     if(!pgVisible(p,byPg[p.id]||[]))return;
-    if(p.stream==="ops")opsCountVis++; else pgCountVis++;
+    if(p.ops)opsCount++; else pgCount++;
     var g=(GAPS[p.id]||[]).length; if(g){gapPgs++;gapSprints+=g;}
   });
   visActs.forEach(function(a){people[a.owner]=1;});
-  var gradsVis=GRADS.filter(function(g){return pgVisible(PGMAP[g.pg],byPg[g.pg]||[]);}).length;
-  $("tiles").innerHTML=
-    tile("Process groups in view",pgCountVis,
-      (opsCountVis?"plus "+opsCountVis+" enablement item"+(opsCountVis===1?"":"s")+" · ":"")+
-      STREAMS.filter(function(s){return state.streams[s.id];}).length+" work streams")+
-    tile("Sprint-level UX gaps",gapSprints,gapPgs?"in "+gapPgs+" process group"+(gapPgs===1?"":"s")+" — PO activity with no UX within ±1 sprint":"no gaps in this view",true)+
-    tile("Stream graduations",gradsVis,gradsVis?"PoC clearing its gate into MVP at S9":"none in this view")+
-    tile("People with activity",Object.keys(people).length,visActs.length+" activities scheduled");
-
-  $("vis").textContent="Showing "+visActs.length+" of "+ACTS.length+" activities · "+shownPgs+" of "+PGS.length+" rows";
+  var msVis=MILESTONES.filter(function(m){
+    return m.pg===null||pgVisible(PGMAP[m.pg],byPg[m.pg]||[]);
+  }).length;
+  $("strip").innerHTML=
+    '<div class="lead"><span class="n">'+gapSprints+'</span><span class="t">sprint-level UX gaps'+
+    (gapPgs?' in '+gapPgs+' process group'+(gapPgs===1?'':'s'):'')+' — product-owner activity with no UX within &plusmn;1 sprint</span></div>'+
+    '<div class="rest">'+
+      '<span class="kv"><b>'+pgCount+'</b> process groups</span>'+
+      '<span class="kv"><b>'+opsCount+'</b> enablement items</span>'+
+      '<span class="kv"><b>'+msVis+'</b> milestones</span>'+
+      '<span class="kv"><b>'+Object.keys(people).length+'</b> people</span>'+
+    '</div>';
+  $("vis").textContent="Showing "+visActs.length+" of "+ACTS.length+" activities · "+shownPgs+" rows";
   if(state.table)renderTable(visActs);
-}
-function tile(k,n,sub,flag){
-  return '<div class="tile'+(flag&&n?" flag":"")+'"><div class="k">'+esc(k)+'</div>'+
-    '<div class="n">'+n+'</div><div class="sub">'+esc(sub)+'</div></div>';
 }
 
 function renderTable(visActs){
-  var h='<div class="tablewrap"><table><caption>All scheduled activities in the current view</caption><thead><tr>'+
-    '<th>Stream</th><th>Process group</th><th>Stage</th><th>Track</th><th>Activity</th>'+
-    '<th>Type</th><th>Owner</th><th>Sprints</th><th>Dates</th></tr></thead><tbody>';
   var order={}; PGS.forEach(function(p,i){order[p.id]=i;});
+  var h='<div class="tablewrap"><table><caption>Activities in the current view</caption><thead><tr>'+
+    '<th>Process group</th><th>Horizon</th><th>Track</th><th>Activity</th><th>Type</th>'+
+    '<th>Owner</th><th>Sprints</th><th>Dates</th></tr></thead><tbody>';
   visActs.slice().sort(function(a,b){
     return (order[a.pg]-order[b.pg])||(a.track<b.track?-1:a.track>b.track?1:0)||(a.s-b.s);
   }).forEach(function(a){
-    var pg=PGMAP[a.pg],st=STREAMS.filter(function(s){return s.id===pg.stream;})[0];
+    var st=STREAMS.filter(function(s){return s.id===a.stream;})[0];
     var tr=a.track==="po"?"Product owner":a.track==="ux"?"UX":"Enablement";
-    h+='<tr><td>'+esc(st.name)+'</td><td>'+esc(pg.name)+' <span class="m">'+pg.id+'</span></td>'+
-      '<td class="m">'+esc(pg.stage)+'</td>'+
+    h+='<tr><td>'+esc(PGMAP[a.pg].name)+' <span class="m">'+a.pg+'</span></td>'+
+      '<td class="m">'+esc(st.short)+'</td>'+
       '<td><span class="tdot" style="background:var(--'+a.track+')"></span>'+tr+'</td>'+
       '<td>'+esc(a.name)+'</td><td class="m">'+esc(a.type)+'</td><td>'+esc(a.owner)+'</td>'+
       '<td class="m">'+esc(sprintLabel(a))+'</td><td class="m">'+esc(dateLabel(a))+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+
+  h+='<div class="tablewrap" style="margin-top:18px"><table><caption>Milestones — every transfer and commitment in the plan</caption>'+
+    '<thead><tr><th>Sprint</th><th>Scope</th><th>Milestone</th><th>Kind</th></tr></thead><tbody>';
+  MILESTONES.slice().sort(function(a,b){return a.s-b.s;}).forEach(function(m){
+    var k=KINDS[m.kind];
+    h+='<tr><td class="m">'+SPRINTS[m.s-1].id+'</td>'+
+      '<td>'+(m.pg?esc(PGMAP[m.pg].name)+' <span class="m">'+m.pg+'</span>':'<b>Programme</b>')+'</td>'+
+      '<td>'+k.g+' '+esc(m.name)+'</td><td class="m">'+esc(k.label)+'</td></tr>';
   });
   h+='</tbody></table></div>';
 
@@ -679,29 +799,40 @@ function renderTable(visActs){
       rows+='<tr class="gaprow"><td class="m">'+SPRINTS[n-1].id+'</td><td>'+esc(p.name)+
         ' <span class="m">'+p.id+'</span></td><td>'+
         esc(po.map(function(a){return a.name+" ("+a.owner+")";}).join("; "))+
-        '</td><td>No UX activity within ±1 sprint</td></tr>';
+        '</td><td>No UX activity on any horizon within ±1 sprint</td></tr>';
     });
   });
-  if(rows){
-    h+='<div class="tablewrap" style="margin-top:18px"><table>'+
-      '<caption>UX coverage gaps — every flag in the plan, regardless of filters</caption><thead><tr>'+
-      '<th>Sprint</th><th>Process group</th><th>Uncovered PO activity</th><th>Finding</th>'+
-      '</tr></thead><tbody>'+rows+'</tbody></table></div>';
-  }
+  if(rows)h+='<div class="tablewrap" style="margin-top:18px"><table>'+
+    '<caption>UX coverage gaps — every flag in the plan, regardless of filters</caption><thead><tr>'+
+    '<th>Sprint</th><th>Process group</th><th>Uncovered PO activity</th><th>Finding</th>'+
+    '</tr></thead><tbody>'+rows+'</tbody></table></div>';
+
+  h+='<div class="tablewrap" style="margin-top:18px"><table><caption>Who is on the programme</caption>'+
+    '<thead><tr><th>Initials</th><th>Name</th><th>Role</th><th>Activities</th></tr></thead><tbody>';
+  PEOPLE.forEach(function(p){
+    var n=ACTS.filter(function(a){return a.owner===p.name;}).length;
+    h+='<tr><td class="m">'+p.id+'</td><td>'+esc(p.name)+'</td><td>'+esc(p.role)+'</td><td class="m">'+n+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
   $("tableview").innerHTML=h;
 }
 
-/* ---------------- tooltip ---------------- */
+/* ---------- tooltip ---------- */
 var tip=$("tip");
 function showTip(el){
-  var g=el.getAttribute("data-gap");
+  var g=el.getAttribute("data-gap"),ms=el.getAttribute("data-ms");
   if(g){
     tip.innerHTML='<span class="tk">Coverage gap</span><span class="tt">'+g+'</span>'+
-      'Product-owner activity with no UX activity within ±1 sprint.';
+      'Product-owner activity with no UX activity on any horizon within ±1 sprint.';
+  }else if(ms){
+    tip.innerHTML='<span class="tk">'+esc(ms)+'</span><span class="tt">'+el.getAttribute("data-n")+'</span>'+
+      '<div class="tr"><span>Sprint</span><span>'+el.getAttribute("data-s")+'</span></div>';
   }else{
     var tr=el.getAttribute("data-tr");
     tip.innerHTML='<span class="tk">'+(tr==="po"?"Product owner":tr==="ux"?"UX":"Enablement")+'</span>'+
       '<span class="tt">'+el.getAttribute("data-n")+'</span>'+
+      '<div class="tr"><span>Process group</span><span>'+el.getAttribute("data-pg")+'</span></div>'+
+      '<div class="tr"><span>Horizon</span><span>'+el.getAttribute("data-h")+'</span></div>'+
       '<div class="tr"><span>Owner</span><span>'+el.getAttribute("data-o")+'</span></div>'+
       '<div class="tr"><span>Sprints</span><span>'+el.getAttribute("data-s")+'</span></div>'+
       '<div class="tr"><span>Dates</span><span>'+el.getAttribute("data-d")+'</span></div>'+
@@ -714,21 +845,13 @@ function showTip(el){
   tip.style.left=x+"px"; tip.style.top=y+"px";
 }
 function hideTip(){tip.hidden=true;}
-
 var board=$("board");
-board.addEventListener("mouseover",function(e){
-  var el=e.target.closest(".bar,.gapcell"); if(el)showTip(el);
-});
-board.addEventListener("mouseout",function(e){
-  if(e.target.closest(".bar,.gapcell"))hideTip();
-});
-board.addEventListener("focusin",function(e){
-  var el=e.target.closest(".bar"); if(el)showTip(el);
-});
+board.addEventListener("mouseover",function(e){var el=e.target.closest(".bar,.gapcell,.ms,.msdot,.maj");if(el)showTip(el);});
+board.addEventListener("mouseout",function(e){if(e.target.closest(".bar,.gapcell,.ms,.msdot,.maj"))hideTip();});
+board.addEventListener("focusin",function(e){var el=e.target.closest(".bar,.ms,.msdot,.maj");if(el)showTip(el);});
 board.addEventListener("focusout",hideTip);
 $("scroller").addEventListener("scroll",hideTip);
 document.addEventListener("keydown",function(e){if(e.key==="Escape")hideTip();});
-
 board.addEventListener("click",function(e){
   var d=e.target.closest(".disc[data-pg]"); if(!d)return;
   var id=d.getAttribute("data-pg");
@@ -736,21 +859,19 @@ board.addEventListener("click",function(e){
   syncSeg(); render();
 });
 
-/* ---------------- controls ---------------- */
+/* ---------- controls ---------- */
 (function build(){
   PEOPLE.forEach(function(p){
-    var o=document.createElement("option");o.value=p;o.textContent=p;$("f-person").appendChild(o);
+    var o=document.createElement("option");o.value=p.name;o.textContent=p.name+" — "+p.role;
+    $("f-person").appendChild(o);
   });
   PGS.forEach(function(p){
-    var o=document.createElement("option");o.value=p.id;o.textContent=p.id+" — "+p.name;$("f-pg").appendChild(o);
-  });
-  STAGES.forEach(function(s){
-    var o=document.createElement("option");o.value=s;o.textContent=s;$("f-stage").appendChild(o);
+    var o=document.createElement("option");o.value=p.id;o.textContent=p.id+" — "+p.name;
+    $("f-pg").appendChild(o);
   });
   STREAMS.forEach(function(s){
     var b=document.createElement("button");
-    b.className="chip";b.type="button";b.setAttribute("aria-pressed","true");
-    b.textContent=s.short;
+    b.className="chip";b.type="button";b.setAttribute("aria-pressed","true");b.textContent=s.short;
     b.addEventListener("click",function(){
       state.streams[s.id]=!state.streams[s.id];
       b.setAttribute("aria-pressed",state.streams[s.id]?"true":"false");render();
@@ -767,20 +888,22 @@ board.addEventListener("click",function(e){
     $("f-track").appendChild(b);
   });
 })();
-
 function syncSeg(){
-  var real=PGS.filter(function(p){return p.stream!=="ops";});
+  var real=PGS.filter(function(p){return !p.ops;});
   var n=real.filter(function(p){return expanded[p.id];}).length;
   $("v-team").setAttribute("aria-pressed",n===real.length?"true":"false");
   $("v-exec").setAttribute("aria-pressed",n===0?"true":"false");
+  $("g-pg").setAttribute("aria-pressed",state.groupBy==="pg"?"true":"false");
+  $("g-stream").setAttribute("aria-pressed",state.groupBy==="stream"?"true":"false");
 }
 $("f-person").addEventListener("change",function(){state.person=this.value;render();});
 $("f-pg").addEventListener("change",function(){state.pg=this.value;render();});
-$("f-stage").addEventListener("change",function(){state.stage=this.value;render();});
 $("f-gaps").addEventListener("change",function(){state.gapsOnly=this.checked;render();});
+$("g-pg").addEventListener("click",function(){state.groupBy="pg";syncSeg();render();});
+$("g-stream").addEventListener("click",function(){state.groupBy="stream";syncSeg();render();});
 $("v-exec").addEventListener("click",function(){expanded={};syncSeg();render();});
 $("v-team").addEventListener("click",function(){
-  expanded={};PGS.forEach(function(p){if(p.stream!=="ops")expanded[p.id]=1;});syncSeg();render();
+  expanded={};PGS.forEach(function(p){if(!p.ops)expanded[p.id]=1;});syncSeg();render();
 });
 $("f-table").addEventListener("click",function(){
   state.table=!state.table;
@@ -790,15 +913,13 @@ $("f-table").addEventListener("click",function(){
   render();
 });
 $("f-reset").addEventListener("click",function(){
-  state.person="";state.pg="";state.stage="";state.gapsOnly=false;
+  state.groupBy="pg";state.person="";state.pg="";state.gapsOnly=false;state.tracks={po:true,ux:true,ops:true};
   STREAMS.forEach(function(s){state.streams[s.id]=true;});
-  state.tracks={po:true,ux:true,ops:true};
   expanded={};
-  $("f-person").value="";$("f-pg").value="";$("f-stage").value="";$("f-gaps").checked=false;
+  $("f-person").value="";$("f-pg").value="";$("f-gaps").checked=false;
   Array.prototype.forEach.call(document.querySelectorAll(".chip"),function(c){c.setAttribute("aria-pressed","true");});
   syncSeg();render();
 });
-
 syncSeg();
 render();
 })();

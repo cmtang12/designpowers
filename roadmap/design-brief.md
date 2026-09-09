@@ -21,18 +21,31 @@ Ability spectrum considered:
   bar carries a visible text label in the expanded view.
 - Cognitive load: the roadmap opens in the collapsed "coverage" read; detail is opt-in per row.
 
-## Design Direction
-Stream swimlanes with sprints as columns — the two axes the user asked for are not alternatives,
-because sprint granularity forces time onto the horizontal axis. Three levels of nesting:
+## Design Direction (revised after round 2)
+Sprints as columns; **process group is the row**. Horizon (future-state / MVP / PoC / enablement)
+is a property of an *activity*, not of a process group — PG-01 carries both future-state and MVP
+work. Nesting by stream duplicated such a group into rows that could not be read as one thing,
+which was the v1 modelling error. Corrected hierarchy:
 
-    STREAM  →  PROCESS GROUP (the item)  →  TRACK (PO | UX)
+    PROCESS GROUP (the row)  →  TRACK (PO | UX)  →  activities tagged FS / MVP / PoC
 
-Maturity (Discovery → PoC → MVP → Operationalized) is a **badge on the process group**, not a
-layout, and "graduation" is an **event marker** on the timeline where a process group changes
-stream. This gives the user the pipeline concept they were curious about at no structural cost.
+A **Group by** control switches between the process-group pivot (default; "everything on PG-01")
+and the stream pivot (the programme read). In the stream pivot each row carries an `also in …`
+cross-reference so a multi-horizon group never reads as orphaned.
+
+Milestones are defined as **a transfer or a commitment, not a task finishing**: requirements
+baselined, design handoff, stakeholder demo, UAT start, PoC gate, discovery synthesis reaching the
+backlog, go-live. Programme-level launches sit in a band pinned inside the sticky header; per-group
+milestones render as ◇ markers on the row. The dashed ⇥ marker is the discovery → backlog feed —
+the concrete handoff between horizons.
+
+Owners appear as monogram avatars on every bar and as a per-track roster in the expanded view.
+Avatar identity is carried by initials, not colour, so it costs nothing from the palette budget.
 
 Coverage gaps are **computed, not eyeballed**: any sprint where a process group has PO activity
-and no UX activity within ±1 sprint is flagged. The rule is stated in the UI rather than applied
+and no UX activity within ±1 sprint is flagged. Since the process group is now the unit, UX work on
+*any* horizon counts as coverage — future-state research covers MVP product-owner work, which
+matches how the overlapping workshops actually run. The rule is stated in the UI, not applied
 invisibly.
 
 ## Constraints
