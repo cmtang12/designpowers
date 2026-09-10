@@ -170,8 +170,14 @@ select,.mbtn{font-family:var(--body);font-size:13.5px;color:var(--ink);backgroun
   text-transform:uppercase;color:#fff;background:var(--warn);border-radius:2px;padding:0 4px;margin-left:5px}
 
 /* you are here */
-.nowline{position:absolute;top:0;bottom:0;width:2px;background:var(--warn);z-index:1;pointer-events:none}
-.nowline.pre{background:none;border-left:2px dashed var(--warn)}
+.nowline{position:absolute;top:0;bottom:0;width:0;border-left:2px dotted var(--warn);z-index:2;pointer-events:none}
+.nowline.pre{border-left-style:dashed}
+/* the arrow itself is anchored over the line; the label sits beside it */
+.nowcap{position:sticky;top:var(--theadh,96px);display:flex;align-items:center;gap:3px;
+  width:max-content;margin:5px 0 0 -8px;padding:2px 6px 2px 4px;border-radius:3px;
+  background:var(--warn);color:#fff;
+  font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em}
+.nowcap .ar{font-size:9px;line-height:1}
 
 
 .mrow{background:var(--band)}
@@ -201,8 +207,9 @@ select,.mbtn{font-family:var(--body);font-size:13.5px;color:var(--ink);backgroun
 .pgrail{position:sticky;left:0;z-index:3;background:var(--surface);border-right:1px solid var(--line-strong);padding:8px 12px;display:flex;flex-direction:column;gap:4px;justify-content:center}
 .pgtop{display:flex;align-items:center;gap:7px;min-width:0}
 .disc{background:none;border:0;padding:0;cursor:pointer;color:var(--ink-3);font-size:10px;line-height:1;width:15px;flex:none;font-family:var(--mono)}
-.pgname{font-family:var(--disp);font-size:13px;font-weight:600;color:var(--ink);line-height:1.25;min-width:0}
-.pgid{font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+.pgname{font-family:var(--disp);font-size:13px;font-weight:600;color:var(--ink);line-height:1.25;
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pgid{font-family:var(--mono);font-size:10px;color:var(--ink-3);flex:none;letter-spacing:.02em}
 .badges{display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding-left:22px}
 .badge{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;padding:2px 6px;border-radius:3px;border:1px solid var(--line-strong);color:var(--ink-2);background:var(--surface-2);white-space:nowrap}
 .badge.gapb{color:var(--warn);border-color:var(--warn);background:var(--warn-soft);font-weight:600}
@@ -371,8 +378,7 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
         <div class="msel" id="m-stream"></div></div>
       <div class="field"><span class="flab">Track</span>
         <div class="msel" id="m-track"></div></div>
-      <div class="field"><span class="flab">Coverage</span>
-        <label class="tgl" for="f-gaps"><input type="checkbox" id="f-gaps"> Only groups with gaps</label></div>
+      <label class="tgl" for="f-gaps"><input type="checkbox" id="f-gaps"> Only groups with gaps</label>
       <div class="field spacer"></div>
       <button class="ghost" id="f-clear">Clear filters</button>
     </div>
@@ -924,14 +930,16 @@ function nowLineHTML(rail,col){
     if(state.start!==0)return "";
     var days=Math.round((VIS[0].d0-t)/86400000);
     return '<div class="nowline pre" style="left:'+rail+'px" role="img" aria-label="Today, '+
-      days+' days before this window"></div>';
+      days+' days before this window"><span class="nowcap"><span class="ar">&#9660;</span>NOW</span></div>';
   }
   for(i=0;i<VIS.length;i++){
     if(t>=VIS[i].d0&&t<=VIS[i].d1){
       var f=(t-VIS[i].d0)/Math.max(1,VIS[i].d1-VIS[i].d0);
-      return '<div class="nowline" style="left:'+(rail+(i+f)*col)+'px" role="img" aria-label="Today"></div>';
+      return '<div class="nowline" style="left:'+(rail+(i+f)*col)+'px" role="img" aria-label="Today">'+
+        '<span class="nowcap"><span class="ar">&#9660;</span>NOW</span></div>';
     }
-    if(t<VIS[i].d0)return '<div class="nowline" style="left:'+(rail+i*col)+'px" role="img" aria-label="Today"></div>';
+    if(t<VIS[i].d0)return '<div class="nowline" style="left:'+(rail+i*col)+'px" role="img" aria-label="Today">'+
+      '<span class="nowcap"><span class="ar">&#9660;</span>NOW</span></div>';
   }
   return "";
 }
@@ -944,7 +952,7 @@ function pgBlock(pg,acts,html,ctx,allVisActs,msList){
   var isOps=!!pg.ops;
   var cells=state.tracks.ux?slicedGaps(gaps,acts):[];
 
-  var badges='<span class="pgid">'+pg.id+'</span>';
+  var badges='';
   if(!isOps){
     if(!ctx){
       if(pg.pod&&pg.pod!=="Programme")badges+='<span class="badge">'+esc(pg.pod)+'</span>';
@@ -970,8 +978,9 @@ function pgBlock(pg,acts,html,ctx,allVisActs,msList){
      ' aria-label="'+(exp?"Collapse":"Expand")+' '+esc(pg.name)+'">'+(exp?"▾":"▸")+'</button>';
 
   html+='<div class="row pgrow'+(exp&&!isOps?" pghdr":"")+'"><div class="pgrail">'+
-    '<div class="pgtop">'+disc+'<span class="pgname">'+esc(pg.name)+'</span></div>'+
-    '<div class="badges">'+badges+'</div></div>';
+    '<div class="pgtop">'+disc+'<span class="pgname">'+esc(pg.name)+'</span>'+
+    '<span class="pgid">'+pg.id+'</span></div>'+
+    (badges?'<div class="badges">'+badges+'</div>':"")+'</div>';
 
   if(isOps){
     html+='<div class="track">';
@@ -1054,7 +1063,6 @@ function render(){
     html+='<div class="sp'+(b.reduced?" dim":"")+(clickable?" clickable":"")+'"'+
       (clickable?' data-zoom="'+(state.start+i)+'" title="Zoom into '+esc(b.label)+' by week"':"")+'>'+
       '<span class="id">'+esc(b.label)+'</span>'+
-      (isNow?'<span class="now">now</span>':"")+
       (pre?'<span class="now">in '+Math.round((b.d0-t)/86400000)+'d</span>':"")+
       '<span class="dt">'+esc(b.sub)+'</span>'+
       (b.reduced&&state.scale==="sprint"?'<span class="red">reduced</span>':'')+'</div>';
@@ -1136,6 +1144,8 @@ function render(){
       'Nothing in this range matches the filters. Zoom out, or clear a filter.</div></div>';
   }
   board.innerHTML=html;
+  var th=board.querySelector(".thead");
+  if(th)board.style.setProperty("--theadh",th.offsetHeight+"px");
 
   var nf=activeFilters();
   $("fcount").textContent=nf; $("fcount").hidden=!nf;
