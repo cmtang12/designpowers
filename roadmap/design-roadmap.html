@@ -469,6 +469,13 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
 (function(){
 "use strict";
 
+/* ==================== BEGIN EDITABLE DATA ====================
+   Everything between these markers is the plan. Replace it wholesale.
+   Nothing below END is data — GAPS, PGSTREAMS, PODS and design stages
+   are all derived at runtime. Do not hand-write them.
+   Run `node roadmap/validate-data.cjs` after editing.
+   See roadmap/DATA-CONTRACT.md for the field-by-field spec.
+   ============================================================== */
 var SPRINTS=[
  {n:1,id:"S1",a:"Sep 28",b:"Oct 09",d0:"2026-09-28",d1:"2026-10-09"},
  {n:2,id:"S2",a:"Oct 12",b:"Oct 23",d0:"2026-10-12",d1:"2026-10-23"},
@@ -685,6 +692,7 @@ var PHASE_OF={
  "Procurement":"enable","Access":"enable","Recruiting":"enable"
 };
 ACTS.forEach(function(a){ a.phase=PHASE_OF[a.type]||"define"; });
+/* ===================== END EDITABLE DATA ===================== */
 
 /* ---------- derived, from the FULL plan (filters never change a gap) ---------- */
 function sprintsOf(a){var o=[];for(var i=0;i<a.span;i++)o.push(a.s+i);return o;}
