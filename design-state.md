@@ -29,6 +29,10 @@ Design + build (roadmap artifact)
 | Everything optional collapses behind a panel toolbar (r4) | Metrics, milestone types, audit tables and the explanatory notes. Only the gap headline stays on screen |
 | Zoom scopes rows, not just columns (r4) | Narrowing the sprint window drops groups with no work in it, rather than leaving blank rows |
 | Milestone types panel doubles as the taxonomy reference (r4) | Definition, scope, stage and count per kind, plus what was deliberately excluded — so the user can judge whether a type is missing |
+| **Static explanation moved into one modal** (r5) | Milestone types + the gap rule, both framed as team decisions. "About this page" deleted — it was chrome about chrome |
+| Audit tables removed; Excel template instead (r5) | The user could not name a use for auditing in-page; populating the view with real data is the actual need |
+| Columns are time buckets, not sprints (r5) | Month / sprint / week, so zoom goes finer than a sprint. Quarters removed entirely — the team does not plan in them |
+| Capacity as a person × sprint load map (r5) | "Who is overloaded" is a magnitude question, so a sequential one-hue ramp with a status ring at the threshold, sorted by overload |
 | Major milestone band collapsible, closed by default (r3) | It was consuming the viewport; collapsed it keeps a marker row plus the next milestone named |
 | Milestone = a transfer or a commitment, not a task finishing (r2) | Gives a testable inclusion rule instead of a taste call |
 | Gap check now counts UX on any horizon (r2) | Matches the real overlap between PO workshops and discovery research |
@@ -47,8 +51,8 @@ Design + build (roadmap artifact)
 - Whether the discovery → backlog feed needs an explicit connector to the MVP item it feeds,
   rather than the current marker on the originating group.
 - Owner avatars are monograms; real photos would need hosted images.
-- Table view: recommended keeping the gaps table and roster, dropping the 66-row activities dump.
-  Raised with the user, not yet actioned at their request.
+- Gap tolerance (±1 sprint) and the milestone taxonomy are surfaced in the modal as explicit
+  team decisions rather than settled defaults.
 - The design-stage map (PHASE_OF) is our inference, not the user's taxonomy — "Workshop" is
   mapped to Discover, which is the assumption most likely to be wrong.
 

@@ -8,6 +8,7 @@
   --line:#dbe1e8; --line-strong:#c0c9d4;
   --ink:#111820; --ink-2:#4b5560; --ink-3:#78838f;
   --po:#2a78d6; --po-soft:#dde9f8;
+  --heat0:transparent; --heat1:#cde2fb; --heat2:#86b6ef; --heat3:#2a78d6; --on-deep:#fff;
   --ux:#eb6834; --ux-soft:#fbe4d9;
   --ops:#5b6672; --ops-soft:#e4e8ed;
   --warn:#b3261e; --warn-soft:#fbe7e5;
@@ -25,6 +26,7 @@
     --line:#2d343c; --line-strong:#414b56;
     --ink:#eef2f6; --ink-2:#a6b1bd; --ink-3:#7c8792;
     --po:#3987e5; --po-soft:#16304e;
+    --heat0:transparent; --heat1:#184f95; --heat2:#256abf; --heat3:#3987e5; --on-deep:#fff;
     --ux:#d95926; --ux-soft:#3e2015;
     --ops:#8c98a5; --ops-soft:#272d34;
     --warn:#ef7a72; --warn-soft:#3a1d1b;
@@ -37,6 +39,7 @@
   --line:#2d343c; --line-strong:#414b56;
   --ink:#eef2f6; --ink-2:#a6b1bd; --ink-3:#7c8792;
   --po:#3987e5; --po-soft:#16304e;
+  --heat0:transparent; --heat1:#184f95; --heat2:#256abf; --heat3:#3987e5; --on-deep:#fff;
   --ux:#d95926; --ux-soft:#3e2015;
   --ops:#8c98a5; --ops-soft:#272d34;
   --warn:#ef7a72; --warn-soft:#3a1d1b;
@@ -78,8 +81,7 @@ header.top{display:flex;flex-wrap:wrap;gap:12px 30px;align-items:flex-end;justif
 
 .panel{margin-top:10px;padding:15px 16px;background:var(--surface);border:1px solid var(--line);border-radius:5px}
 .panel[hidden]{display:none!important}
-.panel > .ptitle{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px;margin-bottom:12px}
-.panel > .ptitle p{margin:0;font-size:12.5px;color:var(--ink-3);max-width:66ch}
+.panel > .ptitle{margin-bottom:12px}
 .frow{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:flex-end}
 .field{display:flex;flex-direction:column;gap:5px;min-width:0}
 .field > label,.field > .flab{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
@@ -112,9 +114,16 @@ select,.mbtn{font-family:var(--body);font-size:13.5px;color:var(--ink);backgroun
 .seg button{font-family:var(--body);font-size:12.5px;color:var(--ink-2);background:var(--surface);border:0;padding:5px 11px;cursor:pointer}
 .seg button + button{border-left:1px solid var(--line-strong)}
 .seg button[aria-pressed="true"]{background:var(--po);color:#fff;font-weight:600}
-.zoom{display:flex;align-items:center;gap:6px}
-.zoom select{min-width:auto;max-width:none;width:auto;padding:5px 6px;font-size:12.5px;font-family:var(--mono);background:var(--surface)}
-.zoom .dash{color:var(--ink-3)}
+.zoom{display:flex;align-items:center;gap:8px}
+.zbtn{font-family:var(--mono);font-size:13px;line-height:1;color:var(--ink-2);background:var(--surface);
+  border:1px solid var(--line-strong);border-radius:4px;width:26px;height:26px;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center}
+.zbtn:hover:not(:disabled){background:var(--surface-2);color:var(--ink)}
+.zbtn:disabled{opacity:.35;cursor:default}
+.zlab{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);min-width:132px;font-variant-numeric:tabular-nums}
+.zlab b{color:var(--ink);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:10px}
+.sp.clickable{cursor:zoom-in}
+.sp.clickable:hover{background:var(--surface-2)}
 .legend{display:flex;flex-wrap:wrap;gap:7px 16px;align-items:center;padding:8px 13px;font-size:12px;color:var(--ink-2);
   background:var(--surface);border:1px solid var(--line-strong);border-bottom:0}
 .lg{display:inline-flex;align-items:center;gap:6px}
@@ -239,6 +248,48 @@ select,.mbtn{font-family:var(--body);font-size:13.5px;color:var(--ink);backgroun
 .empty{grid-column:2 / -1;padding:14px 12px;color:var(--ink-3);font-size:13px}
 .emptyrail{position:sticky;left:0;background:var(--surface);border-right:1px solid var(--line-strong)}
 
+dialog#info{border:1px solid var(--line-strong);border-radius:7px;background:var(--surface);color:var(--ink);
+  padding:0;max-width:min(860px,calc(100vw - 32px));max-height:min(84vh,900px);overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+dialog#info::backdrop{background:rgba(10,14,18,.55)}
+.ihead{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--line);
+  padding:15px 18px;display:flex;align-items:center;gap:14px;justify-content:space-between}
+.ihead h2{font-size:1.05rem}
+.ibody{padding:16px 18px 20px}
+.ibody section + section{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.ibody h3{font-size:.95rem;margin-bottom:6px}
+.ibody p{margin:0 0 8px;font-size:13.5px;color:var(--ink-2);max-width:68ch}
+.ibody code{font-family:var(--mono);font-size:12px;background:var(--surface-2);padding:1px 4px;border-radius:3px}
+.decide{margin-top:10px;padding:10px 13px;border-left:3px solid var(--warn);background:var(--warn-soft);border-radius:0 4px 4px 0}
+.decide b{font-size:12.5px}
+.decide p{margin:3px 0 0;font-size:12.5px;color:var(--ink-2)}
+.iclose{font-family:var(--body);font-size:13px;color:var(--ink-2);background:none;border:1px solid var(--line-strong);
+  border-radius:4px;padding:6px 12px;cursor:pointer}
+.iclose:hover{background:var(--surface-2);color:var(--ink)}
+
+/* capacity map */
+.cap{border:1px solid var(--line);border-radius:5px;overflow:hidden}
+.caprow{display:grid;grid-template-columns:168px repeat(13,minmax(0,1fr));align-items:stretch}
+.caprow + .caprow{border-top:1px solid var(--line)}
+.caphead{background:var(--surface-2)}
+.capname{padding:6px 10px;display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--ink);
+  border-right:1px solid var(--line);min-width:0}
+.capname .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.caphead .capname{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.capcell{display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;
+  font-variant-numeric:tabular-nums;color:var(--ink-2);border-left:1px solid var(--line);padding:5px 0;min-height:26px}
+.caphead .capcell{font-size:10px;color:var(--ink-3);background:var(--surface-2)}
+.capcell.l1{background:var(--heat1)}
+.capcell.l2{background:var(--heat2);color:var(--ink)}
+.capcell.l3{background:var(--heat3);color:var(--on-deep);font-weight:700}
+.capcell.over{box-shadow:inset 0 0 0 2px var(--warn)}
+.capkey{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;margin-top:10px;font-size:12px;color:var(--ink-2)}
+.capkey .k{display:inline-flex;align-items:center;gap:6px}
+.capkey .b{width:19px;height:13px;border-radius:2px;border:1px solid var(--line)}
+.bararea{display:grid;grid-template-columns:auto 1fr auto;gap:5px 10px;align-items:center;max-width:460px}
+.bararea .bl{font-size:13px;color:var(--ink-2);white-space:nowrap}
+.bararea .bt{height:11px;border-radius:2px;background:var(--po);min-width:2px}
+.bararea .bv{font-family:var(--mono);font-size:12px;color:var(--ink);font-variant-numeric:tabular-nums}
+
 #tip{position:fixed;z-index:50;max-width:280px;background:var(--ink);color:var(--ground);border-radius:5px;
   padding:9px 11px;font-size:12.5px;line-height:1.4;pointer-events:none;box-shadow:0 6px 20px rgba(0,0,0,.28)}
 #tip[hidden]{display:none!important}
@@ -273,7 +324,6 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
   .toolbar .showing{margin-left:0;width:100%}
 }
 </style>
-
 <div class="wrap">
   <header class="top">
     <div>
@@ -293,16 +343,11 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
   <div class="toolbar">
     <button class="tbtn" id="t-filters" aria-expanded="false" aria-controls="p-filters"><span class="car">&#9656;</span>Filters<span class="n" id="fcount" hidden>0</span></button>
     <button class="tbtn" id="t-metrics" aria-expanded="false" aria-controls="p-metrics"><span class="car">&#9656;</span>Metrics</button>
-    <button class="tbtn" id="t-kinds" aria-expanded="false" aria-controls="p-kinds"><span class="car">&#9656;</span>Milestone types</button>
-    <button class="tbtn" id="t-table" aria-expanded="false" aria-controls="p-table"><span class="car">&#9656;</span>Audit &amp; export</button>
-    <button class="tbtn" id="t-about" aria-expanded="false" aria-controls="p-about"><span class="car">&#9656;</span>About this page</button>
+    <button class="tbtn" id="t-info">&#9432; Milestones &amp; gap rule</button>
     <span class="showing" id="vis"></span>
   </div>
 
   <section class="panel" id="p-filters" hidden aria-label="Filters">
-    <div class="ptitle"><h2>Filters</h2>
-      <p>Filters <b>remove</b> activities from the board. They never change how it is organised &mdash;
-      that is the <em>Group rows by</em> control on the board itself.</p></div>
     <div class="frow">
       <div class="field"><label for="f-person">Person</label>
         <select id="f-person"><option value="">Everyone</option></select></div>
@@ -318,42 +363,6 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
   </section>
 
   <section class="panel" id="p-metrics" hidden aria-label="Metrics"></section>
-  <section class="panel" id="p-kinds" hidden aria-label="Milestone types"></section>
-  <section class="panel" id="p-table" hidden aria-label="Audit and export"></section>
-
-  <section class="panel" id="p-about" hidden aria-label="About this page">
-    <div class="ptitle"><h2>About this page</h2>
-      <p>How to read the roadmap and the rules it applies.</p></div>
-    <div class="notes">
-      <div class="note warnnote"><h3>How a gap is flagged</h3>
-        <p>A sprint is flagged when a process group has product-owner activity and <em>no</em> UX activity
-        within <code>&plusmn;1 sprint</code> &mdash; counting UX work on <em>any</em> horizon. Future-state
-        research therefore counts as coverage for MVP product-owner work, which is why overlapping
-        workshops no longer read as holes.</p></div>
-      <div class="note"><h3>Grouping versus filtering</h3>
-        <p>Grouping <em>rearranges</em> every activity and nothing leaves the board; it lives on the board.
-        Filtering <em>removes</em> activities; it lives in the Filters panel with a count of what it took
-        out. Detail and Zoom change how the board is drawn, so they sit with grouping.</p></div>
-      <div class="note"><h3>The row hierarchy is a variable</h3>
-        <p>Every activity carries several dimensions &mdash; process group, horizon, design stage, track,
-        owner &mdash; and any can be the top level, with process groups nested underneath. Rows carry an
-        <code>also in</code> tag naming the group's other values, so a group appearing in several
-        sections never reads as orphaned.</p></div>
-      <div class="note"><h3>What counts as a milestone</h3>
-        <p>A transfer or a commitment &mdash; not a task finishing. Open <em>Milestone types</em> for the
-        full list, the definition of each, and how many are in the plan.</p></div>
-      <div class="note"><h3>Where discovery feeds delivery</h3>
-        <p>The dashed <code>&#8677;</code> milestone is the handoff you can point at: discovery synthesis
-        landing <em>n</em> items in the backlog, which MVP delivery then draws from.</p></div>
-      <div class="note"><h3>S7 is not a full sprint</h3>
-        <p><span class="mono">Dec 21 &ndash; Jan 01</span> is reduced capacity. Nothing with a hard
-        commitment should land there.</p></div>
-      <div class="note"><h3>Enablement measures something else</h3>
-        <p>Licences, ride-alongs and access requests are enablement items, not workflows being redesigned.
-        They share the timeline because they gate research access, but carry no PO/UX tracks and are
-        excluded from the gap check.</p></div>
-    </div>
-  </section>
 
   <div class="gbar">
     <div class="grp"><label class="glab" for="f-group">Group rows by</label>
@@ -372,15 +381,11 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
         </div></div>
       <div class="grp"><span class="glab">Zoom</span>
         <div class="zoom">
-          <select id="z-from" aria-label="First sprint shown"></select>
-          <span class="dash">&ndash;</span>
-          <select id="z-to" aria-label="Last sprint shown"></select>
-        </div>
-        <div class="seg" role="group" aria-label="Zoom presets">
-          <button id="z-all">All</button>
-          <button id="z-q4">Q4</button>
-          <button id="z-q1">Q1</button>
-          <button id="z-now">Next 4</button>
+          <button class="zbtn" id="z-out" aria-label="Zoom out">&minus;</button>
+          <button class="zbtn" id="z-in" aria-label="Zoom in">+</button>
+          <span class="zlab" id="z-lab"></span>
+          <button class="zbtn" id="z-prev" aria-label="Earlier">&lsaquo;</button>
+          <button class="zbtn" id="z-next" aria-label="Later">&rsaquo;</button>
         </div></div>
     </div>
   </div>
@@ -397,6 +402,38 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
 
   <div class="scroller" id="scroller"><div class="board" id="board"></div></div>
 </div>
+
+<dialog id="info" aria-labelledby="ititle">
+  <div class="ihead"><h2 id="ititle">Milestones &amp; the gap rule</h2>
+    <button class="iclose" id="iclose">Close</button></div>
+  <div class="ibody">
+    <section>
+      <h3>How a UX coverage gap is flagged</h3>
+      <p>A sprint is flagged when a process group has <b>product-owner activity</b> and
+      <b>no UX activity</b> within <code>&plusmn;1 sprint</code> of it &mdash; counting UX work on any
+      horizon, so future-state research covers MVP product-owner work.</p>
+      <p>The tolerance exists because design and research rarely land in the exact sprint they inform.
+      Gaps are computed from the whole plan, so filtering never makes one disappear.</p>
+      <div class="decide"><b>For the team to decide</b>
+        <p>Is &plusmn;1 sprint the right tolerance? &plusmn;0 flags far more and creates noise;
+        &plusmn;2 will miss real holes. And should a product-owner activity like
+        &ldquo;backlog grooming&rdquo; require UX cover at all, or only the ones that commit scope?</p></div>
+    </section>
+    <section>
+      <h3>Milestone types</h3>
+      <p>A milestone is <b>a transfer or a commitment</b> &mdash; something changes hands, or someone
+      locks something in. A task finishing is not one.</p>
+      <div id="kindtable"></div>
+      <div class="decide"><b>For the team to decide</b>
+        <p>Which of these belong on the roadmap? <b>Not currently included:</b> a data-migration
+        cutover per process group, a training-complete gate before go-live, and security or
+        accessibility sign-off &mdash; each is a commitment by someone outside the team, so each
+        passes the test. <b>Deliberately excluded:</b> &ldquo;wireframes complete&rdquo;,
+        &ldquo;research readout&rdquo;, &ldquo;sprint review&rdquo; and &ldquo;design review&rdquo;
+        &mdash; activities ending or recurring ceremonies, where nothing changes hands.</p></div>
+    </section>
+  </div>
+</dialog>
 <div id="tip" hidden role="tooltip" aria-live="polite"></div>
 <script>
 (function(){
@@ -642,16 +679,73 @@ PGS.forEach(function(pg){
   PGSTREAMS[pg.id]=list;
 });
 
+/* ---------- time: columns are buckets, so zoom can go finer than a sprint ---------- */
+var MON=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+function D(s){return new Date(s+"T00:00:00");}
+function today(){var t=new Date();t.setHours(0,0,0,0);return t;}
+var PLAN0=D(SPRINTS[0].d0),PLAN1=D(SPRINTS[SPRINTS.length-1].d1);
+var SCALES=["month","sprint","week"];
+var SCALECOUNT={month:0,sprint:0,week:6};   /* 0 = show them all */
+
+function sprintOverlapping(d0,d1){
+  for(var i=0;i<SPRINTS.length;i++){
+    var s=D(SPRINTS[i].d0),e=D(SPRINTS[i].d1);
+    if(e>=d0&&s<=d1)return SPRINTS[i];
+  }
+  return null;
+}
+function buildBuckets(scale){
+  var out=[],i,c,e;
+  if(scale==="sprint"){
+    for(i=0;i<SPRINTS.length;i++){
+      var s=SPRINTS[i];
+      out.push({label:s.id,sub:s.a+"–"+s.b,d0:D(s.d0),d1:D(s.d1),reduced:s.reduced,sprintN:s.n});
+    }
+    return out;
+  }
+  if(scale==="week"){
+    c=new Date(PLAN0);
+    while(c<=PLAN1){
+      e=new Date(c);e.setDate(e.getDate()+6);
+      var sp=sprintOverlapping(c,e);
+      out.push({label:MON[c.getMonth()]+" "+c.getDate(),sub:sp?sp.id:"—",
+                d0:new Date(c),d1:e,sprintN:sp?sp.n:0,reduced:sp?!!sp.reduced:false});
+      c=new Date(c);c.setDate(c.getDate()+7);
+    }
+    return out;
+  }
+  c=new Date(PLAN0.getFullYear(),PLAN0.getMonth(),1);
+  while(c<=PLAN1){
+    e=new Date(c.getFullYear(),c.getMonth()+1,0);
+    out.push({label:MON[c.getMonth()],sub:String(c.getFullYear()),d0:new Date(c),d1:e});
+    c=new Date(c.getFullYear(),c.getMonth()+1,1);
+  }
+  return out;
+}
+
 /* ---------- state ---------- */
 var state={groupBy:"pg",person:"",pg:"",streams:{},tracks:{po:true,ux:true,ops:true},
-           gapsOnly:false,bandOpen:false,panel:null,from:1,to:SPRINTS.length};
+           gapsOnly:false,bandOpen:false,panel:null,scale:"sprint",start:0};
 STREAMS.forEach(function(s){state.streams[s.id]=true;});
 var expanded={};
+var ALL=[],VIS=[];
+
+function winCount(){
+  var n=SCALECOUNT[state.scale];
+  return n?Math.min(n,ALL.length):ALL.length;
+}
+function recompute(){
+  ALL=buildBuckets(state.scale);
+  var n=winCount();
+  state.start=Math.max(0,Math.min(state.start,ALL.length-n));
+  VIS=ALL.slice(state.start,state.start+n);
+}
 
 var $=function(i){return document.getElementById(i);};
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
 function sprintLabel(a){var s=SPRINTS[a.s-1],e=SPRINTS[a.s+a.span-2]||s;return a.span===1?s.id:s.id+"–"+e.id;}
 function dateLabel(a){var s=SPRINTS[a.s-1],e=SPRINTS[a.s+a.span-2]||s;return s.a+" → "+e.b;}
+function actRange(a){return [D(SPRINTS[a.s-1].d0),D(SPRINTS[a.s+a.span-2].d1)];}
 function initials(n){var p=PMAP[n];return p?p.id:n.slice(0,2).toUpperCase();}
 function avatar(n,sm){
   var on=state.person&&state.person===n;
@@ -660,20 +754,26 @@ function avatar(n,sm){
 var TRACKNAME={po:"Product owner",ux:"UX",ops:"Enablement"};
 var MAJORWORD={golive:"launch",grad:"graduates",freeze:"freeze",steering:"steering"};
 
-/* ---------- zoom: the visible sprint window ---------- */
-function nCol(){return state.to-state.from+1;}
-function colWidth(n,avail,rail){
-  var base=n<=3?264:n<=5?196:n<=7?152:n<=9?124:96;
-  if(!avail)return base;
-  var fill=Math.floor((avail-rail-2)/n);
-  return Math.max(base,Math.min(fill,340));
+/* ---------- placement against the visible buckets ---------- */
+function spanOf(a0,a1){
+  var first=-1,last=-1,i;
+  for(i=0;i<VIS.length;i++){
+    if(VIS[i].d1>=a0&&VIS[i].d0<=a1){if(first<0)first=i;last=i;}
+  }
+  if(first<0)return null;
+  return {col:first+1,span:last-first+1,
+          clipL:a0<VIS[0].d0&&first===0,
+          clipR:a1>VIS[VIS.length-1].d1&&last===VIS.length-1};
 }
-/* map a plan sprint number to a column in the visible window; null when outside */
-function colOf(n){return (n<state.from||n>state.to)?null:(n-state.from+1);}
-function placeSpan(s,span){
-  var a=Math.max(s,state.from),b=Math.min(s+span-1,state.to);
-  if(b<a)return null;
-  return {col:a-state.from+1,span:b-a+1,clipL:s<state.from,clipR:s+span-1>state.to};
+function colAt(d){
+  for(var i=0;i<VIS.length;i++)if(VIS[i].d0<=d&&d<=VIS[i].d1)return i+1;
+  return null;
+}
+function nCol(){return VIS.length;}
+function colWidth(n,avail,rail){
+  var base=n<=4?230:n<=6?178:n<=8?146:n<=10?120:96;
+  if(!avail)return base;
+  return Math.max(base,Math.min(Math.floor((avail-rail-2)/n),340));
 }
 
 /* ---------- the row hierarchy is a variable ---------- */
@@ -704,10 +804,9 @@ function otherVals(pgId,dim,cur,acts){
   DIMS[dim].values().forEach(function(v){map[v.id]=v.short||v.name;});
   return out.map(function(v){return map[v]||v;});
 }
-
 function actVisible(a){
-  /* the sprint window is part of what is shown: zooming out of a group's work drops its row */
-  if(a.s+a.span-1<state.from||a.s>state.to)return false;
+  var r=actRange(a);
+  if(r[1]<VIS[0].d0||r[0]>VIS[VIS.length-1].d1)return false;
   if(!state.streams[a.stream])return false;
   if(!state.tracks[a.track])return false;
   if(state.person&&a.owner!==state.person)return false;
@@ -728,9 +827,6 @@ function activeFilters(){
   if(["po","ux","ops"].some(function(t){return !state.tracks[t];}))n++;
   return n;
 }
-
-/* A gap is a plan-level fact, but its CELL belongs only in a slice that actually contains the
-   uncovered product-owner activity — otherwise it floats in a section with no related work. */
 function slicedGaps(gaps,acts){
   return gaps.filter(function(n){
     return acts.some(function(a){return a.track==="po"&&a.s<=n&&n<a.s+a.span;});
@@ -739,7 +835,7 @@ function slicedGaps(gaps,acts){
 
 /* ---------- marks ---------- */
 function barHTML(a,mini,row){
-  var p=placeSpan(a.s,a.span); if(!p)return "";
+  var r=actRange(a),p=spanOf(r[0],r[1]); if(!p)return "";
   var st=STREAMS.filter(function(s){return s.id===a.stream;})[0];
   var ph=PHASES.filter(function(x){return x.id===a.phase;})[0];
   var style="grid-column:"+p.col+" / span "+p.span+";"+(row?"grid-row:"+row+";":"");
@@ -755,13 +851,14 @@ function barHTML(a,mini,row){
     '</button>';
 }
 function gapHTML(n,row){
-  var c=colOf(n); if(!c)return "";
-  return '<div class="gapcell" style="grid-column:'+c+' / span 1;'+(row?"grid-row:"+row+";":"")+'"'+
+  var p=spanOf(D(SPRINTS[n-1].d0),D(SPRINTS[n-1].d1)); if(!p)return "";
+  return '<div class="gapcell" style="grid-column:'+p.col+' / span '+p.span+';'+(row?"grid-row:"+row+";":"")+'"'+
     ' data-gap="'+SPRINTS[n-1].id+'" role="img"'+
     ' aria-label="UX coverage gap in sprint '+SPRINTS[n-1].id+'">⚠</div>';
 }
+function msDate(m){return D(SPRINTS[m.s-1].d1);}
 function msHTML(m,row){
-  var c=colOf(m.s); if(!c)return "";
+  var c=colAt(msDate(m)); if(!c)return "";
   var k=KINDS[m.kind],N=nCol(),rev=c>N-2,start,span;
   if(rev){start=Math.max(1,c-2);span=c-start+1;}
   else{start=c;span=Math.min(3,N-c+1);}
@@ -772,7 +869,7 @@ function msHTML(m,row){
     '<span class="g">'+k.g+'</span><span class="mn">'+esc(m.name)+'</span></button>';
 }
 function msDotHTML(m,row){
-  var c=colOf(m.s); if(!c)return "";
+  var c=colAt(msDate(m)); if(!c)return "";
   var k=KINDS[m.kind];
   return '<button class="msdot'+(k.major?" major":"")+'"'+
     ' style="grid-column:'+c+' / span 1;'+(row?"grid-row:"+row+";":"")+'"'+
@@ -784,34 +881,23 @@ function rosterHTML(acts){
   acts.forEach(function(a){if(!seen[a.owner]){seen[a.owner]=1;out+=avatar(a.owner,false);}});
   return out?'<span class="roster">'+out+'</span>':"";
 }
-
-/* ---------- you are here ---------- */
-function nowInfo(){
-  var t=new Date(); t.setHours(0,0,0,0);
-  var first=new Date(SPRINTS[0].d0+"T00:00:00"),last=new Date(SPRINTS[SPRINTS.length-1].d1+"T00:00:00");
-  if(t<first)return {mode:"pre",days:Math.round((first-t)/86400000)};
-  if(t>last)return {mode:"post"};
-  for(var i=0;i<SPRINTS.length;i++){
-    var s=new Date(SPRINTS[i].d0+"T00:00:00"),e=new Date(SPRINTS[i].d1+"T00:00:00");
-    if(t>=s&&t<=e)return {mode:"in",n:i+1,frac:(t-s)/Math.max(1,(e-s))};
-    if(i+1<SPRINTS.length){
-      var nx=new Date(SPRINTS[i+1].d0+"T00:00:00");
-      if(t>e&&t<nx)return {mode:"in",n:i+1,frac:1};
-    }
-  }
-  return {mode:"post"};
-}
 function nowLineHTML(rail,col){
-  var info=nowInfo();
-  if(info.mode==="post")return "";
-  if(info.mode==="pre"){
-    if(state.from!==1)return "";
+  var t=today(),i;
+  if(t>VIS[VIS.length-1].d1)return "";
+  if(t<VIS[0].d0){
+    if(state.start!==0)return "";
+    var days=Math.round((VIS[0].d0-t)/86400000);
     return '<div class="nowline pre" style="left:'+rail+'px" role="img" aria-label="Today, '+
-      info.days+' days before sprint 1"></div>';
+      days+' days before this window"></div>';
   }
-  var c=colOf(info.n); if(!c)return "";
-  var left=rail+(c-1+info.frac)*col;
-  return '<div class="nowline" style="left:'+left+'px" role="img" aria-label="Today"></div>';
+  for(i=0;i<VIS.length;i++){
+    if(t>=VIS[i].d0&&t<=VIS[i].d1){
+      var f=(t-VIS[i].d0)/Math.max(1,VIS[i].d1-VIS[i].d0);
+      return '<div class="nowline" style="left:'+(rail+(i+f)*col)+'px" role="img" aria-label="Today"></div>';
+    }
+    if(t<VIS[i].d0)return '<div class="nowline" style="left:'+(rail+i*col)+'px" role="img" aria-label="Today"></div>';
+  }
+  return "";
 }
 
 /* ---------- rows ---------- */
@@ -842,7 +928,6 @@ function pgBlock(pg,acts,html,ctx,allVisActs,msList){
     var tt=majors.map(function(m){return m.name+" ("+SPRINTS[m.s-1].id+")";}).join(" · ");
     badges+='<span class="badge gradb" title="'+esc(tt)+'">◆ '+esc(word)+'</span>';
   }
-
   var disc=isOps?'<span class="disc" aria-hidden="true">·</span>'
     :'<button class="disc" data-pg="'+pg.id+'" aria-expanded="'+(exp?"true":"false")+'"'+
      ' aria-label="'+(exp?"Collapse":"Expand")+' '+esc(pg.name)+'">'+(exp?"▾":"▸")+'</button>';
@@ -881,8 +966,8 @@ function pgBlock(pg,acts,html,ctx,allVisActs,msList){
   html+='<div class="row subrow last"><div class="tracklabel">'+
     '<span class="tl" style="padding-left:16px">Milestones</span></div><div class="track">';
   var any=false;
-  ms.forEach(function(m){var s=msHTML(m,0); if(s){any=true;html+=s;}});
-  if(!any)html+='<div style="grid-column:1 / -1;padding:2px 8px;font-size:11.5px;color:var(--ink-3)">No milestones in this window</div>';
+  ms.forEach(function(m){var s=msHTML(m,0);if(s){any=true;html+=s;}});
+  if(!any)html+='<div style="grid-column:1 / -1;padding:2px 8px;font-size:11.5px;color:var(--ink-3)">No milestones in view</div>';
   return html+'</div></div>';
 }
 function sectionHead(v,buckets,html){
@@ -897,6 +982,7 @@ function sectionHead(v,buckets,html){
 
 /* ---------- render ---------- */
 function render(){
+  recompute();
   var N=nCol(),rail=window.matchMedia("(max-width:640px)").matches?190:286;
   var board=$("board"),col=colWidth(N,$("scroller").clientWidth,rail);
   board.style.setProperty("--ncol",N);
@@ -905,38 +991,49 @@ function render(){
   var visActs=ACTS.filter(actVisible);
   var byPg={}; visActs.forEach(function(a){(byPg[a.pg]=byPg[a.pg]||[]).push(a);});
   var progMs=MILESTONES.filter(function(m){return m.pg===null;});
-  var VIS=SPRINTS.slice(state.from-1,state.to);
-  var info=nowInfo();
+  var t=today();
+
+  /* group row: months over weeks and sprints, years over months */
+  var runs=[],prev=null;
+  VIS.forEach(function(b,i){
+    var mid=new Date((b.d0.getTime()+b.d1.getTime())/2);
+    var key=state.scale==="month"?String(mid.getFullYear()):MON[mid.getMonth()]+" "+mid.getFullYear();
+    if(prev&&prev.key===key){prev.span++;}
+    else{prev={key:key,label:state.scale==="month"?key:MON[mid.getMonth()]+" "+mid.getFullYear(),col:i+1,span:1};runs.push(prev);}
+  });
 
   var html=nowLineHTML(rail,col)+'<div class="thead"><div class="row qrow">'+
-    '<div class="corner"><span class="eyebrow">Quarter</span></div>';
-  [{n:"Q4 CY26 · Oct–Dec",a:1,b:7},{n:"Q1 CY27 · Jan–Mar",a:8,b:13}].forEach(function(q){
-    var a=Math.max(q.a,state.from),b=Math.min(q.b,state.to);
-    if(b<a)return;
-    html+='<div class="qcell" style="grid-column:'+(a-state.from+2)+' / span '+(b-a+1)+'">'+q.n+'</div>';
+    '<div class="corner"><span class="eyebrow">'+(state.scale==="month"?"Year":"Month")+'</span></div>';
+  runs.forEach(function(r){
+    html+='<div class="qcell" style="grid-column:'+(r.col+1)+' / span '+r.span+'">'+esc(r.label)+'</div>';
   });
   html+='</div><div class="row srow">'+
     '<div class="railhead"><span class="eyebrow">'+esc(DIMS[state.groupBy].label)+
     (state.groupBy==="pg"?"":" / process group")+'</span></div>';
-  VIS.forEach(function(s){
-    var isNow=info.mode==="in"&&info.n===s.n;
-    html+='<div class="sp'+(s.reduced?" dim":"")+'"><span class="id">'+s.id+'</span>'+
+  VIS.forEach(function(b,i){
+    var isNow=t>=b.d0&&t<=b.d1;
+    var pre=state.start===0&&i===0&&t<b.d0;
+    var clickable=state.scale==="sprint";
+    html+='<div class="sp'+(b.reduced?" dim":"")+(clickable?" clickable":"")+'"'+
+      (clickable?' data-zoom="'+(state.start+i)+'" title="Zoom into '+esc(b.label)+' by week"':"")+'>'+
+      '<span class="id">'+esc(b.label)+'</span>'+
       (isNow?'<span class="now">now</span>':"")+
-      (info.mode==="pre"&&s.n===1?'<span class="now">in '+info.days+'d</span>':"")+
-      '<span class="dt">'+s.a+"–"+s.b+'</span>'+(s.reduced?'<span class="red">reduced</span>':'')+'</div>';
+      (pre?'<span class="now">in '+Math.round((b.d0-t)/86400000)+'d</span>':"")+
+      '<span class="dt">'+esc(b.sub)+'</span>'+
+      (b.reduced&&state.scale==="sprint"?'<span class="red">reduced</span>':'')+'</div>';
   });
-  var inWin=progMs.filter(function(m){return colOf(m.s);});
-  var nxt=inWin[0]||progMs[0];
+  var inWin=progMs.filter(function(m){return colAt(msDate(m));});
+  var nxt=inWin[0];
   html+='</div><div class="row mrow'+(state.bandOpen?"":" folded")+'"><div class="mrail">'+
     '<button class="bt" id="bandtoggle" aria-expanded="'+(state.bandOpen?"true":"false")+'">'+
       '<span class="car">'+(state.bandOpen?"▾":"▸")+'</span>◆ Major milestones</button>'+
     '<span class="nxt">'+(state.bandOpen?"Programme-level launches and gates"
       :(inWin.length?inWin.length+" in view · next: "+esc(nxt.name)+" ("+SPRINTS[nxt.s-1].id+")"
-                    :"none in this sprint range"))+
+                    :"none in this range"))+
     '</span></div><div class="track">';
   if(state.bandOpen){
     progMs.forEach(function(m){
-      var c=colOf(m.s); if(!c)return;
+      var c=colAt(msDate(m)); if(!c)return;
       var rev=c>N-3,start,span;
       if(rev){start=Math.max(1,c-3);span=c-start+1;}
       else{start=c;span=Math.min(4,N-c+1);}
@@ -966,14 +1063,13 @@ function render(){
   }else{
     var sections=[];
     DIMS[state.groupBy].values().forEach(function(v){
-      var buckets=[];
+      var bk=[];
       PGS.forEach(function(p){
         var acts=(byPg[p.id]||[]).filter(function(a){return dimOf(a,state.groupBy)===v.id;});
-        if(acts.length&&pgVisible(p,acts))buckets.push({pg:p,acts:acts});
+        if(acts.length&&pgVisible(p,acts))bk.push({pg:p,acts:acts});
       });
-      if(buckets.length)sections.push({v:v,buckets:buckets});
+      if(bk.length)sections.push({v:v,buckets:bk});
     });
-    /* each milestone drawn exactly once: prefer its own design stage, else the group's first section */
     var msAt={};
     PGS.forEach(function(pg){
       var where=[];
@@ -1000,18 +1096,15 @@ function render(){
   }
   if(!shownPgs){
     html+='<div class="row"><div class="emptyrail"></div><div class="empty">'+
-      'Nothing matches these filters. Clear the person or process-group filter to see more.</div></div>';
+      'Nothing in this range matches the filters. Zoom out, or clear a filter.</div></div>';
   }
   board.innerHTML=html;
 
-  /* ---- headline + counts ---- */
-  var gapPgs=0,gapSprints=0,people={},pgCount=0,opsCount=0;
+  var gapPgs=0,gapSprints=0;
   PGS.forEach(function(p){
-    if(!pgVisible(p,byPg[p.id]||[]))return;
-    if(p.ops)opsCount++; else pgCount++;
-    var g=(GAPS[p.id]||[]).length; if(g){gapPgs++;gapSprints+=g;}
+    var g=(GAPS[p.id]||[]).length;
+    if(g&&pgVisible(p,byPg[p.id]||[])){gapPgs++;gapSprints+=g;}
   });
-  visActs.forEach(function(a){people[a.owner]=1;});
   $("alert").innerHTML=gapSprints
     ? '<span class="n">'+gapSprints+'</span><span class="m">sprint-level UX gaps in '+gapPgs+
       ' process group'+(gapPgs===1?"":"s")+'</span>'+
@@ -1020,115 +1113,148 @@ function render(){
       '<span class="r">— every product-owner activity has UX within &plusmn;1 sprint</span>';
   var nf=activeFilters();
   $("fcount").textContent=nf; $("fcount").hidden=!nf;
-  $("vis").textContent="Showing "+visActs.length+" of "+ACTS.length+" activities · "+
-    shownPgs+" rows · "+SPRINTS[state.from-1].id+"–"+SPRINTS[state.to-1].id;
-  if(state.panel==="metrics")renderMetrics(visActs,pgCount,opsCount,gapSprints,gapPgs,people);
-  if(state.panel==="table")renderTable(visActs);
+  $("vis").textContent="Showing "+visActs.length+" of "+ACTS.length+" activities · "+shownPgs+" rows";
+  syncZoom();
+  if(state.panel==="metrics")renderMetrics();
 }
 
-function renderMetrics(visActs,pgCount,opsCount,gapSprints,gapPgs,people){
-  var msVis=MILESTONES.length;
-  var h='<div class="ptitle"><h2>Metrics</h2><p>Counts reflect the current filters. '+
-    'The gap figure stays on screen above whether this panel is open or not.</p></div><div class="mgrid">'+
-    '<div class="kv"><b>'+pgCount+'</b> process groups</div>'+
-    '<div class="kv"><b>'+opsCount+'</b> enablement items</div>'+
-    '<div class="kv"><b>'+gapSprints+'</b> gap sprints</div>'+
-    '<div class="kv"><b>'+gapPgs+'</b> groups with gaps</div>'+
-    '<div class="kv"><b>'+msVis+'</b> milestones</div>'+
-    '<div class="kv"><b>'+Object.keys(people).length+'</b> people with work</div>'+
-    '<div class="kv"><b>'+visActs.length+'</b> activities shown</div>'+
-    '</div><div class="tablewrap" style="margin-top:15px"><table>'+
-    '<caption>Load per person, across the whole plan</caption><thead><tr>'+
-    '<th>Person</th><th>Role</th><th>Activities</th><th>Sprints with work</th><th>Process groups</th>'+
-    '</tr></thead><tbody>';
-  PEOPLE.forEach(function(p){
-    var mine=ACTS.filter(function(a){return a.owner===p.name;});
-    var sp={},pgs={};
-    mine.forEach(function(a){sprintsOf(a).forEach(function(n){sp[n]=1;});pgs[a.pg]=1;});
-    h+='<tr><td>'+avatar(p.name,true)+' '+esc(p.name)+'</td><td class="m">'+esc(p.role)+'</td>'+
-      '<td class="m">'+mine.length+'</td><td class="m">'+Object.keys(sp).length+' of 13</td>'+
-      '<td class="m">'+Object.keys(pgs).length+'</td></tr>';
+function syncZoom(){
+  var si=SCALES.indexOf(state.scale),n=winCount();
+  $("z-out").disabled=si===0;
+  $("z-in").disabled=si===SCALES.length-1;
+  $("z-prev").disabled=state.start<=0;
+  $("z-next").disabled=state.start+n>=ALL.length;
+  var a=VIS[0],b=VIS[VIS.length-1];
+  var range=state.scale==="sprint"?(a.label+(a!==b?"–"+b.label:""))
+           :state.scale==="month"?(a.label+(a!==b?" – "+b.label:""))
+           :(a.label+(a!==b?" – "+b.label:""));
+  $("z-lab").innerHTML='<b>'+state.scale+'s</b> · '+esc(range);
+}
+function setScale(dir){
+  var si=SCALES.indexOf(state.scale),ni=si+dir;
+  if(ni<0||ni>=SCALES.length)return;
+  var anchor=VIS.length?VIS[0].d0:PLAN0;
+  state.scale=SCALES[ni];
+  var next=buildBuckets(state.scale),i,best=0;
+  for(i=0;i<next.length;i++){if(next[i].d1>=anchor){best=i;break;}}
+  state.start=best;
+  render();
+}
+function pan(dir){
+  var n=winCount();
+  state.start=Math.max(0,Math.min(state.start+dir*Math.max(1,Math.floor(n/2)),ALL.length-n));
+  render();
+}
+function zoomToSprint(bucketIndex){
+  var s=SPRINTS[ALL[bucketIndex].sprintN-1];
+  if(!s)return;
+  state.scale="week";
+  var wk=buildBuckets("week"),i,best=0;
+  for(i=0;i<wk.length;i++){if(wk[i].d1>=D(s.d0)){best=i;break;}}
+  state.start=Math.max(0,best-1);
+  render();
+}
+
+/* ---------- metrics: the few that carry a decision ---------- */
+function renderMetrics(){
+  var pgReal=PGS.filter(function(p){return !p.ops;});
+  var byHor=STREAMS.filter(function(s){return !s.ops;}).map(function(s){
+    var n=pgReal.filter(function(p){return PGSTREAMS[p.id].indexOf(s.id)>-1;}).length;
+    return {name:s.name,n:n};
   });
-  $("p-metrics").innerHTML=h+'</tbody></table></div>';
+  var maxH=Math.max.apply(null,byHor.map(function(x){return x.n;}));
+  var withGaps=pgReal.filter(function(p){return (GAPS[p.id]||[]).length;});
+  var t=today(),horizonEnd=new Date(t);horizonEnd.setDate(horizonEnd.getDate()+84);
+  var upcoming=MILESTONES.filter(function(m){var d=msDate(m);return d>=t&&d<=horizonEnd;})
+                         .sort(function(a,b){return a.s-b.s;});
+  var upGroups={};
+  upcoming.forEach(function(m){upGroups[m.pg||"programme"]=1;});
+  var ahead=MILESTONES.filter(function(m){return msDate(m)>=t;})
+                      .sort(function(a,b){return msDate(a)-msDate(b);})[0];
+
+  var h='<div class="ptitle"><h2>Metrics</h2></div>'+
+    '<div class="mgrid" style="margin-bottom:18px">'+
+      '<div class="kv"><b>'+pgReal.length+'</b> process groups</div>'+
+      '<div class="kv"><b>'+withGaps.length+'</b> with UX gaps</div>'+
+      '<div class="kv"><b>'+Object.keys(upGroups).length+'</b> with a milestone in 12 weeks</div>'+
+      '<div class="kv"><b>'+PEOPLE.length+'</b> people</div>'+
+    '</div>'+
+    (ahead?'<p style="margin:0 0 16px;font-size:13px;color:var(--ink-2)">Next milestone: <b>'+
+      esc(ahead.name)+'</b>'+(ahead.pg?' · '+esc(PGMAP[ahead.pg].name):' · programme')+
+      ' · '+esc(SPRINTS[ahead.s-1].id)+', '+esc(SPRINTS[ahead.s-1].b)+
+      ' — in '+Math.round((msDate(ahead)-t)/86400000)+' days</p>':"")+
+    '<h3 style="margin-bottom:8px">Process groups by horizon</h3>'+
+    '<div class="bararea" style="margin-bottom:18px">';
+  byHor.forEach(function(x){
+    h+='<span class="bl">'+esc(x.name)+'</span>'+
+       '<span class="bt" style="width:'+(maxH?Math.round(x.n/maxH*100):0)+'%"></span>'+
+       '<span class="bv">'+x.n+'</span>';
+  });
+  h+='</div>';
+
+  h+='<h3 style="margin-bottom:2px">Capacity — activities running at once, per person per sprint</h3>'+
+     '<p style="margin:0 0 9px;font-size:12px;color:var(--ink-3)">Whole plan, ignores filters. '+
+     'Three or more at once is flagged.</p><div class="cap">'+
+     '<div class="caprow caphead"><div class="capname">Person</div>';
+  SPRINTS.forEach(function(s){h+='<div class="capcell">'+s.id.replace("S","")+'</div>';});
+  h+='</div>';
+  var loads=PEOPLE.map(function(p){
+    var row=SPRINTS.map(function(s){
+      return ACTS.filter(function(a){return a.owner===p.name&&a.s<=s.n&&s.n<a.s+a.span;}).length;
+    });
+    return {p:p,row:row,peak:Math.max.apply(null,row),
+            over:row.filter(function(n){return n>=3;}).length};
+  }).sort(function(a,b){return b.over-a.over||b.peak-a.peak;});
+  loads.forEach(function(L){
+    h+='<div class="caprow"><div class="capname">'+avatar(L.p.name,true)+
+       '<span class="nm">'+esc(L.p.name)+'</span></div>';
+    L.row.forEach(function(n,i){
+      var cls=n===0?"":n===1?"l1":n===2?"l2":"l3";
+      h+='<div class="capcell '+cls+(n>=3?" over":"")+'" title="'+esc(L.p.name)+' · '+
+         SPRINTS[i].id+' · '+n+' activit'+(n===1?"y":"ies")+'">'+(n||"")+'</div>';
+    });
+    h+='</div>';
+  });
+  h+='</div><div class="capkey">'+
+     '<span class="k"><span class="b" style="background:var(--surface)"></span>none</span>'+
+     '<span class="k"><span class="b" style="background:var(--heat1)"></span>1</span>'+
+     '<span class="k"><span class="b" style="background:var(--heat2)"></span>2</span>'+
+     '<span class="k"><span class="b" style="background:var(--heat3)"></span>3</span>'+
+     '<span class="k"><span class="b" style="box-shadow:inset 0 0 0 2px var(--warn)"></span>at or over capacity</span>'+
+     '</div>';
+  var worst=loads[0];
+  if(worst&&worst.over)h+='<p style="margin:10px 0 0;font-size:13px;color:var(--ink-2)">'+
+    '<b>'+esc(worst.p.name)+'</b> is at three concurrent activities in '+worst.over+
+    ' of 13 sprints — the heaviest load in the plan.</p>';
+
+  if(withGaps.length){
+    h+='<h3 style="margin:20px 0 6px">Groups with UX coverage gaps</h3><div class="bararea">';
+    withGaps.sort(function(a,b){return (GAPS[b.id]||[]).length-(GAPS[a.id]||[]).length;})
+      .forEach(function(p){
+      var g=(GAPS[p.id]||[]).length;
+      h+='<span class="bl">'+esc(p.name)+'</span>'+
+         '<span class="bt" style="width:'+Math.round(g/4*100)+'%;background:var(--warn)"></span>'+
+         '<span class="bv">'+g+'</span>';
+    });
+    h+='</div>';
+  }
+  $("p-metrics").innerHTML=h;
 }
 
 function renderKinds(){
-  var counts={},scopeCount={};
+  var counts={};
   MILESTONES.forEach(function(m){counts[m.kind]=(counts[m.kind]||0)+1;});
-  var h='<div class="ptitle"><h2>Milestone types</h2>'+
-    '<p>A milestone is <b>a transfer or a commitment</b> &mdash; something changes hands, or someone '+
-    'locks something in. A task finishing is not one. Use this list to decide whether a type is '+
-    'missing; adding one means adding an entry to <code>KINDS</code> in the source.</p></div>'+
-    '<div class="tablewrap"><table><thead><tr><th></th><th>Type</th><th>What it means</th>'+
-    '<th>Scope</th><th>Stage</th><th>In plan</th></tr></thead><tbody>';
   var pn={}; PHASES.forEach(function(x){pn[x.id]=x.name;});
+  var h='<div class="tablewrap"><table><thead><tr><th></th><th>Type</th><th>What it means</th>'+
+    '<th>Scope</th><th>In plan</th></tr></thead><tbody>';
   Object.keys(KINDS).forEach(function(k){
     var d=KINDS[k],c=counts[k]||0;
     h+='<tr'+(c?"":' class="unused"')+'><td class="g" style="color:'+(d.major?"var(--good)":"var(--ink-2)")+'">'+
-      d.g+'</td><td><b>'+esc(d.label)+'</b>'+(d.major?' <span class="badge gradb">major</span>':'')+'</td>'+
-      '<td style="max-width:44ch">'+esc(d.def)+'</td><td class="m">'+esc(d.scope)+'</td>'+
-      '<td class="m">'+esc(pn[d.phase]||"—")+'</td>'+
-      '<td class="m">'+(c?c:"none yet")+'</td></tr>';
+      d.g+'</td><td><b>'+esc(d.label)+'</b></td>'+
+      '<td style="max-width:40ch">'+esc(d.def)+'</td><td class="m">'+esc(d.scope)+'</td>'+
+      '<td class="m">'+(c?c:"none")+'</td></tr>';
   });
-  h+='</tbody></table></div>'+
-    '<div class="notes" style="margin-top:15px"><div class="note"><h3>Deliberately not milestones</h3>'+
-    '<p>&ldquo;Wireframes complete&rdquo;, &ldquo;research readout&rdquo;, &ldquo;sprint review&rdquo; '+
-    'and &ldquo;design review&rdquo; are activities ending or recurring ceremonies &mdash; nothing '+
-    'changes hands and nobody commits. Adding them would make the row noisy without making it more '+
-    'informative. If one of them genuinely gates other work for you, that is the argument for '+
-    'promoting it.</p></div>'+
-    '<div class="note"><h3>Candidates worth considering</h3>'+
-    '<p>A <b>data migration cutover</b> per process group, a <b>training complete</b> gate before '+
-    'go-live, and a <b>security or accessibility sign-off</b> all pass the test &mdash; each is a '+
-    'commitment by someone outside the team. None are in the plan yet.</p></div></div>';
-  $("p-kinds").innerHTML=h;
-}
-
-function renderTable(visActs){
-  var order={}; PGS.forEach(function(p,i){order[p.id]=i;});
-  var pn={}; PHASES.forEach(function(x){pn[x.id]=x.name;});
-  var rows="";
-  PGS.forEach(function(p){
-    (GAPS[p.id]||[]).forEach(function(n){
-      var po=ACTS.filter(function(a){return a.pg===p.id&&a.track==="po"&&sprintsOf(a).indexOf(n)>-1;});
-      rows+='<tr class="gaprow"><td class="m">'+SPRINTS[n-1].id+'</td><td>'+esc(p.name)+
-        ' <span class="m">'+p.id+'</span></td><td>'+
-        esc(po.map(function(a){return a.name+" ("+a.owner+")";}).join("; "))+
-        '</td><td>No UX activity on any horizon within ±1 sprint</td></tr>';
-    });
-  });
-  var h='<div class="ptitle"><h2>Audit &amp; export</h2>'+
-    '<p>The gap table names the specific uncovered activity and its owner &mdash; the timeline only '+
-    'shows that a gap exists. Everything below ignores filters, because an audit should not.</p></div>';
-  if(rows)h+='<div class="tablewrap"><table>'+
-    '<caption>UX coverage gaps — every flag in the plan</caption><thead><tr>'+
-    '<th>Sprint</th><th>Process group</th><th>Uncovered PO activity</th><th>Finding</th>'+
-    '</tr></thead><tbody>'+rows+'</tbody></table></div>';
-  h+='<div class="tablewrap" style="margin-top:15px"><table>'+
-    '<caption>Milestones — every transfer and commitment in the plan</caption>'+
-    '<thead><tr><th>Sprint</th><th>Scope</th><th>Milestone</th><th>Type</th></tr></thead><tbody>';
-  MILESTONES.slice().sort(function(a,b){return a.s-b.s;}).forEach(function(m){
-    var k=KINDS[m.kind];
-    h+='<tr><td class="m">'+SPRINTS[m.s-1].id+'</td>'+
-      '<td>'+(m.pg?esc(PGMAP[m.pg].name)+' <span class="m">'+m.pg+'</span>':'<b>Programme</b>')+'</td>'+
-      '<td>'+k.g+' '+esc(m.name)+'</td><td class="m">'+esc(k.label)+'</td></tr>';
-  });
-  h+='</tbody></table></div>'+
-    '<div class="tablewrap" style="margin-top:15px"><table>'+
-    '<caption>All activities in the current view</caption><thead><tr>'+
-    '<th>Process group</th><th>Horizon</th><th>Design stage</th><th>Track</th><th>Activity</th>'+
-    '<th>Owner</th><th>Sprints</th><th>Dates</th></tr></thead><tbody>';
-  visActs.slice().sort(function(a,b){
-    return (order[a.pg]-order[b.pg])||(a.track<b.track?-1:a.track>b.track?1:0)||(a.s-b.s);
-  }).forEach(function(a){
-    var st=STREAMS.filter(function(s){return s.id===a.stream;})[0];
-    h+='<tr><td>'+esc(PGMAP[a.pg].name)+' <span class="m">'+a.pg+'</span></td>'+
-      '<td class="m">'+esc(st.short)+'</td><td class="m">'+esc(pn[a.phase])+'</td>'+
-      '<td><span class="tdot" style="background:var(--'+a.track+')"></span>'+TRACKNAME[a.track]+'</td>'+
-      '<td>'+esc(a.name)+'</td><td>'+esc(a.owner)+'</td>'+
-      '<td class="m">'+esc(sprintLabel(a))+'</td><td class="m">'+esc(dateLabel(a))+'</td></tr>';
-  });
-  $("p-table").innerHTML=h+'</tbody></table></div>';
+  $("kindtable").innerHTML=h+'</tbody></table></div>';
 }
 
 /* ---------- tooltip ---------- */
@@ -1170,6 +1296,8 @@ $("scroller").addEventListener("scroll",hideTip);
 document.addEventListener("keydown",function(e){if(e.key==="Escape"){hideTip();closeAllMsel();}});
 boardEl.addEventListener("click",function(e){
   if(e.target.closest("#bandtoggle")){state.bandOpen=!state.bandOpen;render();return;}
+  var z=e.target.closest(".sp[data-zoom]");
+  if(z){zoomToSprint(+z.getAttribute("data-zoom"));return;}
   var d=e.target.closest(".disc[data-pg]"); if(!d)return;
   var id=d.getAttribute("data-pg");
   if(expanded[id])delete expanded[id]; else expanded[id]=1;
@@ -1227,11 +1355,6 @@ document.addEventListener("click",function(e){if(!e.target.closest(".msel"))clos
     var o=document.createElement("option");o.value=p.id;o.textContent=p.id+" — "+p.name;
     $("f-pg").appendChild(o);
   });
-  SPRINTS.forEach(function(s){
-    var a=document.createElement("option");a.value=s.n;a.textContent=s.id+" · "+s.a;$("z-from").appendChild(a);
-    var b=document.createElement("option");b.value=s.n;b.textContent=s.id+" · "+s.b;$("z-to").appendChild(b);
-  });
-  $("z-from").value=1; $("z-to").value=SPRINTS.length;
   buildMsel($("m-stream"),"Horizon",
     STREAMS.map(function(s){return {id:s.id,name:s.name};}),
     function(id){return !!state.streams[id];},
@@ -1247,10 +1370,7 @@ function syncSeg(){
   $("v-team").setAttribute("aria-pressed",n===real.length?"true":"false");
   $("v-exec").setAttribute("aria-pressed",n===0?"true":"false");
 }
-
-/* panels behave as an accordion so only one thing competes with the board */
-var PANELS=[["filters","t-filters","p-filters"],["metrics","t-metrics","p-metrics"],
-            ["kinds","t-kinds","p-kinds"],["table","t-table","p-table"],["about","t-about","p-about"]];
+var PANELS=[["filters","t-filters","p-filters"],["metrics","t-metrics","p-metrics"]];
 function openPanel(name){
   state.panel=(state.panel===name)?null:name;
   PANELS.forEach(function(p){
@@ -1259,26 +1379,16 @@ function openPanel(name){
     $(p[1]).querySelector(".car").textContent=on?"▾":"▸";
     $(p[2]).hidden=!on;
   });
-  if(state.panel==="kinds")renderKinds();
   render();
 }
 PANELS.forEach(function(p){$(p[1]).addEventListener("click",function(){openPanel(p[0]);});});
+$("t-info").addEventListener("click",function(){renderKinds();$("info").showModal();});
+$("iclose").addEventListener("click",function(){$("info").close();});
 
-function setZoom(f,t){
-  state.from=Math.max(1,Math.min(f,SPRINTS.length));
-  state.to=Math.max(state.from,Math.min(t,SPRINTS.length));
-  $("z-from").value=state.from; $("z-to").value=state.to;
-  render();
-}
-$("z-from").addEventListener("change",function(){setZoom(+this.value,Math.max(+this.value,state.to));});
-$("z-to").addEventListener("change",function(){setZoom(Math.min(state.from,+this.value),+this.value);});
-$("z-all").addEventListener("click",function(){setZoom(1,SPRINTS.length);});
-$("z-q4").addEventListener("click",function(){setZoom(1,7);});
-$("z-q1").addEventListener("click",function(){setZoom(8,13);});
-$("z-now").addEventListener("click",function(){
-  var i=nowInfo(),s=i.mode==="in"?i.n:1;
-  setZoom(s,Math.min(SPRINTS.length,s+3));
-});
+$("z-out").addEventListener("click",function(){setScale(-1);});
+$("z-in").addEventListener("click",function(){setScale(1);});
+$("z-prev").addEventListener("click",function(){pan(-1);});
+$("z-next").addEventListener("click",function(){pan(1);});
 $("f-group").addEventListener("change",function(){state.groupBy=this.value;render();});
 $("f-person").addEventListener("change",function(){state.person=this.value;render();});
 $("f-pg").addEventListener("change",function(){state.pg=this.value;render();});
