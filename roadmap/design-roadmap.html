@@ -295,7 +295,7 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
     <span class="lg"><span class="sw ops"></span> Enablement</span>
     <span class="lg"><span class="sw gap"></span> UX coverage gap</span>
     <span class="lg"><span class="gl gmin">&#9671;</span> Milestone</span>
-    <span class="lg"><span class="gl gmaj">&#9670;</span> Launch / graduation</span>
+    <span class="lg"><span class="gl gmaj">&#9670;</span> Launch / graduation <span style="color:var(--ink-3)">(row badge names which)</span></span>
     <span class="count" id="vis"></span>
   </div>
 
@@ -673,6 +673,7 @@ function rosterHTML(acts){
   return out?'<span class="roster">'+out+'</span>':"";
 }
 var TRACKNAME={po:"Product owner",ux:"UX",ops:"Enablement"};
+var MAJORWORD={golive:"launch",grad:"graduates",freeze:"freeze",steering:"steering"};
 /* A gap is a plan-level fact, but its CELL belongs only in a slice that actually contains the
    uncovered product-owner activity — otherwise it floats in a section with no related work. */
 function slicedGaps(gaps,acts){
@@ -702,7 +703,12 @@ function pgBlock(pg,acts,html,ctx,allVisActs,msList){
     }
   }
   if(gaps.length)badges+='<span class="badge gapb">⚠ '+gaps.length+' gap'+(gaps.length===1?"":"s")+'</span>';
-  if(ms.filter(function(m){return KINDS[m.kind].major;}).length)badges+='<span class="badge gradb">◆</span>';
+  var majors=ms.filter(function(m){return KINDS[m.kind].major;});
+  if(majors.length){
+    var word=majors.length>1?majors.length+" major":MAJORWORD[majors[0].kind];
+    var tt=majors.map(function(m){return m.name+" ("+SPRINTS[m.s-1].id+")";}).join(" · ");
+    badges+='<span class="badge gradb" title="'+esc(tt)+'">◆ '+esc(word)+'</span>';
+  }
 
   var disc=isOps?'<span class="disc" aria-hidden="true">·</span>'
     :'<button class="disc" data-pg="'+pg.id+'" aria-expanded="'+(exp?"true":"false")+'"'+
