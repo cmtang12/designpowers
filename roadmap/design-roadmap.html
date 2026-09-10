@@ -122,6 +122,11 @@ select,.mbtn{font-family:var(--body);font-size:13.5px;color:var(--ink);backgroun
 .zbtn:disabled{opacity:.35;cursor:default}
 .zlab{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);min-width:132px;font-variant-numeric:tabular-nums}
 .zlab b{color:var(--ink);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:10px}
+#boardwrap.fs{position:fixed;inset:0;z-index:40;background:var(--ground);
+  padding:12px 14px;display:flex;flex-direction:column;overflow:hidden}
+#boardwrap.fs .gbar{border-radius:5px 5px 0 0}
+#boardwrap.fs .scroller{max-height:none;flex:1;min-height:0}
+#fs-toggle[aria-pressed="true"]{background:var(--po);border-color:var(--po);color:#fff}
 .sp.clickable{cursor:zoom-in}
 .sp.clickable:hover{background:var(--surface-2)}
 .legend{display:flex;flex-wrap:wrap;gap:7px 16px;align-items:center;padding:8px 13px;font-size:12px;color:var(--ink-2);
@@ -311,6 +316,10 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
 .kv{display:flex;align-items:baseline;gap:7px;font-size:13px;color:var(--ink-2)}
 .kv b{font-family:var(--disp);font-size:1.25rem;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
 .mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px 22px}
+.chartrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:14px}
+.chartbox{border:1px solid var(--line);border-radius:5px;padding:13px 15px;min-width:0}
+.chartbox h3{margin-bottom:10px}
+.chartbox .bararea{max-width:none}
 .notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:16px 26px}
 .note p{margin:4px 0 0;font-size:13px;color:var(--ink-2);max-width:60ch}
 .note code{font-family:var(--mono);font-size:11.5px;background:var(--surface-2);padding:1px 4px;border-radius:3px}
@@ -329,13 +338,8 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
     <div>
       <span class="eyebrow">Field Operations Modernization &middot; Design &amp; Delivery</span>
       <h1>Process Group Roadmap</h1>
-      <div class="meta">
-        <span><b>13 sprints</b> &middot; 2 weeks each</span>
-        <span><b>S1</b> Sep 28 2026 &rarr; <b>S13</b> Mar 26 2027</span>
-        <span>Last updated <b>10 Sep 2026</b></span>
-      </div>
+      <div class="meta"><span>Last updated <b>10 Sep 2026</b></span></div>
     </div>
-    <span class="samplechip">&#9679; Illustrative data &mdash; replace with real names</span>
   </header>
 
   <div class="alert" id="alert"></div>
@@ -353,6 +357,8 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
         <select id="f-person"><option value="">Everyone</option></select></div>
       <div class="field"><label for="f-pg">Process group</label>
         <select id="f-pg"><option value="">All process groups</option></select></div>
+      <div class="field"><span class="flab">Pod</span>
+        <div class="msel" id="m-pod"></div></div>
       <div class="field"><span class="flab">Horizon</span>
         <div class="msel" id="m-stream"></div></div>
       <div class="field"><span class="flab">Track</span>
@@ -364,10 +370,12 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
 
   <section class="panel" id="p-metrics" hidden aria-label="Metrics"></section>
 
+  <div id="boardwrap">
   <div class="gbar">
     <div class="grp"><label class="glab" for="f-group">Group rows by</label>
       <select id="f-group">
         <option value="pg">Process group</option>
+        <option value="pod">Pod</option>
         <option value="stream">Horizon</option>
         <option value="phase">Design stage</option>
         <option value="track">Track</option>
@@ -379,6 +387,8 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
           <button id="v-exec" aria-pressed="true">Coverage</button>
           <button id="v-team" aria-pressed="false">Activities</button>
         </div></div>
+      <button class="zbtn" id="fs-toggle" aria-pressed="false" title="Expand the roadmap to fill the screen"
+        aria-label="Expand the roadmap to fill the screen">&#10530;</button>
       <div class="grp"><span class="glab">Zoom</span>
         <div class="zoom">
           <button class="zbtn" id="z-out" aria-label="Zoom out">&minus;</button>
@@ -401,6 +411,7 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
   </div>
 
   <div class="scroller" id="scroller"><div class="board" id="board"></div></div>
+  </div>
 </div>
 
 <dialog id="info" aria-labelledby="ititle">
@@ -481,21 +492,23 @@ var PEOPLE=[
 var PMAP={}; PEOPLE.forEach(function(p){PMAP[p.name]=p;});
 
 var PGS=[
- {id:"PG-01",name:"Work Intake & Triage"},
- {id:"PG-02",name:"Scheduling & Dispatch"},
- {id:"PG-03",name:"Field Execution & Inspection"},
- {id:"PG-04",name:"Asset Records Management"},
- {id:"PG-05",name:"Permitting & Compliance"},
- {id:"PG-06",name:"Materials & Inventory Requests"},
- {id:"PG-07",name:"Predictive Maintenance Signals"},
- {id:"PG-08",name:"Offline Mobile Capture"},
- {id:"PG-09",name:"Automated Damage Assessment"},
- {id:"OPS-01",name:"Platform Licence Procurement",ops:true},
- {id:"OPS-02",name:"Field Ride-Alongs",ops:true},
- {id:"OPS-03",name:"Sandbox Environment Access",ops:true},
- {id:"OPS-04",name:"Research Participant Panel",ops:true}
+ {id:"PG-01",name:"Work Intake & Triage",pod:"Juno"},
+ {id:"PG-02",name:"Scheduling & Dispatch",pod:"Juno"},
+ {id:"PG-03",name:"Field Execution & Inspection",pod:"Juno"},
+ {id:"PG-04",name:"Asset Records Management",pod:"Juno"},
+ {id:"PG-05",name:"Permitting & Compliance",pod:"Atlas"},
+ {id:"PG-06",name:"Materials & Inventory Requests",pod:"Atlas"},
+ {id:"PG-07",name:"Predictive Maintenance Signals",pod:"Atlas"},
+ {id:"PG-08",name:"Offline Mobile Capture",pod:"Vega"},
+ {id:"PG-09",name:"Automated Damage Assessment",pod:"Vega"},
+ {id:"OPS-01",name:"Platform Licence Procurement",pod:"Programme",ops:true},
+ {id:"OPS-02",name:"Field Ride-Alongs",pod:"Programme",ops:true},
+ {id:"OPS-03",name:"Sandbox Environment Access",pod:"Programme",ops:true},
+ {id:"OPS-04",name:"Research Participant Panel",pod:"Programme",ops:true}
 ];
 var PGMAP={}; PGS.forEach(function(p){PGMAP[p.id]=p;});
+var PODS=[]; (function(){var seen={};PGS.forEach(function(p){
+  if(p.pod&&!seen[p.pod]){seen[p.pod]=1;PODS.push(p.pod);}});})();
 
 function A(pg,stream,track,name,owner,s,span,type){
   return {pg:pg,stream:stream,track:track,name:name,owner:owner,s:s,span:span,type:type};
@@ -725,7 +738,8 @@ function buildBuckets(scale){
 
 /* ---------- state ---------- */
 var state={groupBy:"pg",person:"",pg:"",streams:{},tracks:{po:true,ux:true,ops:true},
-           gapsOnly:false,bandOpen:false,panel:null,scale:"sprint",start:0};
+           gapsOnly:false,bandOpen:false,panel:null,scale:"sprint",start:0,pods:{},fs:false};
+PODS.forEach(function(x){state.pods[x]=true;});
 STREAMS.forEach(function(s){state.streams[s.id]=true;});
 var expanded={};
 var ALL=[],VIS=[];
@@ -779,6 +793,10 @@ function colWidth(n,avail,rail){
 /* ---------- the row hierarchy is a variable ---------- */
 var DIMS={
   pg:{label:"Process group",flat:true},
+  pod:{label:"Pod",of:function(a){return PGMAP[a.pg].pod;},
+    values:function(){return PODS.map(function(x){return {id:x,name:x,short:x,
+      note:PGS.filter(function(p){return p.pod===x;}).map(function(p){return p.id;}).join(" · "),
+      ops:x==="Programme"};});}},
   stream:{label:"Horizon",of:function(a){return a.stream;},
     values:function(){return STREAMS.map(function(x){return {id:x.id,name:x.name,short:x.short,note:x.note,ops:x.ops};});}},
   phase:{label:"Design stage",of:function(a){return a.phase;},
@@ -805,6 +823,7 @@ function otherVals(pgId,dim,cur,acts){
   return out.map(function(v){return map[v]||v;});
 }
 function actVisible(a){
+  if(!state.pods[PGMAP[a.pg].pod])return false;
   var r=actRange(a);
   if(r[1]<VIS[0].d0||r[0]>VIS[VIS.length-1].d1)return false;
   if(!state.streams[a.stream])return false;
@@ -824,6 +843,7 @@ function activeFilters(){
   if(state.pg)n++;
   if(state.gapsOnly)n++;
   if(STREAMS.some(function(s){return !state.streams[s.id];}))n++;
+  if(PODS.some(function(x){return !state.pods[x];}))n++;
   if(["po","ux","ops"].some(function(t){return !state.tracks[t];}))n++;
   return n;
 }
@@ -911,6 +931,7 @@ function pgBlock(pg,acts,html,ctx,allVisActs,msList){
   var badges='<span class="pgid">'+pg.id+'</span>';
   if(!isOps){
     if(!ctx){
+      if(pg.pod&&pg.pod!=="Programme")badges+='<span class="badge">'+esc(pg.pod)+'</span>';
       PGSTREAMS[pg.id].forEach(function(sid){
         var st=STREAMS.filter(function(s){return s.id===sid;})[0];
         badges+='<span class="badge">'+st.short+'</span>';
@@ -1115,7 +1136,7 @@ function render(){
   $("fcount").textContent=nf; $("fcount").hidden=!nf;
   $("vis").textContent="Showing "+visActs.length+" of "+ACTS.length+" activities · "+shownPgs+" rows";
   syncZoom();
-  if(state.panel==="metrics")renderMetrics();
+  if(state.panel==="metrics")renderMetrics(visActs,byPg);
 }
 
 function syncZoom(){
@@ -1156,62 +1177,75 @@ function zoomToSprint(bucketIndex){
 }
 
 /* ---------- metrics: the few that carry a decision ---------- */
-function renderMetrics(){
-  var pgReal=PGS.filter(function(p){return !p.ops;});
+function renderMetrics(visActs,byPg){
+  var pgReal=PGS.filter(function(p){return !p.ops&&pgVisible(p,byPg[p.id]||[]);});
   var byHor=STREAMS.filter(function(s){return !s.ops;}).map(function(s){
-    var n=pgReal.filter(function(p){return PGSTREAMS[p.id].indexOf(s.id)>-1;}).length;
+    var n=pgReal.filter(function(p){
+      return (byPg[p.id]||[]).some(function(a){return a.stream===s.id;});
+    }).length;
     return {name:s.name,n:n};
   });
-  var maxH=Math.max.apply(null,byHor.map(function(x){return x.n;}));
-  var withGaps=pgReal.filter(function(p){return (GAPS[p.id]||[]).length;});
-  var t=today(),horizonEnd=new Date(t);horizonEnd.setDate(horizonEnd.getDate()+84);
-  var upcoming=MILESTONES.filter(function(m){var d=msDate(m);return d>=t&&d<=horizonEnd;})
-                         .sort(function(a,b){return a.s-b.s;});
-  var upGroups={};
-  upcoming.forEach(function(m){upGroups[m.pg||"programme"]=1;});
-  var ahead=MILESTONES.filter(function(m){return msDate(m)>=t;})
-                      .sort(function(a,b){return msDate(a)-msDate(b);})[0];
+  var maxH=Math.max.apply(null,byHor.map(function(x){return x.n;}))||1;
+  var withGaps=pgReal.filter(function(p){return (GAPS[p.id]||[]).length;})
+                     .sort(function(a,b){return (GAPS[b.id]||[]).length-(GAPS[a.id]||[]).length;});
+  var maxG=Math.max.apply(null,withGaps.map(function(p){return (GAPS[p.id]||[]).length;}))||1;
+  var loads=PEOPLE.map(function(p){
+    var mine=visActs.filter(function(a){return a.owner===p.name;});
+    var row=SPRINTS.map(function(s){
+      return mine.filter(function(a){return a.s<=s.n&&s.n<a.s+a.span;}).length;
+    });
+    return {p:p,row:row,n:mine.length,peak:Math.max.apply(null,row),
+            over:row.filter(function(n){return n>=3;}).length};
+  }).filter(function(L){return L.n;}).sort(function(a,b){return b.over-a.over||b.peak-a.peak;});
+  var atRisk=loads.filter(function(L){return L.over>0;}).length;
 
+  if(!pgReal.length&&!loads.length){
+    $("p-metrics").innerHTML='<div class="ptitle"><h2>Metrics</h2></div>'+
+      '<p style="margin:0;font-size:13px;color:var(--ink-3)">Nothing in the current selection.</p>';
+    return;
+  }
   var h='<div class="ptitle"><h2>Metrics</h2></div>'+
-    '<div class="mgrid" style="margin-bottom:18px">'+
+    '<div class="mgrid" style="margin-bottom:16px">'+
       '<div class="kv"><b>'+pgReal.length+'</b> process groups</div>'+
       '<div class="kv"><b>'+withGaps.length+'</b> with UX gaps</div>'+
-      '<div class="kv"><b>'+Object.keys(upGroups).length+'</b> with a milestone in 12 weeks</div>'+
-      '<div class="kv"><b>'+PEOPLE.length+'</b> people</div>'+
-    '</div>'+
-    (ahead?'<p style="margin:0 0 16px;font-size:13px;color:var(--ink-2)">Next milestone: <b>'+
-      esc(ahead.name)+'</b>'+(ahead.pg?' · '+esc(PGMAP[ahead.pg].name):' · programme')+
-      ' · '+esc(SPRINTS[ahead.s-1].id)+', '+esc(SPRINTS[ahead.s-1].b)+
-      ' — in '+Math.round((msDate(ahead)-t)/86400000)+' days</p>':"")+
-    '<h3 style="margin-bottom:8px">Process groups by horizon</h3>'+
-    '<div class="bararea" style="margin-bottom:18px">';
+      '<div class="kv"><b>'+atRisk+'</b> '+(atRisk===1?"person":"people")+' at or over capacity</div>'+
+    '</div><div class="chartrow">';
+
+  h+='<div class="chartbox"><h3>Process groups by horizon</h3><div class="bararea">';
   byHor.forEach(function(x){
     h+='<span class="bl">'+esc(x.name)+'</span>'+
-       '<span class="bt" style="width:'+(maxH?Math.round(x.n/maxH*100):0)+'%"></span>'+
+       '<span class="bt" style="width:'+Math.round(x.n/maxH*100)+'%"></span>'+
        '<span class="bv">'+x.n+'</span>';
   });
-  h+='</div>';
+  h+='</div></div>';
 
-  h+='<h3 style="margin-bottom:2px">Capacity — activities running at once, per person per sprint</h3>'+
-     '<p style="margin:0 0 9px;font-size:12px;color:var(--ink-3)">Whole plan, ignores filters. '+
-     'Three or more at once is flagged.</p><div class="cap">'+
-     '<div class="caprow caphead"><div class="capname">Person</div>';
-  SPRINTS.forEach(function(s){h+='<div class="capcell">'+s.id.replace("S","")+'</div>';});
-  h+='</div>';
-  var loads=PEOPLE.map(function(p){
-    var row=SPRINTS.map(function(s){
-      return ACTS.filter(function(a){return a.owner===p.name&&a.s<=s.n&&s.n<a.s+a.span;}).length;
+  h+='<div class="chartbox"><h3>Groups with UX coverage gaps</h3>';
+  if(withGaps.length){
+    h+='<div class="bararea">';
+    withGaps.forEach(function(p){
+      var g=(GAPS[p.id]||[]).length;
+      h+='<span class="bl">'+esc(p.name)+'</span>'+
+         '<span class="bt" style="width:'+Math.round(g/maxG*100)+'%;background:var(--warn)"></span>'+
+         '<span class="bv">'+g+'</span>';
     });
-    return {p:p,row:row,peak:Math.max.apply(null,row),
-            over:row.filter(function(n){return n>=3;}).length};
-  }).sort(function(a,b){return b.over-a.over||b.peak-a.peak;});
+    h+='</div>';
+  }else{
+    h+='<p style="margin:0;font-size:13px;color:var(--ink-3)">None.</p>';
+  }
+  h+='</div></div>';
+
+  h+='<div class="chartbox" style="margin-top:14px">'+
+     '<h3>Capacity &mdash; activities running at once, per person per sprint</h3><div class="cap">'+
+     '<div class="caprow caphead"><div class="capname">Person</div>';
+  SPRINTS.forEach(function(sp){h+='<div class="capcell">'+sp.id.replace("S","")+'</div>';});
+  h+='</div>';
   loads.forEach(function(L){
     h+='<div class="caprow"><div class="capname">'+avatar(L.p.name,true)+
        '<span class="nm">'+esc(L.p.name)+'</span></div>';
     L.row.forEach(function(n,i){
       var cls=n===0?"":n===1?"l1":n===2?"l2":"l3";
-      h+='<div class="capcell '+cls+(n>=3?" over":"")+'" title="'+esc(L.p.name)+' · '+
-         SPRINTS[i].id+' · '+n+' activit'+(n===1?"y":"ies")+'">'+(n||"")+'</div>';
+      h+='<div class="capcell '+cls+(n>=3?" over":"")+'" title="'+esc(L.p.name)+' \u00b7 '+
+         SPRINTS[i].id+' \u00b7 '+n+' activit'+(n===1?"y":"ies")+'">'+(n||"")+'</div>';
     });
     h+='</div>';
   });
@@ -1221,23 +1255,7 @@ function renderMetrics(){
      '<span class="k"><span class="b" style="background:var(--heat2)"></span>2</span>'+
      '<span class="k"><span class="b" style="background:var(--heat3)"></span>3</span>'+
      '<span class="k"><span class="b" style="box-shadow:inset 0 0 0 2px var(--warn)"></span>at or over capacity</span>'+
-     '</div>';
-  var worst=loads[0];
-  if(worst&&worst.over)h+='<p style="margin:10px 0 0;font-size:13px;color:var(--ink-2)">'+
-    '<b>'+esc(worst.p.name)+'</b> is at three concurrent activities in '+worst.over+
-    ' of 13 sprints — the heaviest load in the plan.</p>';
-
-  if(withGaps.length){
-    h+='<h3 style="margin:20px 0 6px">Groups with UX coverage gaps</h3><div class="bararea">';
-    withGaps.sort(function(a,b){return (GAPS[b.id]||[]).length-(GAPS[a.id]||[]).length;})
-      .forEach(function(p){
-      var g=(GAPS[p.id]||[]).length;
-      h+='<span class="bl">'+esc(p.name)+'</span>'+
-         '<span class="bt" style="width:'+Math.round(g/4*100)+'%;background:var(--warn)"></span>'+
-         '<span class="bv">'+g+'</span>';
-    });
-    h+='</div>';
-  }
+     '</div></div>';
   $("p-metrics").innerHTML=h;
 }
 
@@ -1293,7 +1311,11 @@ boardEl.addEventListener("mouseout",function(e){if(e.target.closest(HOVER))hideT
 boardEl.addEventListener("focusin",function(e){var el=e.target.closest(".bar,.ms,.msdot,.maj");if(el)showTip(el);});
 boardEl.addEventListener("focusout",hideTip);
 $("scroller").addEventListener("scroll",hideTip);
-document.addEventListener("keydown",function(e){if(e.key==="Escape"){hideTip();closeAllMsel();}});
+document.addEventListener("keydown",function(e){
+  if(e.key!=="Escape")return;
+  hideTip();closeAllMsel();
+  if(state.fs&&!$("info").open)$("fs-toggle").click();
+});
 boardEl.addEventListener("click",function(e){
   if(e.target.closest("#bandtoggle")){state.bandOpen=!state.bandOpen;render();return;}
   var z=e.target.closest(".sp[data-zoom]");
@@ -1355,6 +1377,10 @@ document.addEventListener("click",function(e){if(!e.target.closest(".msel"))clos
     var o=document.createElement("option");o.value=p.id;o.textContent=p.id+" — "+p.name;
     $("f-pg").appendChild(o);
   });
+  buildMsel($("m-pod"),"Pod",
+    PODS.map(function(x){return {id:x,name:x};}),
+    function(id){return !!state.pods[id];},
+    function(id,v){state.pods[id]=v;});
   buildMsel($("m-stream"),"Horizon",
     STREAMS.map(function(s){return {id:s.id,name:s.name};}),
     function(id){return !!state.streams[id];},
@@ -1385,6 +1411,15 @@ PANELS.forEach(function(p){$(p[1]).addEventListener("click",function(){openPanel
 $("t-info").addEventListener("click",function(){renderKinds();$("info").showModal();});
 $("iclose").addEventListener("click",function(){$("info").close();});
 
+$("fs-toggle").addEventListener("click",function(){
+  state.fs=!state.fs;
+  $("boardwrap").classList.toggle("fs",state.fs);
+  this.setAttribute("aria-pressed",state.fs?"true":"false");
+  this.innerHTML=state.fs?"&#10529;":"&#10530;";
+  this.title=state.fs?"Exit full screen":"Expand the roadmap to fill the screen";
+  document.body.style.overflow=state.fs?"hidden":"";
+  render();
+});
 $("z-out").addEventListener("click",function(){setScale(-1);});
 $("z-in").addEventListener("click",function(){setScale(1);});
 $("z-prev").addEventListener("click",function(){pan(-1);});
@@ -1401,9 +1436,10 @@ $("f-clear").addEventListener("click",function(){
   state.person="";state.pg="";state.gapsOnly=false;
   state.tracks={po:true,ux:true,ops:true};
   STREAMS.forEach(function(s){state.streams[s.id]=true;});
+  PODS.forEach(function(x){state.pods[x]=true;});
   $("f-person").value="";$("f-pg").value="";$("f-gaps").checked=false;
   Array.prototype.forEach.call(document.querySelectorAll(".mpanel input"),function(i){i.checked=true;});
-  $("m-stream")._sync(); $("m-track")._sync();
+  $("m-pod")._sync(); $("m-stream")._sync(); $("m-track")._sync();
   render();
 });
 window.addEventListener("resize",function(){render();});
