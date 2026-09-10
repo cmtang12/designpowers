@@ -24,6 +24,11 @@ Design + build (roadmap artifact)
 | **Row hierarchy generalised to any dimension** (r3) | Process group / horizon / design stage / track / owner. The r2 toggle was a special case of a pivot; five dimensions cost little more than two |
 | Design stage derived from activity type via one map (r3) | Re-cutting the stage taxonomy means editing one table, not 66 activity rows |
 | Each gap cell and each milestone drawn exactly once per pivot (r3) | Gap cells belong to the slice holding the uncovered PO activity; milestones prefer their own stage section, else the group's first. Invariant: 7 gap cells + 27 markers in every pivot |
+| **Grouping and filtering separated by location** (r4) | Board controls (group / detail / zoom) attach to the board because they redraw it; filters live in a panel that reports what it removed. Location is the only separation people actually read |
+| All filters are one control family (r4) | Horizon and track became multi-select dropdowns matching the single-selects; mixed chips-and-dropdowns read as disorder |
+| Everything optional collapses behind a panel toolbar (r4) | Metrics, milestone types, audit tables and the explanatory notes. Only the gap headline stays on screen |
+| Zoom scopes rows, not just columns (r4) | Narrowing the sprint window drops groups with no work in it, rather than leaving blank rows |
+| Milestone types panel doubles as the taxonomy reference (r4) | Definition, scope, stage and count per kind, plus what was deliberately excluded — so the user can judge whether a type is missing |
 | Major milestone band collapsible, closed by default (r3) | It was consuming the viewport; collapsed it keeps a marker row plus the next milestone named |
 | Milestone = a transfer or a commitment, not a task finishing (r2) | Gives a testable inclusion rule instead of a taste call |
 | Gap check now counts UX on any horizon (r2) | Matches the real overlap between PO workshops and discovery research |
@@ -42,6 +47,10 @@ Design + build (roadmap artifact)
 - Whether the discovery → backlog feed needs an explicit connector to the MVP item it feeds,
   rather than the current marker on the originating group.
 - Owner avatars are monograms; real photos would need hosted images.
+- Table view: recommended keeping the gaps table and roster, dropping the 66-row activities dump.
+  Raised with the user, not yet actioned at their request.
+- The design-stage map (PHASE_OF) is our inference, not the user's taxonomy — "Workshop" is
+  mapped to Discover, which is the assumption most likely to be wrong.
 
 ## Taste Profile
 None on disk (`~/.designpowers/taste-profile.md` absent). Early signals recorded in the brief.
