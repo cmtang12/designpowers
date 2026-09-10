@@ -170,14 +170,17 @@ select,.mbtn{font-family:var(--body);font-size:13.5px;color:var(--ink);backgroun
   text-transform:uppercase;color:#fff;background:var(--warn);border-radius:2px;padding:0 4px;margin-left:5px}
 
 /* you are here */
-.nowline{position:absolute;top:0;bottom:0;width:0;border-left:2px dotted var(--warn);z-index:2;pointer-events:none}
+.nowline{position:absolute;top:0;bottom:0;width:0;border-left:2px dotted var(--warn);z-index:1;pointer-events:none}
 .nowline.pre{border-left-style:dashed}
-/* the arrow itself is anchored over the line; the label sits beside it */
-.nowcap{position:sticky;top:var(--theadh,96px);display:flex;align-items:center;gap:3px;
-  width:max-content;margin:5px 0 0 -8px;padding:2px 6px 2px 4px;border-radius:3px;
+/* the label rides its own layer above the header so it never sits on a row */
+.nowmark{position:absolute;top:0;bottom:0;width:0;z-index:7;pointer-events:none}
+.nowcap{position:sticky;top:calc(var(--theadh,96px) - 18px);display:flex;align-items:center;gap:3px;
+  width:max-content;margin-left:-8px;padding:2px 6px 2px 4px;border-radius:3px;
   background:var(--warn);color:#fff;
   font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em}
 .nowcap .ar{font-size:9px;line-height:1}
+/* marks sit above the today line */
+.bar,.gapcell,.ms,.msdot,.maj{position:relative;z-index:2}
 
 
 .mrow{background:var(--band)}
@@ -930,16 +933,18 @@ function nowLineHTML(rail,col){
     if(state.start!==0)return "";
     var days=Math.round((VIS[0].d0-t)/86400000);
     return '<div class="nowline pre" style="left:'+rail+'px" role="img" aria-label="Today, '+
-      days+' days before this window"><span class="nowcap"><span class="ar">&#9660;</span>NOW</span></div>';
+      days+' days before this window"></div>'+
+      '<div class="nowmark" style="left:'+rail+'px"><span class="nowcap"><span class="ar">&#9660;</span>NOW</span></div>';
   }
   for(i=0;i<VIS.length;i++){
     if(t>=VIS[i].d0&&t<=VIS[i].d1){
       var f=(t-VIS[i].d0)/Math.max(1,VIS[i].d1-VIS[i].d0);
-      return '<div class="nowline" style="left:'+(rail+(i+f)*col)+'px" role="img" aria-label="Today">'+
-        '<span class="nowcap"><span class="ar">&#9660;</span>NOW</span></div>';
+      var x=rail+(i+f)*col;
+      return '<div class="nowline" style="left:'+x+'px" role="img" aria-label="Today"></div>'+
+        '<div class="nowmark" style="left:'+x+'px"><span class="nowcap"><span class="ar">&#9660;</span>NOW</span></div>';
     }
-    if(t<VIS[i].d0)return '<div class="nowline" style="left:'+(rail+i*col)+'px" role="img" aria-label="Today">'+
-      '<span class="nowcap"><span class="ar">&#9660;</span>NOW</span></div>';
+    if(t<VIS[i].d0)return '<div class="nowline" style="left:'+(rail+i*col)+'px" role="img" aria-label="Today"></div>'+
+      '<div class="nowmark" style="left:'+(rail+i*col)+'px"><span class="nowcap"><span class="ar">&#9660;</span>NOW</span></div>';
   }
   return "";
 }
