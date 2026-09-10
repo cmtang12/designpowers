@@ -56,17 +56,23 @@ h3{font-size:12.5px;font-weight:600}
 .mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
 button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
 
-header.top{display:flex;flex-wrap:wrap;gap:12px 30px;align-items:flex-end;justify-content:space-between}
+header.top{display:flex;flex-wrap:wrap;gap:12px 30px;align-items:flex-start;justify-content:space-between}
 .meta{display:flex;flex-wrap:wrap;gap:4px 16px;font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-top:8px;font-variant-numeric:tabular-nums}
 .meta b{color:var(--ink-2);font-weight:500}
 .samplechip{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--warn);background:var(--warn-soft);border:1px solid var(--warn);border-radius:3px;padding:3px 8px;white-space:nowrap}
 
 /* the one figure that stays on screen */
-.alert{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 9px;margin-top:14px;padding:9px 14px;
-  background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:5px}
-.alert .n{font-family:var(--disp);font-size:1.15rem;font-weight:700;color:var(--warn);font-variant-numeric:tabular-nums}
-.alert .m{font-size:13.5px;color:var(--ink)}
-.alert .r{font-size:12.5px;color:var(--ink-3)}
+.aboutbtn{font-family:var(--body);font-size:13px;color:var(--ink-2);background:none;
+  border:1px solid var(--line-strong);border-radius:4px;padding:7px 13px;cursor:pointer;
+  display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.aboutbtn:hover{background:var(--surface-2);color:var(--ink)}
+.aboutbtn .i{font-size:15px;line-height:1;color:var(--ink-3)}
+.aboutbtn:hover .i{color:var(--po)}
+.pillbtn{font-family:var(--body);font-size:13.5px;color:var(--ink-2);background:var(--surface-2);
+  border:1px solid var(--line-strong);border-radius:4px;padding:6px 11px;cursor:pointer;white-space:nowrap}
+.pillbtn:hover{color:var(--ink)}
+.pillbtn[aria-pressed="true"]{background:var(--warn);border-color:var(--warn);color:#fff;font-weight:600}
+.field.spacer{flex:1 1 0;min-width:0}
 
 /* panel toolbar — everything optional lives behind it */
 .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:12px}
@@ -105,10 +111,10 @@ select,.mbtn{font-family:var(--body);font-size:13.5px;color:var(--ink);backgroun
 
 /* board controls — attached to the board, because they redraw it */
 .gbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;margin-top:14px;padding:9px 13px;
-  background:var(--surface-3);border:1px solid var(--line-strong);border-bottom:0;border-radius:5px 5px 0 0}
+  background:var(--surface);border:1px solid var(--line-strong);border-bottom:0;border-radius:5px 5px 0 0}
 .gbar .grp{display:flex;align-items:center;gap:8px}
 .gbar .glab{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
-.gbar select{min-width:auto;max-width:240px;background:var(--surface);padding:5px 8px;font-size:13px}
+.gbar select{min-width:auto;max-width:240px;background:var(--surface-2);padding:5px 8px;font-size:13px}
 .gbar .right{margin-left:auto;display:flex;flex-wrap:wrap;align-items:center;gap:9px 16px}
 .seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:4px;overflow:hidden;background:var(--surface)}
 .seg button{font-family:var(--body);font-size:12.5px;color:var(--ink-2);background:var(--surface);border:0;padding:5px 11px;cursor:pointer}
@@ -121,12 +127,16 @@ select,.mbtn{font-family:var(--body);font-size:13.5px;color:var(--ink);backgroun
 .zbtn:hover:not(:disabled){background:var(--surface-2);color:var(--ink)}
 .zbtn:disabled{opacity:.35;cursor:default}
 .zlab{font-family:var(--mono);font-size:11.5px;color:var(--ink-2);min-width:132px;font-variant-numeric:tabular-nums}
+.fsbtn{font-size:17px;line-height:1;color:var(--ink-2);background:var(--surface-2);
+  border:1px solid var(--line-strong);border-radius:5px;width:34px;height:34px;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;margin-left:4px}
+.fsbtn:hover{background:var(--po);border-color:var(--po);color:#fff}
+.fsbtn[aria-pressed="true"]{background:var(--po);border-color:var(--po);color:#fff}
 .zlab b{color:var(--ink);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:10px}
 #boardwrap.fs{position:fixed;inset:0;z-index:40;background:var(--ground);
   padding:12px 14px;display:flex;flex-direction:column;overflow:hidden}
 #boardwrap.fs .gbar{border-radius:5px 5px 0 0}
 #boardwrap.fs .scroller{max-height:none;flex:1;min-height:0}
-#fs-toggle[aria-pressed="true"]{background:var(--po);border-color:var(--po);color:#fff}
 .sp.clickable{cursor:zoom-in}
 .sp.clickable:hover{background:var(--surface-2)}
 .legend{display:flex;flex-wrap:wrap;gap:7px 16px;align-items:center;padding:8px 13px;font-size:12px;color:var(--ink-2);
@@ -144,16 +154,17 @@ select,.mbtn{font-family:var(--body);font-size:13.5px;color:var(--ink);backgroun
 .scroller{overflow:auto;max-height:78vh;border:1px solid var(--line-strong);border-radius:0 0 5px 5px;background:var(--surface);position:relative}
 .board{min-width:calc(var(--rail) + var(--ncol) * var(--col));width:max-content;position:relative}
 .row{display:grid;grid-template-columns:var(--rail) repeat(var(--ncol),var(--col));align-items:stretch}
-.thead{position:sticky;top:0;z-index:6;background:var(--surface)}
-.thead .qrow,.thead .srow{border-bottom:1px solid var(--line)}
+.thead{position:sticky;top:0;z-index:6;background:var(--surface-2)}
+.thead .qrow{border-bottom:1px solid var(--line-strong)}
+.thead .srow{border-bottom:1px solid var(--line)}
 .thead .mrow{border-bottom:2px solid var(--line-strong)}
-.qcell{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);background:var(--surface-3);padding:5px 10px;border-left:1px solid var(--line-strong)}
-.corner{position:sticky;left:0;z-index:7;background:var(--surface-3);padding:5px 12px;border-right:1px solid var(--line-strong)}
-.railhead{position:sticky;left:0;z-index:7;background:var(--surface);padding:6px 12px;border-right:1px solid var(--line-strong);display:flex;align-items:flex-end}
-.sp{padding:6px 8px;border-left:1px solid var(--line);background:var(--surface)}
+.qcell{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);background:var(--surface-2);padding:5px 10px;border-left:1px solid var(--line-strong)}
+.corner{position:sticky;left:0;z-index:7;background:var(--surface-2);padding:5px 12px;border-right:1px solid var(--line-strong)}
+.railhead{position:sticky;left:0;z-index:7;background:var(--surface-2);padding:6px 12px;border-right:1px solid var(--line-strong);display:flex;align-items:flex-end}
+.sp{padding:6px 8px;border-left:1px solid var(--line);background:var(--surface-2)}
 .sp .id{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--ink)}
 .sp .dt{display:block;font-family:var(--mono);font-size:9.5px;color:var(--ink-3);white-space:nowrap;font-variant-numeric:tabular-nums}
-.sp.dim{background:var(--surface-2)}
+.sp.dim{background:var(--surface-3)}
 .sp .red{display:block;font-family:var(--mono);font-size:9px;color:var(--warn);letter-spacing:.03em}
 .sp .now{display:inline-block;font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:.06em;
   text-transform:uppercase;color:#fff;background:var(--warn);border-radius:2px;padding:0 4px;margin-left:5px}
@@ -179,8 +190,7 @@ select,.mbtn{font-family:var(--body);font-size:13.5px;color:var(--ink);backgroun
 
 .streamrow{border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line);background:var(--surface-2)}
 .streamrow .srail{position:sticky;left:0;z-index:3;background:var(--surface-2);padding:10px 12px;border-right:1px solid var(--line-strong)}
-.streamrow .snote{grid-column:2 / -1;background:var(--surface-2);display:flex;align-items:center}
-.streamrow .snote span{position:sticky;left:12px;font-size:12.5px;color:var(--ink-2);padding:4px 0;max-width:80ch}
+.streamrow .snote{grid-column:2 / -1;background:var(--surface-2)}
 .stag{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);margin-top:3px;display:block}
 .streamrow.opslane .srail{border-left:3px solid var(--ops)}
 
@@ -340,14 +350,13 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
       <h1>Process Group Roadmap</h1>
       <div class="meta"><span>Last updated <b>10 Sep 2026</b></span></div>
     </div>
+    <button class="aboutbtn" id="t-info"><span class="i">&#9432;</span>About this roadmap</button>
   </header>
 
-  <div class="alert" id="alert"></div>
 
   <div class="toolbar">
     <button class="tbtn" id="t-filters" aria-expanded="false" aria-controls="p-filters"><span class="car">&#9656;</span>Filters<span class="n" id="fcount" hidden>0</span></button>
     <button class="tbtn" id="t-metrics" aria-expanded="false" aria-controls="p-metrics"><span class="car">&#9656;</span>Metrics</button>
-    <button class="tbtn" id="t-info">&#9432; Milestones &amp; gap rule</button>
     <span class="showing" id="vis"></span>
   </div>
 
@@ -363,7 +372,9 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
         <div class="msel" id="m-stream"></div></div>
       <div class="field"><span class="flab">Track</span>
         <div class="msel" id="m-track"></div></div>
-      <label class="tgl" for="f-gaps"><input type="checkbox" id="f-gaps"> Only groups with gaps</label>
+      <div class="field"><span class="flab">Coverage</span>
+        <button class="pillbtn" id="f-gaps" aria-pressed="false">Only groups with gaps</button></div>
+      <div class="field spacer"></div>
       <button class="ghost" id="f-clear">Clear filters</button>
     </div>
   </section>
@@ -387,8 +398,6 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
           <button id="v-exec" aria-pressed="true">Coverage</button>
           <button id="v-team" aria-pressed="false">Activities</button>
         </div></div>
-      <button class="zbtn" id="fs-toggle" aria-pressed="false" title="Expand the roadmap to fill the screen"
-        aria-label="Expand the roadmap to fill the screen">&#10530;</button>
       <div class="grp"><span class="glab">Zoom</span>
         <div class="zoom">
           <button class="zbtn" id="z-out" aria-label="Zoom out">&minus;</button>
@@ -397,6 +406,8 @@ td .tdot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-righ
           <button class="zbtn" id="z-prev" aria-label="Earlier">&lsaquo;</button>
           <button class="zbtn" id="z-next" aria-label="Later">&rsaquo;</button>
         </div></div>
+      <button class="fsbtn" id="fs-toggle" aria-pressed="false" title="Expand the roadmap to fill the screen"
+        aria-label="Expand the roadmap to fill the screen">&#10530;</button>
     </div>
   </div>
 
@@ -998,7 +1009,7 @@ function sectionHead(v,buckets,html){
     '<h2>'+esc(v.name)+'</h2><span class="stag">'+buckets.length+
     (v.ops?" enablement item":" process group")+(buckets.length===1?"":"s")+
     (gt?" · "+gt+" gap"+(gt===1?"":"s"):"")+'</span></div>'+
-    '<div class="snote"><span>'+esc(v.note||"")+'</span></div></div>';
+    '<div class="snote"></div></div>';
 }
 
 /* ---------- render ---------- */
@@ -1121,17 +1132,6 @@ function render(){
   }
   board.innerHTML=html;
 
-  var gapPgs=0,gapSprints=0;
-  PGS.forEach(function(p){
-    var g=(GAPS[p.id]||[]).length;
-    if(g&&pgVisible(p,byPg[p.id]||[])){gapPgs++;gapSprints+=g;}
-  });
-  $("alert").innerHTML=gapSprints
-    ? '<span class="n">'+gapSprints+'</span><span class="m">sprint-level UX gaps in '+gapPgs+
-      ' process group'+(gapPgs===1?"":"s")+'</span>'+
-      '<span class="r">— product-owner activity with no UX within &plusmn;1 sprint</span>'
-    : '<span class="m">No UX coverage gaps in this selection.</span>'+
-      '<span class="r">— every product-owner activity has UX within &plusmn;1 sprint</span>';
   var nf=activeFilters();
   $("fcount").textContent=nf; $("fcount").hidden=!nf;
   $("vis").textContent="Showing "+visActs.length+" of "+ACTS.length+" activities · "+shownPgs+" rows";
@@ -1427,7 +1427,11 @@ $("z-next").addEventListener("click",function(){pan(1);});
 $("f-group").addEventListener("change",function(){state.groupBy=this.value;render();});
 $("f-person").addEventListener("change",function(){state.person=this.value;render();});
 $("f-pg").addEventListener("change",function(){state.pg=this.value;render();});
-$("f-gaps").addEventListener("change",function(){state.gapsOnly=this.checked;render();});
+$("f-gaps").addEventListener("click",function(){
+  state.gapsOnly=!state.gapsOnly;
+  this.setAttribute("aria-pressed",state.gapsOnly?"true":"false");
+  render();
+});
 $("v-exec").addEventListener("click",function(){expanded={};syncSeg();render();});
 $("v-team").addEventListener("click",function(){
   expanded={};PGS.forEach(function(p){if(!p.ops)expanded[p.id]=1;});syncSeg();render();
@@ -1437,7 +1441,7 @@ $("f-clear").addEventListener("click",function(){
   state.tracks={po:true,ux:true,ops:true};
   STREAMS.forEach(function(s){state.streams[s.id]=true;});
   PODS.forEach(function(x){state.pods[x]=true;});
-  $("f-person").value="";$("f-pg").value="";$("f-gaps").checked=false;
+  $("f-person").value="";$("f-pg").value="";$("f-gaps").setAttribute("aria-pressed","false");
   Array.prototype.forEach.call(document.querySelectorAll(".mpanel input"),function(i){i.checked=true;});
   $("m-pod")._sync(); $("m-stream")._sync(); $("m-track")._sync();
   render();
